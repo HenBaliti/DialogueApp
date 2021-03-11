@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/fragment_home">
+    <fragment
+        android:id="@+id/fragment_home"
+        android:name="com.example.dialogueapp.fragment_home"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_fragment_home2_to_fragment_login"
+            app:destination="@id/fragment_login"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_login"
+        android:name="com.example.dialogueapp.fragment_login"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/fragment_schedule_student"
+        android:name="com.example.dialogueapp.fragment_schedule_student"
+        android:label="Schedule_student"
+        tools:layout="@layout/fragment_schedule_student" />
+    <fragment
+        android:id="@+id/fragment_summary"
+        android:name="com.example.dialogueapp.fragment_summary"
+        android:label="fragment_summary"
+        tools:layout="@layout/fragment_summary" />
+    <fragment
+        android:id="@+id/fragment_history"
+        android:name="com.example.dialogueapp.fragment_history"
+        android:label="fragment_history"
+        tools:layout="@layout/fragment_history" />
+    <fragment
+        android:id="@+id/fragment_progress"
+        android:name="com.example.dialogueapp.fragment_progress"
+        android:label="fragment_progress"
+        tools:layout="@layout/fragment_progress" />
+</navigation>
