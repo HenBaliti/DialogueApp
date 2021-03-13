@@ -10,12 +10,8 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_fragment_home2_to_fragment_login"
-            app:destination="@id/fragment_login"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            android:id="@+id/action_fragment_home_to_fragment_login"
+            app:destination="@id/fragment_login" />
     </fragment>
     <fragment
         android:id="@+id/fragment_login"
@@ -25,6 +21,9 @@
         <action
             android:id="@+id/action_fragment_login_to_fragment_register"
             app:destination="@id/fragment_register" />
+        <action
+            android:id="@+id/action_fragment_login_to_fragment_home"
+            app:destination="@id/fragment_home" />
     </fragment>
     <fragment
         android:id="@+id/fragment_schedule_student"
@@ -50,5 +49,9 @@
         android:id="@+id/fragment_register"
         android:name="com.example.dialogueapp.fragment_register"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register" />
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_fragment_register_to_fragment_login"
+            app:destination="@id/fragment_login" />
+    </fragment>
 </navigation>

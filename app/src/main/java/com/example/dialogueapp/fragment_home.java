@@ -22,7 +22,7 @@ public class fragment_home extends Fragment {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(view).navigate(R.id.action_fragment_home2_to_fragment_login);
+                Navigation.findNavController(view).navigate(R.id.action_fragment_home_to_fragment_login);
             }
         });
         return view;
