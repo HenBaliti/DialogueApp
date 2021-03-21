@@ -29,7 +29,11 @@
         android:id="@+id/fragment_schedule_student"
         android:name="com.example.dialogueapp.fragment_schedule_student"
         android:label="Schedule_student"
-        tools:layout="@layout/fragment_schedule_student" />
+        tools:layout="@layout/fragment_schedule_student" >
+        <action
+            android:id="@+id/action_fragment_schedule_student_to_fragment_LessonList"
+            app:destination="@id/fragment_LessonList" />
+    </fragment>
     <fragment
         android:id="@+id/fragment_summary"
         android:name="com.example.dialogueapp.fragment_summary"
@@ -54,4 +58,9 @@
             android:id="@+id/action_fragment_register_to_fragment_login"
             app:destination="@id/fragment_login" />
     </fragment>
+    <fragment
+        android:id="@+id/fragment_LessonList"
+        android:name="com.example.dialogueapp.fragment_LessonList"
+        android:label="fragment__lesson_list"
+        tools:layout="@layout/fragment__lesson_list" />
 </navigation>

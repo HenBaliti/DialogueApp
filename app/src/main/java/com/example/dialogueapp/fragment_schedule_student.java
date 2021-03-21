@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -85,6 +86,13 @@ public class fragment_schedule_student extends Fragment {
         });
 
 
+        Button findFreeTeachers_btn = view.findViewById(R.id.btn_find_free_teachers);
+        findFreeTeachers_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(view).navigate(R.id.action_fragment_schedule_student_to_fragment_LessonList);
+            }
+        });
 
         return view;
     }
@@ -99,6 +107,9 @@ public class fragment_schedule_student extends Fragment {
                     + "-" + String.valueOf(dayOfMonth));
         }
     };
+
+
+
 
 
 }

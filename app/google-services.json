@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "406276325319",
+    "project_id": "dialogue-cf923",
+    "storage_bucket": "dialogue-cf923.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:406276325319:android:ef266c441683284d9263e2",
+        "android_client_info": {
+          "package_name": "com.example.dialogueapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "406276325319-mlbvi2hkf5b337plc70ne2ouj6nrut88.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgEKQBRSSrMy3QjS-LxTWK5ITSMLbhINk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "406276325319-mlbvi2hkf5b337plc70ne2ouj6nrut88.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
