@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_fragment_home_to_fragment_login"
             app:destination="@id/fragment_login" />
+        <action
+            android:id="@+id/action_fragment_home_self"
+            app:destination="@id/fragment_home" />
     </fragment>
     <fragment
         android:id="@+id/fragment_login"
@@ -33,34 +36,53 @@
         <action
             android:id="@+id/action_fragment_schedule_student_to_fragment_LessonList"
             app:destination="@id/fragment_LessonList" />
+        <action
+            android:id="@+id/action_fragment_schedule_student_to_fragment_home"
+            app:destination="@id/fragment_home" />
     </fragment>
     <fragment
         android:id="@+id/fragment_summary"
         android:name="com.example.dialogueapp.fragment_summary"
         android:label="fragment_summary"
-        tools:layout="@layout/fragment_summary" />
+        tools:layout="@layout/fragment_summary" >
+        <action
+            android:id="@+id/action_fragment_summary_to_fragment_home"
+            app:destination="@id/fragment_home" />
+    </fragment>
     <fragment
         android:id="@+id/fragment_history"
         android:name="com.example.dialogueapp.fragment_history"
         android:label="fragment_history"
-        tools:layout="@layout/fragment_history" />
+        tools:layout="@layout/fragment_history" >
+        <action
+            android:id="@+id/action_fragment_history_to_fragment_home"
+            app:destination="@id/fragment_home" />
+    </fragment>
     <fragment
         android:id="@+id/fragment_progress"
         android:name="com.example.dialogueapp.fragment_progress"
         android:label="fragment_progress"
-        tools:layout="@layout/fragment_progress" />
+        tools:layout="@layout/fragment_progress" >
+        <action
+            android:id="@+id/action_fragment_progress_to_fragment_home"
+            app:destination="@id/fragment_home" />
+    </fragment>
     <fragment
         android:id="@+id/fragment_register"
         android:name="com.example.dialogueapp.fragment_register"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" >
         <action
-            android:id="@+id/action_fragment_register_to_fragment_login"
-            app:destination="@id/fragment_login" />
+            android:id="@+id/action_fragment_register_to_fragment_home"
+            app:destination="@id/fragment_home" />
     </fragment>
     <fragment
         android:id="@+id/fragment_LessonList"
         android:name="com.example.dialogueapp.fragment_LessonList"
         android:label="fragment__lesson_list"
-        tools:layout="@layout/fragment__lesson_list" />
+        tools:layout="@layout/fragment__lesson_list" >
+        <action
+            android:id="@+id/action_fragment_LessonList_to_fragment_home"
+            app:destination="@id/fragment_home" />
+    </fragment>
 </navigation>

@@ -16,10 +16,14 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.Calendar;
 
 
 public class fragment_schedule_student extends Fragment {
+//    private FirebaseAuth mAuth;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,8 +37,36 @@ public class fragment_schedule_student extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_schedule_student, container, false);
 
-        ImageButton clickScheduleBtn = (ImageButton)view.findViewById(R.id.btn_schedule_picker);
 
+
+        ImageButton logOutBtn = view.findViewById(R.id.btn_logout_schedule);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user != null) {
+            // User is signed in
+            logOutBtn.setVisibility(view.VISIBLE);
+
+            //BUTTON LOGOUT -- Press
+            logOutBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    LogOutFunction();
+                    Navigation.findNavController(view).navigate(R.id.action_fragment_schedule_student_to_fragment_home);
+                }
+
+                private void LogOutFunction() {
+                    FirebaseAuth.getInstance().signOut();
+                }
+            });
+        } else {
+            // No user is signed in
+            logOutBtn.setVisibility(view.GONE);
+        }
+
+
+
+
+        //SCHEDULE PICKER
+        ImageButton clickScheduleBtn = (ImageButton)view.findViewById(R.id.btn_schedule_picker);
 
         // Using an onclick listener on the editText to show the datePicker
         clickScheduleBtn.setOnClickListener(new View.OnClickListener() {

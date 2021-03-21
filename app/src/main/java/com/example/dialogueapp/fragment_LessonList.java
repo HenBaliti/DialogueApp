@@ -3,6 +3,7 @@ package com.example.dialogueapp;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,17 +11,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.dialogueapp.Model.Lesson;
 import com.example.dialogueapp.Model.Model;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class fragment_LessonList extends Fragment {
+//    private FirebaseAuth mAuth;
     Button btn_add;
     ProgressBar pb;
     List<Lesson> stLesson = new LinkedList<Lesson>();
@@ -32,6 +37,34 @@ public class fragment_LessonList extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment__lesson_list, container, false);
 
+
+
+//        ImageButton logOutBtn = view.findViewById(R.id.btnLesson);
+//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//        if(user != null) {
+//            // User is signed in
+//            logOutBtn.setVisibility(view.VISIBLE);
+//
+//            //BUTTON LOGOUT -- Press
+//            logOutBtn.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    LogOutFunction();
+//                    Navigation.findNavController(view).navigate(R.id.action_fragment_LessonList_to_fragment_home);
+//                }
+//
+//                private void LogOutFunction() {
+//                    FirebaseAuth.getInstance().signOut();
+//                }
+//            });
+//        } else {
+//            // No user is signed in
+//            logOutBtn.setVisibility(view.GONE);
+//        }
+//
+
+
+        //--LIST--
         ListView list = view.findViewById(R.id.lesson_list);
         pb = view.findViewById(R.id.progressBar_lesson_list);
         btn_add = view.findViewById(R.id.btn_add_lesson);
