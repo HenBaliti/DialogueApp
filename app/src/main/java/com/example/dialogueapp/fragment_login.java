@@ -42,16 +42,20 @@ public class fragment_login extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
-        Button signUpBtn = view.findViewById(R.id.button_signup);
         Button ConfirmBtn = view.findViewById(R.id.button_confirm);
         TextView txt_Email = view.findViewById(R.id.edit_text_email);
         TextView txt_Password = view.findViewById(R.id.edit_text_password);
-        signUpBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(view).navigate(R.id.action_fragment_login_to_fragment_register);
-            }
-        });
+
+
+        //ERROR - LOGIN
+//        String error = fragment_loginArgs.fromBundle(getArguments()).getLoginError();
+//        if(error!=null){
+//            TextView txt_error_login = view.findViewById(R.id.txt_login_error);
+//            txt_error_login.setText(error);
+//        }
+
+
+
         ConfirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

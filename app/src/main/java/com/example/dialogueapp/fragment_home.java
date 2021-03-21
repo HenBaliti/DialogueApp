@@ -24,6 +24,7 @@ public class fragment_home extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_home, container, false);
         Button loginBtn = view.findViewById(R.id.button_login);
+        Button signUpBtn = view.findViewById(R.id.button_signup);
         ImageButton logOutBtn = view.findViewById(R.id.btn_logout);
         TextView txt_user_firstName = view.findViewById(R.id.txt_user_firstName_home);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -32,6 +33,7 @@ public class fragment_home extends Fragment {
             String email = user.getEmail().toString();
             loginBtn.setVisibility(view.GONE);
             logOutBtn.setVisibility(view.VISIBLE);
+            signUpBtn.setVisibility(view.GONE);
             txt_user_firstName.setVisibility(view.VISIBLE);
             txt_user_firstName.setText(email);
 
@@ -50,9 +52,20 @@ public class fragment_home extends Fragment {
         } else {
             // No user is signed in
             loginBtn.setVisibility(view.VISIBLE);
+            signUpBtn.setVisibility(view.VISIBLE);
             txt_user_firstName.setVisibility(view.GONE);
         }
 
+
+        /// ---- onClick ->SignUp
+        signUpBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(view).navigate(R.id.action_fragment_home_to_fragment_register);
+            }
+        });
+
+        /// ---- OnClick -> Login
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

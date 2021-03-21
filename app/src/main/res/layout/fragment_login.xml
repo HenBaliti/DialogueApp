@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:scrollbarSize="16dp"
     tools:context=".fragment_login">
 
     <EditText
@@ -40,14 +41,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_text_password" />
 
-    <Button
-        android:id="@+id/button_signup"
+    <TextView
+        android:id="@+id/txt_login_error"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="Sign up"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:layout_marginTop="20dp"
+        android:textColor="#FF0000"
+        app:layout_constraintTop_toBottomOf="@+id/button_confirm"
+        tools:layout_editor_absoluteX="179dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

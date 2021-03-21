@@ -3,7 +3,10 @@ package com.example.dialogueapp;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,10 +29,12 @@ import java.util.List;
 
 public class fragment_LessonList extends Fragment {
 //    private FirebaseAuth mAuth;
+
+    LessonListViewModel viewModelList;
     Button btn_add;
     ProgressBar pb;
-    List<Lesson> stLesson = new LinkedList<Lesson>();
     MyAdapter adapter;
+    SwipeRefreshLayout sref;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,7 +42,7 @@ public class fragment_LessonList extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment__lesson_list, container, false);
 
-
+        viewModelList = new ViewModelProvider(this).get(LessonListViewModel.class);
 
 //        ImageButton logOutBtn = view.findViewById(R.id.btnLesson);
 //        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -69,6 +74,15 @@ public class fragment_LessonList extends Fragment {
         pb = view.findViewById(R.id.progressBar_lesson_list);
         btn_add = view.findViewById(R.id.btn_add_lesson);
         pb.setVisibility(View.INVISIBLE);
+        sref = view.findViewById(R.id.lessonList_swipe);
+
+        sref.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                sref.setRefreshing(true);
+                reloadData();
+            }
+        });
 
 
         adapter = new MyAdapter();
@@ -81,14 +95,25 @@ public class fragment_LessonList extends Fragment {
             }
         });
 
+
+        //--ViewModel--
+        viewModelList.getStLesson().observe(getViewLifecycleOwner(), new Observer<List<Lesson>>() {
+            @Override
+            public void onChanged(List<Lesson> lessons) {
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+
         reloadData();
+
         return view;
     }
 
     static int id = 0;
     private void addNewLesson() {
         btn_add.setEnabled((false));
-        int id = stLesson.size();
+        int id = viewModelList.getStLesson().getValue().size();
         Lesson lesson = new Lesson();
         lesson.setLesson_id(id);
         lesson.setLesson_title("LESSON "+id);
@@ -105,16 +130,12 @@ public class fragment_LessonList extends Fragment {
     void reloadData(){
         pb.setVisibility(View.VISIBLE);
         btn_add.setEnabled((false));
-        Model.instance.getAllLessons(new Model.GetAllLessonsListener() {
+        Model.instance.refreshAllLessons(new Model.GetAllLessonsListener() {
             @Override
             public void onComplete(List<Lesson> data) {
-                stLesson = data;
-                for (Lesson lesson: data) {
-                    Log.d("TAG","Lesson id: "+lesson.getLesson_id());
-                }
                 pb.setVisibility(View.INVISIBLE);
                 btn_add.setEnabled((true));
-                adapter.notifyDataSetChanged();
+                sref.setRefreshing(false);
             }
         });
     }
@@ -123,9 +144,9 @@ public class fragment_LessonList extends Fragment {
         @Override
         public int getCount() {
 
-            if(stLesson==null)
+            if(viewModelList.getStLesson().getValue()==null)
                 return 0;
-            return stLesson.size();
+            return viewModelList.getStLesson().getValue().size();
         }
 
         @Override
@@ -145,7 +166,7 @@ public class fragment_LessonList extends Fragment {
             }
 
             TextView txtLessonId = convertView.findViewById(R.id.txt_lesson_row_id);
-            Lesson lesson = stLesson.get(position);
+            Lesson lesson = viewModelList.getStLesson().getValue().get(position);
             txtLessonId.setText(""+lesson.getLesson_id());
 
             return convertView;

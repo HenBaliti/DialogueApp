@@ -8,6 +8,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -19,18 +20,22 @@ import java.util.List;
 import java.util.Map;
 
 public class ModelFireBase {
-    public void getAllLessons(Model.GetAllLessonsListener listener) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+    public void getAllLessons(Long lastUpdated, Model.GetAllLessonsListener listener) {
 
-        db.collection("Lesson").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        //////////////////TODO - fix filter records according to lastUpdated
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Timestamp ts = new Timestamp(lastUpdated,0);
+        db.collection("Lesson").whereGreaterThanOrEqualTo("lastUpdated",ts).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 List<Lesson> data = new LinkedList<Lesson>();
                 if(task.isSuccessful()){
                     for(DocumentSnapshot doc:task.getResult())
                     {
-                        Lesson lesson = doc.toObject(Lesson.class);
-                        data.add(lesson);
+                        Lesson less1 = new Lesson();
+                        less1.fromMap(doc.getData());
+//                        Lesson lesson = doc.toObject(Lesson.class);
+                        data.add(less1);
                     }
                 }
                 listener.onComplete(data);
@@ -47,7 +52,7 @@ public class ModelFireBase {
 
 // Add a new document with a generated ID
         db.collection("Lesson").document(""+lesson.getLesson_id())
-                .set(lesson).addOnSuccessListener(new OnSuccessListener<Void>() {
+                .set(lesson.toMap()).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Log.d("FireBaseAddingLesson","Lesson added succecfully");

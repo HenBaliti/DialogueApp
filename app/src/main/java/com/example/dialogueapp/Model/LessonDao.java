@@ -1,5 +1,7 @@
 package com.example.dialogueapp.Model;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -11,7 +13,7 @@ import java.util.List;
 @Dao
 public interface LessonDao {
     @Query("select * from Lesson")
-    List<Lesson> getAllLessons();
+    LiveData<List<Lesson>> getAllLessons();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(Lesson... lessons);

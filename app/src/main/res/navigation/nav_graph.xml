@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_fragment_home_self"
             app:destination="@id/fragment_home" />
+        <action
+            android:id="@+id/action_fragment_home_to_fragment_register"
+            app:destination="@id/fragment_register" />
     </fragment>
     <fragment
         android:id="@+id/fragment_login"
@@ -22,11 +25,11 @@
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_fragment_login_to_fragment_register"
-            app:destination="@id/fragment_register" />
-        <action
             android:id="@+id/action_fragment_login_to_fragment_home"
             app:destination="@id/fragment_home" />
+        <argument
+            android:name="LoginError"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/fragment_schedule_student"
@@ -39,6 +42,9 @@
         <action
             android:id="@+id/action_fragment_schedule_student_to_fragment_home"
             app:destination="@id/fragment_home" />
+        <action
+            android:id="@+id/action_fragment_schedule_student_to_fragment_login"
+            app:destination="@id/fragment_login" />
     </fragment>
     <fragment
         android:id="@+id/fragment_summary"
@@ -48,6 +54,9 @@
         <action
             android:id="@+id/action_fragment_summary_to_fragment_home"
             app:destination="@id/fragment_home" />
+        <action
+            android:id="@+id/action_fragment_summary_to_fragment_login"
+            app:destination="@id/fragment_login" />
     </fragment>
     <fragment
         android:id="@+id/fragment_history"
@@ -57,6 +66,9 @@
         <action
             android:id="@+id/action_fragment_history_to_fragment_home"
             app:destination="@id/fragment_home" />
+        <action
+            android:id="@+id/action_fragment_history_to_fragment_login"
+            app:destination="@id/fragment_login" />
     </fragment>
     <fragment
         android:id="@+id/fragment_progress"
@@ -66,6 +78,9 @@
         <action
             android:id="@+id/action_fragment_progress_to_fragment_home"
             app:destination="@id/fragment_home" />
+        <action
+            android:id="@+id/action_fragment_progress_to_fragment_login"
+            app:destination="@id/fragment_login" />
     </fragment>
     <fragment
         android:id="@+id/fragment_register"
@@ -84,5 +99,8 @@
         <action
             android:id="@+id/action_fragment_LessonList_to_fragment_home"
             app:destination="@id/fragment_home" />
+        <action
+            android:id="@+id/action_fragment_LessonList_to_fragment_login"
+            app:destination="@id/fragment_login" />
     </fragment>
 </navigation>

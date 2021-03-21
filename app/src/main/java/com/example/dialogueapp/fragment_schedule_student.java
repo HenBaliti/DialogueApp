@@ -60,6 +60,11 @@ public class fragment_schedule_student extends Fragment {
         } else {
             // No user is signed in
             logOutBtn.setVisibility(view.GONE);
+
+            String errorMsg = "You are not Login yet.";
+//            fragment_schedule_studentDirections.ActionFragmentScheduleStudentToFragmentLogin action = fragment_schedule_studentDirections.actionFragmentScheduleStudentToFragmentLogin(errorMsg);
+//            Navigation.findNavController(view).navigate(action);
+
         }
 
 

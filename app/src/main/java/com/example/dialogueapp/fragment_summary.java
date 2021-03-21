@@ -45,6 +45,9 @@ public class fragment_summary extends Fragment {
         } else {
             // No user is signed in
             logOutBtn.setVisibility(view.GONE);
+//            Bundle bundle = new Bundle();
+//            bundle.putString("FailedLogin","You Are not Login Yet.");
+//            Navigation.findNavController(view).navigate(R.id.action_fragment_summary_to_fragment_login,bundle);
         }
 
         return view;

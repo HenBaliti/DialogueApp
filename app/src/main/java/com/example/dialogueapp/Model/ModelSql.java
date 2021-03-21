@@ -2,37 +2,46 @@ package com.example.dialogueapp.Model;
 
 import android.os.AsyncTask;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
 import java.nio.channels.AsynchronousByteChannel;
 import java.util.List;
 
 public class ModelSql {
 
-    public interface GetAllLessonsListener{
-        void onComplete(List<Lesson> data);
-    }
 
+    ///// --- Async GetAll Lessons Function Room ---
 
-    public void getAllLessons(GetAllLessonsListener listener){
+//    public interface GetAllLessonsListener{
+//        void onComplete(List<Lesson> data);
+//    }
 
-        /////////////////////////////////// ASYNC TASK /////////////////////////////////
-        class MyAsyncTask extends AsyncTask{
-            List<Lesson> dataLessons;
+//    public void getAllLessons(GetAllLessonsListener listener){
+//
+//        /////////////////////////////////// ASYNC TASK /////////////////////////////////
+//        class MyAsyncTask extends AsyncTask{
+//            List<Lesson> dataLessons;
+//
+//            @Override
+//            protected Object doInBackground(Object[] objects) {
+//                dataLessons = AppLocalDb.db.lessonDao().getAllLessons();
+//                return null;
+//            }
+//
+//            @Override
+//            protected void onPostExecute(Object o) {
+//                super.onPostExecute(o);
+//                listener.onComplete(dataLessons);
+//            }
+//        }
+//        MyAsyncTask task = new MyAsyncTask();
+//        task.execute();
+//    }
 
-            @Override
-            protected Object doInBackground(Object[] objects) {
-                dataLessons = AppLocalDb.db.lessonDao().getAllLessons();
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Object o) {
-                super.onPostExecute(o);
-                listener.onComplete(dataLessons);
-            }
-        }
-        MyAsyncTask task = new MyAsyncTask();
-        task.execute();
-    }
+public LiveData<List<Lesson>> getAllLessons(){
+        return AppLocalDb.db.lessonDao().getAllLessons();
+}
 
 
     public interface AddLessonListener{
