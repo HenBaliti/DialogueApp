@@ -23,6 +23,16 @@ public class fragment_home extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_home, container, false);
+
+        Button Btn = view.findViewById(R.id.button);
+        Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(view).navigate(R.id.action_fragment_home_to_fragment_set_lesson_teacher);
+            }
+        });
+
+
         Button loginBtn = view.findViewById(R.id.button_login);
         Button signUpBtn = view.findViewById(R.id.button_signup);
         ImageButton logOutBtn = view.findViewById(R.id.btn_logout);

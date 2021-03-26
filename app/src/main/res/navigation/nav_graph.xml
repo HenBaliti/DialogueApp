@@ -18,6 +18,9 @@
         <action
             android:id="@+id/action_fragment_home_to_fragment_register"
             app:destination="@id/fragment_register" />
+        <action
+            android:id="@+id/action_fragment_home_to_fragment_set_lesson_teacher"
+            app:destination="@id/fragment_set_lesson_teacher" />
     </fragment>
     <fragment
         android:id="@+id/fragment_login"
@@ -102,5 +105,17 @@
         <action
             android:id="@+id/action_fragment_LessonList_to_fragment_login"
             app:destination="@id/fragment_login" />
+        <argument
+            android:name="dateFilter"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_set_lesson_teacher"
+        android:name="com.example.dialogueapp.fragment_set_lesson_teacher"
+        android:label="fragment_set_lesson_teacher"
+        tools:layout="@layout/fragment_set_lesson_teacher" >
+        <action
+            android:id="@+id/action_fragment_set_lesson_teacher_to_fragment_home"
+            app:destination="@id/fragment_home" />
     </fragment>
 </navigation>
