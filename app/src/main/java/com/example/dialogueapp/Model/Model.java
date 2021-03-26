@@ -2,12 +2,9 @@ package com.example.dialogueapp.Model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
-import java.nio.channels.AsynchronousByteChannel;
 import java.util.List;
 
 public class Model {
@@ -118,5 +115,64 @@ public class Model {
     }
     public void updateLesson(Lesson lesson,AddLessonListener listener){
         modelFireBase.updateLesson(lesson,listener);
+    }
+
+
+    //User
+    public interface GetUserListener{
+        void onComplete(User user);
+    }
+    public interface GetAllUsersListener{
+        void onComplete(List<User> data);
+    }
+    LiveData<List<User>> userList;
+    public LiveData<List<User>> getAllUsers(){
+        if(userList==null){
+            userList = modelSql.getAllUsers();
+            refreshAllUsers(null);
+        }
+        return userList;
+    }
+
+    public void refreshAllUsers(GetAllUsersListener listener){
+
+        //1. Get local last update date
+        final SharedPreferences sp = MyApplication.context.getSharedPreferences("TAG", Context.MODE_PRIVATE);
+        Long lastUpdated = sp.getLong("lastUpdated",0);
+
+        //2. Get all updated record from firebase from the last update date
+        modelFireBase.getAllUsers(lastUpdated,new GetAllUsersListener() {
+            @Override
+            public void onComplete(List<User> data) {
+
+                //3. Insert the new updates to the local db
+                long lastUp = 0;
+                for (User us : data) {
+                    modelSql.addUser(us, null);
+                    if (us.getLastUpdated() > lastUp) {
+                        lastUp = us.getLastUpdated();
+                    }
+                }
+
+                //4. Update the local last update date
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putLong("lastUpdated", lastUp);
+                editor.commit();
+
+
+                //5. Return the updates data to the listeners
+                if (listener != null) {
+                    listener.onComplete(data);
+                }
+
+            }
+        });
+        }
+
+    public interface AddUserListener{
+        void onComplete();
+    }
+    public void addUser(final User user, final AddUserListener listener) {
+        modelFireBase.addUser(user,listener);
     }
 }
