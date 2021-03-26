@@ -34,7 +34,7 @@ public class fragment_home extends Fragment {
 
 
         Button loginBtn = view.findViewById(R.id.button_login);
-        Button SearchBtn = view.findViewById(R.id.btn_searchusers);
+       // Button SearchBtn = view.findViewById(R.id.btn_searchusers);
         Button signUpBtn = view.findViewById(R.id.button_signup);
         ImageButton logOutBtn = view.findViewById(R.id.btn_logout);
         TextView txt_user_firstName = view.findViewById(R.id.txt_user_firstName_home);
@@ -75,12 +75,12 @@ public class fragment_home extends Fragment {
                 Navigation.findNavController(view).navigate(R.id.action_fragment_home_to_fragment_register);
             }
         });
-        SearchBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(view).navigate(R.id.action_fragment_home_to_fragment_SearchUsers2);
-            }
-        });
+//        SearchBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Navigation.findNavController(view).navigate(R.id.action_fragment_home_to_fragment_SearchUsers2);
+//            }
+//        });
 
         /// ---- OnClick -> Login
         loginBtn.setOnClickListener(new View.OnClickListener() {

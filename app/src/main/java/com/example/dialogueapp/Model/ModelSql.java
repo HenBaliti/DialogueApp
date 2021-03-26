@@ -42,7 +42,8 @@ public class ModelSql {
     public LiveData<List<Lesson>> getAllLessons(){
         return AppLocalDb.db.lessonDao().getAllLessons();
     }
-  
+
+
 public LiveData<List<User>> getAllUsers() { return AppLocalDb.db.userDao().getAllUsers();}
 
 
