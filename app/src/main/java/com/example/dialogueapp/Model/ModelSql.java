@@ -42,7 +42,7 @@ public class ModelSql {
 public LiveData<List<Lesson>> getAllLessons(){
         return AppLocalDb.db.lessonDao().getAllLessons();
 }
-
+public LiveData<List<User>> getAllUsers() { return AppLocalDb.db.userDao().getAllUsers();}
 
     public interface AddLessonListener{
         void onComplete();
@@ -66,4 +66,27 @@ public LiveData<List<Lesson>> getAllLessons(){
         MyAsyncTask task = new MyAsyncTask();
         task.execute();
     }
+    public interface AddUserListener{
+        void onComplete();
+    }
+    public void addUser(User user,AddUserListener listener){
+        class MyAsyncTask extends AsyncTask {
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                AppLocalDb.db.userDao().insertAll(user);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Object o) {
+                super.onPostExecute(o);
+                if(listener !=null){
+                    listener.onComplete();
+                }
+            }
+        };
+        MyAsyncTask task = new MyAsyncTask();
+        task.execute();
+    }
+
 }

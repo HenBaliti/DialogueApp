@@ -18,6 +18,9 @@
         <action
             android:id="@+id/action_fragment_home_to_fragment_register"
             app:destination="@id/fragment_register" />
+        <action
+            android:id="@+id/action_fragment_home_to_fragment_SearchUsers2"
+            app:destination="@id/fragment_SearchUsers2" />
     </fragment>
     <fragment
         android:id="@+id/fragment_login"
@@ -103,4 +106,8 @@
             android:id="@+id/action_fragment_LessonList_to_fragment_login"
             app:destination="@id/fragment_login" />
     </fragment>
+    <fragment
+        android:id="@+id/fragment_SearchUsers2"
+        android:name="com.example.dialogueapp.fragment_SearchUsers"
+        android:label="fragment_SearchUsers" />
 </navigation>

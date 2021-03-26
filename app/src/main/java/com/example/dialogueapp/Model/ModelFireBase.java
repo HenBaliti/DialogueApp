@@ -9,15 +9,12 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 public class ModelFireBase {
     public void getAllLessons(Long lastUpdated, Model.GetAllLessonsListener listener) {
@@ -83,6 +80,68 @@ public class ModelFireBase {
                         lesson = task.getResult().toObject(Lesson.class);
                     }
                 listener.onComplete(lesson);
+                }
+            }
+        });
+    }
+
+
+    public void getAllUsers(Long lastUpdated, Model.GetAllUsersListener listener) {
+
+        //////////////////TODO - fix filter records according to lastUpdated
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Timestamp ts = new Timestamp(lastUpdated,0);
+        db.collection("User").whereGreaterThanOrEqualTo("lastUpdated",ts).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                List<User> data = new LinkedList<User>();
+                if(task.isSuccessful()){
+                    for(DocumentSnapshot doc:task.getResult())
+                    {
+                        User user1 = new User();
+                        user1.fromMap(doc.getData());
+                        data.add(user1);
+                    }
+                }
+                listener.onComplete(data);
+            }
+        });
+
+
+    }
+    public void addUser(User user, Model.AddUserListener listener) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("User").document(""+user.getUser_id())
+                .set(user.toMap()).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d("FireBase Adding User","User added succecfully");
+                listener.onComplete();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("FireBaseAddingLesson","Failing by adding User");
+                listener.onComplete();
+            }
+        });
+    }
+    public void updateUser(User user, Model.AddUserListener listener) {
+        addUser(user,listener);
+    }
+
+    public void getUser(int id, Model.GetUserListener listener) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("User").document(""+id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                User user = null;
+                if(task.isSuccessful()){
+                    DocumentSnapshot doc = task.getResult();
+                    if(doc!=null){
+                        user = task.getResult().toObject(User.class);
+                    }
+                    listener.onComplete(user);
                 }
             }
         });
