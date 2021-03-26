@@ -32,7 +32,18 @@ public class Model {
         return lessonList;
     }
 
+    public LiveData<List<Lesson>> getLessonsByDate(String date){
+        if(lessonList==null){
+            lessonList = modelSql.getLessonsByDate(date);
+            refreshAllLessons(null);
+        }
+        return lessonList;
+    }
 
+
+
+
+    ///////// REFRESH ALL LESSONS //////////
     public void refreshAllLessons(GetAllLessonsListener listener){
 
         //1. Get local last update date

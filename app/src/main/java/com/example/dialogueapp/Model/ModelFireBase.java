@@ -45,6 +45,37 @@ public class ModelFireBase {
 
     }
 
+    ////////////////////////////////////////////////
+    ///////// Get Lessons By Specific Date /////////
+    ////////////////////////////////////////////////
+
+    public void getAllLessonsByDate(String date,Long lastUpdated, Model.GetAllLessonsListener listener) {
+
+        //////////////////TODO - fix filter records according to lastUpdated
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Timestamp ts = new Timestamp(lastUpdated,0);
+        db.collection("Lesson").whereGreaterThanOrEqualTo("lastUpdated",ts).whereEqualTo("schedule_date",date).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                List<Lesson> data = new LinkedList<Lesson>();
+                if(task.isSuccessful()){
+                    for(DocumentSnapshot doc:task.getResult())
+                    {
+                        Lesson less1 = new Lesson();
+                        less1.fromMap(doc.getData());
+//                        Lesson lesson = doc.toObject(Lesson.class);
+                        data.add(less1);
+                    }
+                }
+                listener.onComplete(data);
+            }
+        });
+
+
+    }
+
+
+
     public void addLesson(Lesson lesson, Model.AddLessonListener listener) {
         // Access a Cloud Firestore instance from your Activity
         FirebaseFirestore db = FirebaseFirestore.getInstance();
