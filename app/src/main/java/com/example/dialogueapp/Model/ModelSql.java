@@ -39,10 +39,18 @@ public class ModelSql {
 //        task.execute();
 //    }
 
-public LiveData<List<Lesson>> getAllLessons(){
+    public LiveData<List<Lesson>> getAllLessons(){
         return AppLocalDb.db.lessonDao().getAllLessons();
-}
+    }
+  
 public LiveData<List<User>> getAllUsers() { return AppLocalDb.db.userDao().getAllUsers();}
+
+
+    public LiveData<List<Lesson>> getLessonsByDate(String date){
+        return AppLocalDb.db.lessonDao().findLessonByDate(date);
+    }
+
+
 
     public interface AddLessonListener{
         void onComplete();

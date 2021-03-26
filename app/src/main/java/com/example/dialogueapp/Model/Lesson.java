@@ -23,6 +23,7 @@ public class Lesson {
     private String lesson_title;
     private String lesson_summary;
     private int student_review_id;
+    private int numOfMinutesPerLesson;
     private boolean isCatch;
     private boolean isDone;
     private Long lastUpdated;
@@ -38,6 +39,7 @@ public class Lesson {
         result.put("lesson_title",lesson_title);
         result.put("lesson_summary",lesson_summary);
         result.put("student_review_id",student_review_id);
+        result.put("numOfMinutesPerLesson",numOfMinutesPerLesson);
         result.put("isCatch",isCatch);
         result.put("isDone",isDone);
         result.put("lastUpdated", FieldValue.serverTimestamp());
@@ -54,13 +56,21 @@ public class Lesson {
         lesson_title = (String)map.get("lesson_title");
         lesson_summary = (String)map.get("lesson_summary");
         student_review_id = ((Long)map.get("student_review_id")).intValue();
+        if(map.containsKey("numOfMinutesPerLesson"))
+            numOfMinutesPerLesson = Integer.parseInt(map.get("numOfMinutesPerLesson").toString());
         isCatch = (boolean)map.get("isCatch");
         isDone = (boolean)map.get("isDone");
         Timestamp ts = (Timestamp)map.get("lastUpdated");
         lastUpdated = (Long)ts.getSeconds();
-//        long time = ts.toDate().getTime();
     }
 
+    public int getNumOfMinutesPerLesson() {
+        return numOfMinutesPerLesson;
+    }
+
+    public void setNumOfMinutesPerLesson(int numOfMinutesPerLesson) {
+        this.numOfMinutesPerLesson = numOfMinutesPerLesson;
+    }
 
     public Long getLastUpdated() {
         return lastUpdated;

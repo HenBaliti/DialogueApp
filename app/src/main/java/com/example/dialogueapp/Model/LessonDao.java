@@ -15,6 +15,9 @@ public interface LessonDao {
     @Query("select * from Lesson")
     LiveData<List<Lesson>> getAllLessons();
 
+    @Query("SELECT * FROM Lesson WHERE schedule_date LIKE :date")
+    LiveData<List<Lesson>> findLessonByDate(String date);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(Lesson... lessons);
 

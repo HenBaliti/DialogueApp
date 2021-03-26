@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
@@ -14,17 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.dialogueapp.Model.Lesson;
 import com.example.dialogueapp.Model.Model;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class fragment_LessonList extends Fragment {
@@ -44,6 +39,8 @@ public class fragment_LessonList extends Fragment {
 
         viewModelList = new ViewModelProvider(this).get(LessonListViewModel.class);
 
+        String datePassed = fragment_LessonListArgs.fromBundle(getArguments()).getDateFilter();
+        Log.d("TAG",datePassed);
 //        ImageButton logOutBtn = view.findViewById(R.id.btnLesson);
 //        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 //        if(user != null) {
@@ -127,6 +124,10 @@ public class fragment_LessonList extends Fragment {
         id++;
     }
 
+
+
+    //Add New Lesson -> Student
+
     void reloadData(){
         pb.setVisibility(View.VISIBLE);
         btn_add.setEnabled((false));
@@ -166,8 +167,19 @@ public class fragment_LessonList extends Fragment {
             }
 
             TextView txtLessonId = convertView.findViewById(R.id.txt_lesson_row_id);
+            TextView txtLessonTitle = convertView.findViewById(R.id.txt_lesson_row_title);
+            TextView txtLessonDate = convertView.findViewById(R.id.txt_lesson_row_date);
+            TextView txtLessonTime = convertView.findViewById(R.id.txt_lesson_row_time);
+            TextView txtLessonLengthTime = convertView.findViewById(R.id.txt_lesson_row_length_time);
+
             Lesson lesson = viewModelList.getStLesson().getValue().get(position);
+
             txtLessonId.setText(""+lesson.getLesson_id());
+            txtLessonTitle.setText(lesson.getLesson_title());
+            txtLessonDate.setText(""+lesson.getSchedule_date());
+            txtLessonTime.setText(""+lesson.getLesson_time());
+            txtLessonLengthTime.setText(""+lesson.getNumOfMinutesPerLesson());
+
 
             return convertView;
         }
