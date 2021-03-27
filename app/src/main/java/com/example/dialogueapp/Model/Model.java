@@ -175,4 +175,26 @@ public class Model {
     public void addUser(final User user, final AddUserListener listener) {
         modelFireBase.addUser(user,listener);
     }
+
+
+    public interface GetUserByEmailListener{
+        void onComplete(int id);
+    }
+    public User getStudentByEmail(String email, final GetUserByEmailListener listener) {
+        modelFireBase.getStudentByEmail(email,listener);
+        return null;
+    }
+
+
+
+    /////Getting the user by id
+    public interface GetUserByIDListener{
+        void onComplete(User user);
+    }
+    public User GetUserByID(int userid, final GetUserByIDListener listener) {
+        modelFireBase.GetUserByID(userid,listener);
+        return null;
+    }
+
+
 }

@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.example.dialogueapp.Model.Lesson;
 import com.example.dialogueapp.Model.Model;
+import com.example.dialogueapp.Model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -39,6 +40,7 @@ public class fragment_set_lesson_teacher extends Fragment {
     Button btn_15;
     Button btn_30;
     Button btn_45;
+    Lesson lesson;
     int numOfMinutes;
     static int id = 0;
 
@@ -199,35 +201,45 @@ public class fragment_set_lesson_teacher extends Fragment {
         txt_Title = (TextView) getActivity().findViewById(R.id.txt_picked_title_teacher);
         createLesson_btn.setEnabled((false));
 //        id = viewModelList.getStLesson().getValue().size();
-        Lesson lesson = new Lesson();
-        lesson.setLesson_id(id);
-        lesson.setLesson_title(txt_Title.getText().toString());
-        lesson.setSchedule_date(tvDate.getText().toString());
-        lesson.setLesson_time(timePickerValueTextView.getText().toString());
-        lesson.setTeacher_id(1234);
-        lesson.setNumOfMinutesPerLesson(numOfMinutes);
-        lesson.setCatch(false);
-        lesson.setDone(false);
+        lesson = new Lesson();
 
-        Model.instance.addLesson(lesson, new Model.AddLessonListener() {
+        Model.instance.getStudentByEmail(user.getEmail(), new Model.GetUserByEmailListener() {
             @Override
-            public void onComplete() {
-                Toast.makeText(getActivity(), "Added a new Lesson Succeeded",
-                        Toast.LENGTH_SHORT).show();
-                createLesson_btn.setEnabled((true));
-                txt_Title.setText("");
-                timePickerValueTextView.setText("");
-                tvDate.setText("");
-                numOfMinutes = 0;
-                btn_15.setBackgroundColor(Color.parseColor("#FF747277"));
-                btn_30.setBackgroundColor(Color.parseColor("#FF747277"));
-                btn_45.setBackgroundColor(Color.parseColor("#FF747277"));
+            public void onComplete(int userId) {
+                Log.d("Teacher ID IS: ",""+userId);
+                lesson.setLesson_id(id);
+                lesson.setLesson_title(txt_Title.getText().toString());
+                lesson.setSchedule_date(tvDate.getText().toString());
+                lesson.setLesson_time(timePickerValueTextView.getText().toString());
+                lesson.setTeacher_id(userId);
+                lesson.setNumOfMinutesPerLesson(numOfMinutes);
+                lesson.setCatch(false);
+                lesson.setDone(false);
 
-                Model.instance.refreshAllLessons(null);
+                Model.instance.addLesson(lesson, new Model.AddLessonListener() {
+                    @Override
+                    public void onComplete() {
+                        Toast.makeText(getActivity(), "Added a new Lesson Succeeded",
+                                Toast.LENGTH_SHORT).show();
+                        createLesson_btn.setEnabled((true));
+                        txt_Title.setText("");
+                        timePickerValueTextView.setText("");
+                        tvDate.setText("");
+                        numOfMinutes = 0;
+                        btn_15.setBackgroundColor(Color.parseColor("#FF747277"));
+                        btn_30.setBackgroundColor(Color.parseColor("#FF747277"));
+                        btn_45.setBackgroundColor(Color.parseColor("#FF747277"));
+
+                        Model.instance.refreshAllLessons(null);
+                    }
+                });
+
             }
         });
+
         id++;
     }
+
 
 
     //--------------------------

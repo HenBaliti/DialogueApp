@@ -140,4 +140,33 @@
         app:layout_constraintStart_toEndOf="@+id/title_time"
         app:layout_constraintTop_toBottomOf="@+id/txt_lesson_row_date" />
 
+    <ImageView
+        android:id="@+id/image_teacher_row_lesson"
+        android:layout_width="68dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_launcher_foreground" />
+
+    <TextView
+        android:id="@+id/txt_lesson_row_image_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="38dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_teacher_row_lesson" />
+
+    <ImageButton
+        android:id="@+id/btn_order_now"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_baseline_calendar_today_24" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

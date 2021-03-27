@@ -13,12 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.dialogueapp.Model.Lesson;
 import com.example.dialogueapp.Model.Model;
+import com.example.dialogueapp.Model.User;
 
 import java.util.List;
 
@@ -26,7 +28,6 @@ public class fragment_LessonList extends Fragment {
 //    private FirebaseAuth mAuth;
 
     LessonListViewModel viewModelList;
-    Button btn_add;
     ProgressBar pb;
     MyAdapter adapter;
     SwipeRefreshLayout sref;
@@ -69,7 +70,6 @@ public class fragment_LessonList extends Fragment {
         //--LIST--
         ListView list = view.findViewById(R.id.lesson_list);
         pb = view.findViewById(R.id.progressBar_lesson_list);
-        btn_add = view.findViewById(R.id.btn_add_lesson);
         pb.setVisibility(View.INVISIBLE);
         sref = view.findViewById(R.id.lessonList_swipe);
 
@@ -84,13 +84,6 @@ public class fragment_LessonList extends Fragment {
 
         adapter = new MyAdapter();
         list.setAdapter(adapter);
-
-        btn_add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addNewLesson();
-            }
-        });
 
 
         //--ViewModel--
@@ -109,7 +102,6 @@ public class fragment_LessonList extends Fragment {
 
     static int id = 0;
     private void addNewLesson() {
-        btn_add.setEnabled((false));
         int id = viewModelList.getStLesson().getValue().size();
         Lesson lesson = new Lesson();
         lesson.setLesson_id(id);
@@ -130,12 +122,12 @@ public class fragment_LessonList extends Fragment {
 
     void reloadData(){
         pb.setVisibility(View.VISIBLE);
-        btn_add.setEnabled((false));
+
         Model.instance.refreshAllLessons(new Model.GetAllLessonsListener() {
             @Override
             public void onComplete(List<Lesson> data) {
                 pb.setVisibility(View.INVISIBLE);
-                btn_add.setEnabled((true));
+
                 sref.setRefreshing(false);
             }
         });
@@ -171,14 +163,31 @@ public class fragment_LessonList extends Fragment {
             TextView txtLessonDate = convertView.findViewById(R.id.txt_lesson_row_date);
             TextView txtLessonTime = convertView.findViewById(R.id.txt_lesson_row_time);
             TextView txtLessonLengthTime = convertView.findViewById(R.id.txt_lesson_row_length_time);
+            TextView txtImageTeacherName = convertView.findViewById(R.id.txt_lesson_row_image_title);
+            //Todo -> Need to put the imageUrl of the teacher on the list_row
 
             Lesson lesson = viewModelList.getStLesson().getValue().get(position);
+            Log.d("Assaraf",String.valueOf(lesson.getTeacher_id()));
+            Model.instance.GetUserByID(lesson.getTeacher_id(), new Model.GetUserByIDListener() {
+                @Override
+                public void onComplete(User teacherData) {
+                    txtLessonId.setText(""+lesson.getLesson_id());
+                    txtLessonTitle.setText(lesson.getLesson_title());
+                    txtLessonDate.setText(""+lesson.getSchedule_date());
+                    txtLessonTime.setText(""+lesson.getLesson_time());
+                    txtLessonLengthTime.setText(""+lesson.getNumOfMinutesPerLesson());
+                    txtImageTeacherName.setText(teacherData.getFirst_name()+" "+teacherData.getLast_name());
+                }
+            });
 
-            txtLessonId.setText(""+lesson.getLesson_id());
-            txtLessonTitle.setText(lesson.getLesson_title());
-            txtLessonDate.setText(""+lesson.getSchedule_date());
-            txtLessonTime.setText(""+lesson.getLesson_time());
-            txtLessonLengthTime.setText(""+lesson.getNumOfMinutesPerLesson());
+            ImageButton btn_order_Now = convertView.findViewById(R.id.btn_order_now);
+
+            btn_order_Now.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //UPDATE -> ROOM AND FIREBASE
+                }
+            });
 
 
             return convertView;
