@@ -154,7 +154,7 @@ public class fragment_history extends Fragment {
         @NonNull
         @Override
         public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = getLayoutInflater().inflate(R.layout.lesson_list_row,parent,false);
+            View view = getLayoutInflater().inflate(R.layout.history_student_list_row,parent,false);
             MyViewHolder holder = new MyViewHolder(view);
             holder.listener = listener;
             return holder;
