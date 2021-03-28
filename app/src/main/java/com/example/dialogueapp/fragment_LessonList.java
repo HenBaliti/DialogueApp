@@ -1,10 +1,12 @@
 package com.example.dialogueapp;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
@@ -17,16 +19,19 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.dialogueapp.Model.Lesson;
 import com.example.dialogueapp.Model.Model;
 import com.example.dialogueapp.Model.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
 public class fragment_LessonList extends Fragment {
 //    private FirebaseAuth mAuth;
-
+    FirebaseUser user;
     LessonListViewModel viewModelList;
     ProgressBar pb;
     MyAdapter adapter;
@@ -42,28 +47,28 @@ public class fragment_LessonList extends Fragment {
 
         String datePassed = fragment_LessonListArgs.fromBundle(getArguments()).getDateFilter();
         Log.d("TAG",datePassed);
-//        ImageButton logOutBtn = view.findViewById(R.id.btnLesson);
-//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//        if(user != null) {
-//            // User is signed in
-//            logOutBtn.setVisibility(view.VISIBLE);
-//
-//            //BUTTON LOGOUT -- Press
-//            logOutBtn.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    LogOutFunction();
-//                    Navigation.findNavController(view).navigate(R.id.action_fragment_LessonList_to_fragment_home);
-//                }
-//
-//                private void LogOutFunction() {
-//                    FirebaseAuth.getInstance().signOut();
-//                }
-//            });
-//        } else {
-//            // No user is signed in
-//            logOutBtn.setVisibility(view.GONE);
-//        }
+        ImageButton logOutBtn = view.findViewById(R.id.btn_logout_lesson_list);
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user != null) {
+            // User is signed in
+            logOutBtn.setVisibility(view.VISIBLE);
+
+            //BUTTON LOGOUT -- Press
+            logOutBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    LogOutFunction();
+                    Navigation.findNavController(view).navigate(R.id.action_fragment_LessonList_to_fragment_home);
+                }
+
+                private void LogOutFunction() {
+                    FirebaseAuth.getInstance().signOut();
+                }
+            });
+        } else {
+            // No user is signed in
+            logOutBtn.setVisibility(view.GONE);
+        }
 //
 
 
@@ -186,6 +191,34 @@ public class fragment_LessonList extends Fragment {
                 @Override
                 public void onClick(View v) {
                     //UPDATE -> ROOM AND FIREBASE
+
+                    //Get the user(Student) id
+                    Model.instance.getStudentByEmail(user.getEmail(), new Model.GetUserByEmailListener() {
+                        @Override
+                        public void onComplete(int userId) {
+                            Log.d("User ID IS: ",""+userId);
+
+                            //Get the Lesson on click Id + set the student id for the lesson
+                            lesson.setStudent_id(userId);
+                            lesson.setCatch(true);
+
+                            Model.instance.addLesson(lesson, new Model.AddLessonListener() {
+                                @Override
+                                public void onComplete() {
+//                                    Toast.makeText(getActivity(), "Update Lesson Succeeded",
+//                                            Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(getActivity(), "You Have Set A Lesson to the "+lesson.getSchedule_date()+"\n"+"Time: "+lesson.getLesson_time()+" Successfully.",
+                            Toast.LENGTH_SHORT).show();
+
+                                    Model.instance.refreshAllLessons(null);
+                                }
+                            });
+
+                        }
+                    });
+
+
+
                 }
             });
 

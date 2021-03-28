@@ -111,10 +111,20 @@ public class Model {
         });
     }
 
-    public interface UpdateLessonListener extends AddLessonListener{
+    public interface UpdateCatchLesson extends AddLessonListener{
     }
-    public void updateLesson(Lesson lesson,AddLessonListener listener){
-        modelFireBase.updateLesson(lesson,listener);
+    public void UpdateCatch(Lesson lesson,AddLessonListener listener){
+        modelFireBase.addLesson(lesson, new UpdateCatchLesson() {
+            @Override
+            public void onComplete() {
+                refreshAllLessons(new GetAllLessonsListener() {
+                    @Override
+                    public void onComplete(List<Lesson> data) {
+                        listener.onComplete();
+                    }
+                });
+            }
+        });
     }
 
 
