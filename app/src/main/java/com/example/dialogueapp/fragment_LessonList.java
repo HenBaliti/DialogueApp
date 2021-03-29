@@ -144,6 +144,7 @@ public class fragment_LessonList extends Fragment {
         TextView txtLessonTime;
         TextView txtLessonLengthTime;
         TextView txtImageTeacherName;
+        ImageButton btn_order_Now;
         public OnItemClickListener listener;
         int position;
 
@@ -155,6 +156,7 @@ public class fragment_LessonList extends Fragment {
             txtLessonTime = itemView.findViewById(R.id.txt_lesson_row_time);
             txtLessonLengthTime = itemView.findViewById(R.id.txt_lesson_row_length_time);
             txtImageTeacherName = itemView.findViewById(R.id.txt_lesson_row_image_title);
+            btn_order_Now = itemView.findViewById(R.id.btn_order_now);
             //Todo -> Need to put the imageUrl of the teacher on the list_history
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -174,12 +176,56 @@ public class fragment_LessonList extends Fragment {
                     txtLessonDate.setText(""+lesson.getSchedule_date());
                     txtLessonTime.setText(""+lesson.getLesson_time());
                     txtLessonLengthTime.setText(""+lesson.getNumOfMinutesPerLesson());
-                    txtImageTeacherName.setText(teacherData.getFirst_name()+" "+teacherData.getLast_name());
+                    txtImageTeacherName.setText(teacherData.getFull_name());
+
+
+                    btn_order_Now.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //UPDATE -> ROOM AND FIREBASE
+
+                            //Get the user(Student) id
+                            Model.instance.getStudentByEmail(user.getEmail(), new Model.GetUserByEmailListener() {
+                                @Override
+                                public void onComplete(int userId) {
+                                    Log.d("User ID IS: ",""+userId);
+
+                                    //Get the Lesson on click Id + set the student id for the lesson
+                                    lesson.setStudent_id(userId);
+                                    lesson.setCatch(true);
+
+                                    Model.instance.addLesson(lesson, new Model.AddLessonListener() {
+                                        @Override
+                                        public void onComplete() {
+//                                    Toast.makeText(getActivity(), "Update Lesson Succeeded",
+//                                            Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getActivity(), "You Have Set A Lesson to the "+lesson.getSchedule_date()+"\n"+"Time: "+lesson.getLesson_time()+" Successfully.",
+                                                    Toast.LENGTH_SHORT).show();
+
+                                            Model.instance.refreshAllLessons(null);
+                                        }
+                                    });
+
+                                }
+                            });
+
+
+
+                        }
+                    });
                 }
             });
 
-            ImageButton btn_order_Now = itemView.findViewById(R.id.btn_order_now);
 
+
+        }
+
+        public void bindData(Lesson lesson, int position) {
+            txtLessonId.setText(""+lesson.getLesson_id());
+            txtLessonTitle.setText(lesson.getLesson_title());
+            txtLessonDate.setText(""+lesson.getSchedule_date());
+            txtLessonTime.setText(""+lesson.getLesson_time());
+            txtLessonLengthTime.setText(""+lesson.getNumOfMinutesPerLesson());
             btn_order_Now.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -214,16 +260,6 @@ public class fragment_LessonList extends Fragment {
 
                 }
             });
-
-
-        }
-
-        public void bindData(Lesson lesson, int position) {
-            txtLessonId.setText(""+lesson.getLesson_id());
-            txtLessonTitle.setText(lesson.getLesson_title());
-            txtLessonDate.setText(""+lesson.getSchedule_date());
-            txtLessonTime.setText(""+lesson.getLesson_time());
-            txtLessonLengthTime.setText(""+lesson.getNumOfMinutesPerLesson());
             this.position = position;
         }
     }
