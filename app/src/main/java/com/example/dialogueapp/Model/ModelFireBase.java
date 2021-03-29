@@ -11,6 +11,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.LinkedList;
@@ -51,7 +52,7 @@ public class ModelFireBase {
         //////////////////TODO - fix filter records according to lastUpdated
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Timestamp ts = new Timestamp(lastUpdated,0);
-        db.collection("Lesson").whereGreaterThanOrEqualTo("lastUpdated",ts).whereEqualTo("schedule_date",date).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("Lesson").whereGreaterThanOrEqualTo("lastUpdated",ts).whereEqualTo("isCatch",false).whereEqualTo("schedule_date",date).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 List<Lesson> data = new LinkedList<Lesson>();
@@ -67,7 +68,6 @@ public class ModelFireBase {
                 listener.onComplete(data);
             }
         });
-
 
     }
 
@@ -173,6 +173,46 @@ public class ModelFireBase {
                         user = task.getResult().toObject(User.class);
                     }
                     listener.onComplete(user);
+                }
+            }
+        });
+    }
+
+    public void getStudentByEmail(String email, Model.GetUserByEmailListener listener) {
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("User").whereEqualTo("email",email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Log.d("TAG", document.getId() + " => " + document.getData());
+                        listener.onComplete(Integer.parseInt(document.getId()));
+                    }
+                } else {
+                    Log.d("TAG", "Error getting documents: ", task.getException());
+                }
+            }
+        });
+
+    }
+
+    public void GetUserByID(int userId, Model.GetUserByIDListener listener) {
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("User").document(String.valueOf(userId)).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                User userById = null;
+                if(task.isSuccessful()){
+                    DocumentSnapshot doc = task.getResult();
+                    if(doc!=null){
+                        userById = new User();
+                        userById.fromMap(doc.getData());
+//                        userById = task.getResult().toObject(User.class);
+//                        Log.d("MSG",task.getResult().toString());
+                    }
+                    listener.onComplete(userById);
                 }
             }
         });

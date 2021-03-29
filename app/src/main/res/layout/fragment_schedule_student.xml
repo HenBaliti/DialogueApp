@@ -6,6 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".fragment_schedule_student">
 
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="46dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/tap"
+        android:src="@drawable/tap"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_schedule_picker"
+        app:layout_constraintTop_toBottomOf="@+id/text_schedule_title"
+        app:srcCompat="@drawable/tap" />
+
     <ImageButton
         android:id="@+id/btn_logout_schedule"
         android:layout_width="wrap_content"
@@ -31,36 +45,37 @@
         android:id="@+id/txt_picked_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:width="200dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_schedule_title" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_schedule_picker" />
+
 
     <ImageButton
         android:id="@+id/btn_schedule_picker"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="32dp"
-        android:background="@drawable/ic_calendar"
-        android:src="@drawable/ic_baseline_calendar_today_24"
-        app:layout_constraintStart_toEndOf="@+id/txt_picked_date"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="42dp"
+        android:background="@drawable/ic_baseline_calendar_today_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_schedule_title" />
-
 
     <Button
         android:id="@+id/btn_find_free_teachers"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="50dp"
         android:layout_marginEnd="24dp"
-        android:text="Find Free Teachers"
+        android:layout_marginBottom="120dp"
+        android:text="Find Free Lesson"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_picked_date" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

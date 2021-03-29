@@ -111,10 +111,20 @@ public class Model {
         });
     }
 
-    public interface UpdateLessonListener extends AddLessonListener{
+    public interface UpdateCatchLesson extends AddLessonListener{
     }
-    public void updateLesson(Lesson lesson,AddLessonListener listener){
-        modelFireBase.updateLesson(lesson,listener);
+    public void UpdateCatch(Lesson lesson,AddLessonListener listener){
+        modelFireBase.addLesson(lesson, new UpdateCatchLesson() {
+            @Override
+            public void onComplete() {
+                refreshAllLessons(new GetAllLessonsListener() {
+                    @Override
+                    public void onComplete(List<Lesson> data) {
+                        listener.onComplete();
+                    }
+                });
+            }
+        });
     }
 
 
@@ -175,4 +185,26 @@ public class Model {
     public void addUser(final User user, final AddUserListener listener) {
         modelFireBase.addUser(user,listener);
     }
+
+
+    public interface GetUserByEmailListener{
+        void onComplete(int id);
+    }
+    public User getStudentByEmail(String email, final GetUserByEmailListener listener) {
+        modelFireBase.getStudentByEmail(email,listener);
+        return null;
+    }
+
+
+
+    /////Getting the user by id
+    public interface GetUserByIDListener{
+        void onComplete(User user);
+    }
+    public User GetUserByID(int userid, final GetUserByIDListener listener) {
+        modelFireBase.GetUserByID(userid,listener);
+        return null;
+    }
+
+
 }
