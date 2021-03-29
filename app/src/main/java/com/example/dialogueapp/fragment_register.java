@@ -1,11 +1,11 @@
 package com.example.dialogueapp;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-import androidx.navigation.ui.NavigationUI;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.dialogueapp.Model.Model;
+import com.example.dialogueapp.Model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -23,7 +25,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class fragment_register extends Fragment {
     private FirebaseAuth mAuth;
-
+    String usertype;
+    static int id=0;
     @Override
     public void onStart() {
         super.onStart();
@@ -46,18 +49,58 @@ public class fragment_register extends Fragment {
         Button confirmBtn = view.findViewById(R.id.signup_button_confirm);
         TextView txt_Email = view.findViewById(R.id.signup_edit_email);
         TextView txt_Password = view.findViewById(R.id.signup_edit_password);
-        TextView txt_firstName = view.findViewById(R.id.signup_edit_firstname);
-        TextView txt_lastName = view.findViewById(R.id.signup_edit_lastname);
+        TextView txt_username = view.findViewById(R.id.signup_edit_username);
+        TextView txt_fullname = view.findViewById(R.id.signup_edit_fullname);
+        Button signStudent = view.findViewById(R.id.btn_registerstudent);
+        Button signTeacher = view.findViewById(R.id.btn_registerteacher);
+        TextView signIn = view.findViewById(R.id.text_signin);
 
+        signIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(view).navigate(R.id.action_fragment_register_to_fragment_login); //need to send the user through the navigation
 
+            }
+        });
+
+        signStudent.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                signStudent.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                signTeacher.setBackgroundColor(getResources().getColor(R.color.colorWhite));
+                usertype="Student";
+            }
+        });
+        signTeacher.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                signStudent.setBackgroundColor(getResources().getColor(R.color.colorWhite));
+                signTeacher.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                usertype="Teacher";
+            }
+        });
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 String email = txt_Email.getText().toString();
                 String password = txt_Password.getText().toString();
-                String firstName = txt_firstName.getText().toString();
-                String lastName = txt_lastName.getText().toString();
+                String fullname = txt_fullname.getText().toString();
+                String username = txt_username.getText().toString();
+                User user = new User();
+                user.setUser_id(id++);
+                user.setEmail(email);
+                user.setFull_name(fullname);
+                user.setUser_name(username);
+                user.setUser_type(usertype);
+                Model.instance.addUser(user, new Model.AddUserListener() {
+                    @Override
+                    public void onComplete() {
+                        Log.d("TAG", "createUserFirebase:success");
+                    }
+                });
 
                 //When The user clicked the login and the pass and wmail was correct
                 mAuth.createUserWithEmailAndPassword(email, password)

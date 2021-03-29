@@ -139,7 +139,7 @@
         app:backgroundTint="#747277"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_picked_time_teacher"
-        app:strokeColor="@color/black"
+        app:strokeColor="@color/colorBlack"
         app:strokeWidth="2dp" />
 
     <Button
@@ -152,7 +152,7 @@
         app:layout_constraintEnd_toStartOf="@+id/btn_45"
         app:layout_constraintStart_toEndOf="@+id/btn_15"
         app:layout_constraintTop_toBottomOf="@+id/txt_picked_time_teacher"
-        app:strokeColor="@color/black"
+        app:strokeColor="@color/colorBlack"
         app:strokeWidth="2dp" />
 
     <Button
@@ -165,7 +165,7 @@
         app:backgroundTint="#747277"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_picked_time_teacher"
-        app:strokeColor="@color/black"
+        app:strokeColor="@color/colorBlack"
         app:strokeWidth="2dp" />
 
     <ImageView

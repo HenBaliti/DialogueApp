@@ -15,18 +15,19 @@ public class User {
     @PrimaryKey
     @NonNull
     private int user_id;
-    private String first_name;
-    private String last_name;
+    private String user_name;
+    private String full_name;
     private String email;
     private String user_type;
     private Long lastUpdated;
+   // private String imageUrl;
 
 
     public Map<String,Object> toMap(){
         HashMap<String,Object> result = new HashMap<>();
         result.put("user_id",user_id);
-        result.put("first_name",first_name);
-        result.put("last_name",last_name);
+        result.put("user_name",user_name);
+        result.put("full_name",full_name);
         result.put("email",email);
         result.put("user_type",user_type);
         result.put("lastUpdated", FieldValue.serverTimestamp());
@@ -36,8 +37,8 @@ public class User {
 
     public void fromMap(Map<String,Object> map){
         user_id = ((Long)map.get("user_id")).intValue();
-        first_name = (String)map.get("first_name");
-        last_name = (String)map.get("last_name");
+        user_name = (String)map.get("user_name");
+        full_name = (String)map.get("full_name");
         email = (String)map.get("email");
         user_type = (String)map.get("user_type");
         Timestamp ts = (Timestamp)map.get("lastUpdated");
@@ -63,20 +64,20 @@ public class User {
         this.user_id = user_id;
     }
 
-    public String getFirst_name() {
-        return first_name;
+    public String getUser_name() {
+        return user_name;
     }
 
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
     }
 
-    public String getLast_name() {
-        return last_name;
+    public String getFull_name() {
+        return full_name;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public void setFull_name(String full_name) {
+        this.full_name = full_name;
     }
 
     public String getEmail() {
