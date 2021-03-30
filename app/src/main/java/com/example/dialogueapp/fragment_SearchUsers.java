@@ -60,7 +60,7 @@ public class fragment_SearchUsers extends Fragment {
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addNewUser();
+//                addNewUser();
             }
         });
 
@@ -79,22 +79,22 @@ public class fragment_SearchUsers extends Fragment {
         return view;
     }
 
-    static int id = 0;
-    private void addNewUser() {
-        btn_add.setEnabled((false));
-        int id = viewModelList.getListTeachers().getValue().size();
-        User user = new User();
-        user.setUser_id(id);
-        //user.setLesson_title("LESSON "+id);
-        pb.setVisibility(View.VISIBLE);
-        Model.instance.addUser(user, new Model.AddUserListener() {
-            @Override
-            public void onComplete() {
-                reloadData();
-            }
-        });
-        id++;
-    }
+//    static int id = 0;
+//    private void addNewUser() {
+//        btn_add.setEnabled((false));
+//        int id = viewModelList.getListTeachers().getValue().size();
+//        User user = new User();
+//        user.setUser_id(id);
+//        //user.setLesson_title("LESSON "+id);
+//        pb.setVisibility(View.VISIBLE);
+//        Model.instance.addUser(user, new Model.AddUserListener() {
+//            @Override
+//            public void onComplete() {
+//                reloadData();
+//            }
+//        });
+//        id++;
+//    }
 
     void reloadData(){
         pb.setVisibility(View.VISIBLE);

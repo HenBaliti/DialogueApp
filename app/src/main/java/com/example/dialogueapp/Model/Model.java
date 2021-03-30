@@ -29,12 +29,8 @@ public class Model {
         return lessonList;
     }
 
-    public LiveData<List<Lesson>> getLessonsByDate(String date){
-        if(lessonList==null){
-            lessonList = modelSql.getLessonsByDate(date);
-            refreshAllLessons(null);
-        }
-        return lessonList;
+    public void getLessonsByDate(String date){
+        modelSql.getLessonsByDate(date);
     }
 
 
@@ -89,7 +85,7 @@ public class Model {
     public interface GetLessonListener{
         void onComplete(Lesson lesson);
     }
-    public void getLesson(int id,GetLessonListener listener){
+    public void getLesson(String id,GetLessonListener listener){
         modelFireBase.getLesson(id,listener);
     }
 
@@ -188,7 +184,7 @@ public class Model {
 
 
     public interface GetUserByEmailListener{
-        void onComplete(int id);
+        void onComplete(String id);
     }
     public User getStudentByEmail(String email, final GetUserByEmailListener listener) {
         modelFireBase.getStudentByEmail(email,listener);
@@ -201,7 +197,7 @@ public class Model {
     public interface GetUserByIDListener{
         void onComplete(User user);
     }
-    public User GetUserByID(int userid, final GetUserByIDListener listener) {
+    public User GetUserByID(String userid, final GetUserByIDListener listener) {
         modelFireBase.GetUserByID(userid,listener);
         return null;
     }

@@ -131,7 +131,7 @@ public class fragment_history extends Fragment {
         }
 
         public void bindData(Lesson lesson, int position) {
-            txtLessonId.setText(""+lesson.getLesson_id());
+//            txtLessonId.setText(""+lesson.getLesson_id());
             txtLessonTitle.setText(lesson.getLesson_title());
             txtLessonDate.setText(""+lesson.getSchedule_date());
             txtLessonTime.setText(""+lesson.getLesson_time());

@@ -29,6 +29,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.UUID;
 
 public class fragment_set_lesson_teacher extends Fragment {
     Button createLesson_btn;
@@ -42,7 +43,7 @@ public class fragment_set_lesson_teacher extends Fragment {
     Button btn_45;
     Lesson lesson;
     int numOfMinutes;
-    static int id = 0;
+
 
 
     @Override
@@ -205,9 +206,9 @@ public class fragment_set_lesson_teacher extends Fragment {
 
         Model.instance.getStudentByEmail(user.getEmail(), new Model.GetUserByEmailListener() {
             @Override
-            public void onComplete(int userId) {
+            public void onComplete(String userId) {
                 Log.d("Teacher ID IS: ",""+userId);
-                lesson.setLesson_id(id);
+                lesson.setLesson_id(String.valueOf(UUID.randomUUID()));
                 lesson.setLesson_title(txt_Title.getText().toString());
                 lesson.setSchedule_date(tvDate.getText().toString());
                 lesson.setLesson_time(timePickerValueTextView.getText().toString());
@@ -237,7 +238,6 @@ public class fragment_set_lesson_teacher extends Fragment {
             }
         });
 
-        id++;
     }
 
 

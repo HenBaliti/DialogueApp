@@ -14,7 +14,7 @@ import java.util.Map;
 public class User {
     @PrimaryKey
     @NonNull
-    private int user_id;
+    private String user_id;
     private String user_name;
     private String full_name;
     private String email;
@@ -36,7 +36,7 @@ public class User {
     }
 
     public void fromMap(Map<String,Object> map){
-        user_id = ((Long)map.get("user_id")).intValue();
+        user_id = (String)map.get("user_id");
         user_name = (String)map.get("user_name");
         full_name = (String)map.get("full_name");
         email = (String)map.get("email");
@@ -56,11 +56,11 @@ public class User {
         this.lastUpdated = lastUpdated;
     }
 
-    public int getUser_id() {
+    public String getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(int user_id) {
+    public void setUser_id(String user_id) {
         this.user_id = user_id;
     }
 

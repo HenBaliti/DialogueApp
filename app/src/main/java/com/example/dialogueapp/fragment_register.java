@@ -23,10 +23,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.UUID;
+
 public class fragment_register extends Fragment {
     private FirebaseAuth mAuth;
     String usertype;
-    static int id=0;
+
     @Override
     public void onStart() {
         super.onStart();
@@ -90,7 +92,7 @@ public class fragment_register extends Fragment {
                 String fullname = txt_fullname.getText().toString();
                 String username = txt_username.getText().toString();
                 User user = new User();
-                user.setUser_id(id++);
+                user.setUser_id(String.valueOf(UUID.randomUUID()));
                 user.setEmail(email);
                 user.setFull_name(fullname);
                 user.setUser_name(username);

@@ -99,7 +99,7 @@ public class ModelFireBase {
         addLesson(lesson,listener);
     }
 
-    public void getLesson(int id, Model.GetLessonListener listener) {
+    public void getLesson(String id, Model.GetLessonListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Lesson").document(""+id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -187,7 +187,7 @@ public class ModelFireBase {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Log.d("TAG", document.getId() + " => " + document.getData());
-                        listener.onComplete(Integer.parseInt(document.getId()));
+                        listener.onComplete(document.getId());
                     }
                 } else {
                     Log.d("TAG", "Error getting documents: ", task.getException());
@@ -197,7 +197,7 @@ public class ModelFireBase {
 
     }
 
-    public void GetUserByID(int userId, Model.GetUserByIDListener listener) {
+    public void GetUserByID(String userId, Model.GetUserByIDListener listener) {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("User").document(String.valueOf(userId)).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

@@ -187,7 +187,7 @@ public class fragment_LessonList extends Fragment {
                             //Get the user(Student) id
                             Model.instance.getStudentByEmail(user.getEmail(), new Model.GetUserByEmailListener() {
                                 @Override
-                                public void onComplete(int userId) {
+                                public void onComplete(String userId) {
                                     Log.d("User ID IS: ",""+userId);
 
                                     //Get the Lesson on click Id + set the student id for the lesson
@@ -234,7 +234,7 @@ public class fragment_LessonList extends Fragment {
                     //Get the user(Student) id
                     Model.instance.getStudentByEmail(user.getEmail(), new Model.GetUserByEmailListener() {
                         @Override
-                        public void onComplete(int userId) {
+                        public void onComplete(String userId) {
                             Log.d("User ID IS: ",""+userId);
 
                             //Get the Lesson on click Id + set the student id for the lesson
@@ -296,25 +296,6 @@ public class fragment_LessonList extends Fragment {
                 return 0;
             return viewModelList.getStLesson().getValue().size();
         }
-    }
-
-
-
-
-    static int id = 0;
-    private void addNewLesson() {
-        int id = viewModelList.getStLesson().getValue().size();
-        Lesson lesson = new Lesson();
-        lesson.setLesson_id(id);
-        lesson.setLesson_title("LESSON "+id);
-        pb.setVisibility(View.VISIBLE);
-        Model.instance.addLesson(lesson, new Model.AddLessonListener() {
-            @Override
-            public void onComplete() {
-                reloadData();
-            }
-        });
-        id++;
     }
 
 

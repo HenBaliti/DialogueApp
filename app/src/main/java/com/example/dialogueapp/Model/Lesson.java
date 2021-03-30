@@ -15,9 +15,9 @@ import java.util.Map;
 public class Lesson {
     @PrimaryKey
     @NonNull
-    private int lesson_id;
-    private int teacher_id;
-    private int student_id;
+    private String lesson_id;
+    private String teacher_id;
+    private String student_id;
     private String schedule_date;
     private String lesson_time;
     private String lesson_title;
@@ -48,9 +48,9 @@ public class Lesson {
     }
 
     public void fromMap(Map<String,Object> map){
-        lesson_id = ((Long)map.get("lesson_id")).intValue();
-        teacher_id = ((Long)map.get("teacher_id")).intValue();
-        student_id = ((Long)map.get("student_id")).intValue();
+        lesson_id = (String)map.get("lesson_id");
+        teacher_id = (String)map.get("teacher_id");
+        student_id = (String)map.get("student_id");
         schedule_date = (String)map.get("schedule_date");
         lesson_time = (String)map.get("lesson_time");
         lesson_title = (String)map.get("lesson_title");
@@ -91,27 +91,27 @@ public class Lesson {
     }
 
 
-    public int getLesson_id() {
+    public String getLesson_id() {
         return lesson_id;
     }
 
-    public void setLesson_id(int lesson_id) {
+    public void setLesson_id(String lesson_id) {
         this.lesson_id = lesson_id;
     }
 
-    public int getTeacher_id() {
+    public String getTeacher_id() {
         return teacher_id;
     }
 
-    public void setTeacher_id(int teacher_id) {
+    public void setTeacher_id(String teacher_id) {
         this.teacher_id = teacher_id;
     }
 
-    public int getStudent_id() {
+    public String getStudent_id() {
         return student_id;
     }
 
-    public void setStudent_id(int student_id) {
+    public void setStudent_id(String student_id) {
         this.student_id = student_id;
     }
 
