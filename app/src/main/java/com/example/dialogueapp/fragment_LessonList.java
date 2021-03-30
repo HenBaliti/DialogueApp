@@ -47,8 +47,14 @@ public class fragment_LessonList extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment__lesson_list, container, false);
 
+        String datePassed = fragment_LessonListArgs.fromBundle(getArguments()).getDateFilter();
+        Log.d("TAG",datePassed);
+
         //--ViewModel--
         viewModelList = new ViewModelProvider(this).get(LessonListViewModel.class);
+        if(datePassed!=null){ ////////////////---------Need to add a else statement
+            viewModelList.setStLessonFilteredDate(datePassed);
+        }
         viewModelList.getStLesson().observe(getViewLifecycleOwner(), new Observer<List<Lesson>>() {
             @Override
             public void onChanged(List<Lesson> lessons) {
@@ -73,8 +79,6 @@ public class fragment_LessonList extends Fragment {
         });
 
 
-        String datePassed = fragment_LessonListArgs.fromBundle(getArguments()).getDateFilter();
-        Log.d("TAG",datePassed);
 
         ////////////////////////////////
         ////////////User Auth///////////
@@ -168,6 +172,15 @@ public class fragment_LessonList extends Fragment {
 
             Lesson lesson = viewModelList.getStLesson().getValue().get(position);
 
+
+        }
+
+        public void bindData(Lesson lesson, int position) {
+//            txtLessonId.setText(""+lesson.getLesson_id());
+//            txtLessonTitle.setText(lesson.getLesson_title());
+//            txtLessonDate.setText(""+lesson.getSchedule_date());
+//            txtLessonTime.setText(""+lesson.getLesson_time());
+//            txtLessonLengthTime.setText(""+lesson.getNumOfMinutesPerLesson());
             Model.instance.GetUserByID(lesson.getTeacher_id(), new Model.GetUserByIDListener() {
                 @Override
                 public void onComplete(User teacherData) {
@@ -215,51 +228,40 @@ public class fragment_LessonList extends Fragment {
                     });
                 }
             });
-
-
-
-        }
-
-        public void bindData(Lesson lesson, int position) {
-            txtLessonId.setText(""+lesson.getLesson_id());
-            txtLessonTitle.setText(lesson.getLesson_title());
-            txtLessonDate.setText(""+lesson.getSchedule_date());
-            txtLessonTime.setText(""+lesson.getLesson_time());
-            txtLessonLengthTime.setText(""+lesson.getNumOfMinutesPerLesson());
-            btn_order_Now.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //UPDATE -> ROOM AND FIREBASE
-
-                    //Get the user(Student) id
-                    Model.instance.getStudentByEmail(user.getEmail(), new Model.GetUserByEmailListener() {
-                        @Override
-                        public void onComplete(String userId) {
-                            Log.d("User ID IS: ",""+userId);
-
-                            //Get the Lesson on click Id + set the student id for the lesson
-                            lesson.setStudent_id(userId);
-                            lesson.setCatch(true);
-
-                            Model.instance.addLesson(lesson, new Model.AddLessonListener() {
-                                @Override
-                                public void onComplete() {
-//                                    Toast.makeText(getActivity(), "Update Lesson Succeeded",
+//            btn_order_Now.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    //UPDATE -> ROOM AND FIREBASE
+//
+//                    //Get the user(Student) id
+//                    Model.instance.getStudentByEmail(user.getEmail(), new Model.GetUserByEmailListener() {
+//                        @Override
+//                        public void onComplete(String userId) {
+//                            Log.d("User ID IS: ",""+userId);
+//
+//                            //Get the Lesson on click Id + set the student id for the lesson
+//                            lesson.setStudent_id(userId);
+//                            lesson.setCatch(true);
+//
+//                            Model.instance.addLesson(lesson, new Model.AddLessonListener() {
+//                                @Override
+//                                public void onComplete() {
+////                                    Toast.makeText(getActivity(), "Update Lesson Succeeded",
+////                                            Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(getActivity(), "You Have Set A Lesson to the "+lesson.getSchedule_date()+"\n"+"Time: "+lesson.getLesson_time()+" Successfully.",
 //                                            Toast.LENGTH_SHORT).show();
-                                    Toast.makeText(getActivity(), "You Have Set A Lesson to the "+lesson.getSchedule_date()+"\n"+"Time: "+lesson.getLesson_time()+" Successfully.",
-                                            Toast.LENGTH_SHORT).show();
-
-                                    Model.instance.refreshAllLessons(null);
-                                }
-                            });
-
-                        }
-                    });
-
-
-
-                }
-            });
+//
+//                                    Model.instance.refreshAllLessons(null);
+//                                }
+//                            });
+//
+//                        }
+//                    });
+//
+//
+//
+//                }
+//            });
             this.position = position;
         }
     }

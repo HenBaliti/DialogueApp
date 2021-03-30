@@ -21,6 +21,9 @@
         <action
             android:id="@+id/action_fragment_home_to_fragment_set_lesson_teacher"
             app:destination="@id/fragment_set_lesson_teacher" />
+        <action
+            android:id="@+id/action_fragment_home_to_fragment_my_lessons_student"
+            app:destination="@id/fragment_my_lessons_student" />
 
     </fragment>
     <fragment
@@ -123,7 +126,12 @@
             app:destination="@id/fragment_home" />
     </fragment>
     <fragment
-        android:id="@+id/fragment_SearchUsers2"
-        android:name="com.example.dialogueapp.fragment_SearchUsers"
-        android:label="fragment_SearchUsers" />
+        android:id="@+id/fragment_my_lessons_student"
+        android:name="com.example.dialogueapp.fragment_my_lessons_student"
+        android:label="fragment_my_lessons_student"
+        tools:layout="@layout/fragment_my_lessons_student" >
+        <action
+            android:id="@+id/action_fragment_my_lessons_student_to_fragment_home"
+            app:destination="@id/fragment_home" />
+    </fragment>
 </navigation>

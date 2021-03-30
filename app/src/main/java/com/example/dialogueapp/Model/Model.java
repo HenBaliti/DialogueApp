@@ -29,8 +29,16 @@ public class Model {
         return lessonList;
     }
 
-    public void getLessonsByDate(String date){
-        modelSql.getLessonsByDate(date);
+    public LiveData<List<Lesson>> getLessonsByDate(String date){
+        return modelSql.getLessonsByDate(date);
+    }
+
+    public LiveData<List<Lesson>> getLessonsHistoryForUser(String curentUserId){
+        return modelSql.getLessonsHistoryForUser(curentUserId);
+    }
+
+    public LiveData<List<Lesson>> getMyLessons(String curentUserId){
+        return modelSql.getMyLessons(curentUserId);
     }
 
 

@@ -32,6 +32,14 @@ public class fragment_home extends Fragment {
             }
         });
 
+        Button Btn3 = view.findViewById(R.id.button3);
+        Btn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(view).navigate(R.id.action_fragment_home_to_fragment_my_lessons_student);
+            }
+        });
+
 
         Button loginBtn = view.findViewById(R.id.button_login);
        // Button SearchBtn = view.findViewById(R.id.btn_searchusers);

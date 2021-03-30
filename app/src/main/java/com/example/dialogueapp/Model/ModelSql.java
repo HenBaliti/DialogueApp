@@ -48,10 +48,16 @@ public LiveData<List<User>> getAllUsers() { return AppLocalDb.db.userDao().getAl
 
 
     public LiveData<List<Lesson>> getLessonsByDate(String date){
-        return AppLocalDb.db.lessonDao().findLessonByDate(date);
+        return AppLocalDb.db.lessonDao().findLessonByDate(date,false);
     }
 
+    public LiveData<List<Lesson>> getLessonsHistoryForUser(String cureentUserId){
+        return AppLocalDb.db.lessonDao().findLessonHistoryOfUser(cureentUserId,true);
+    }
 
+    public LiveData<List<Lesson>> getMyLessons(String cureentUserId){
+        return AppLocalDb.db.lessonDao().getMyLessons(cureentUserId);
+    }
 
     public interface AddLessonListener{
         void onComplete();

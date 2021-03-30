@@ -16,13 +16,21 @@ public interface LessonDao {
     @Query("select * from Lesson")
     LiveData<List<Lesson>> getAllLessons();
 
-//    //Get all the lesson by date
-//    @Query("SELECT * FROM Lesson WHERE schedule_date LIKE :date")
-//    LiveData<List<Lesson>> findLessonByDate(String date);
-
     //Get all the lesson by date
-    @Query("SELECT * FROM Lesson WHERE Lesson.schedule_date= :date")
-    LiveData<List<Lesson>> findLessonByDate(String date);
+    @Query("SELECT * FROM Lesson WHERE Lesson.schedule_date LIKE :date AND Lesson.isCatch LIKE :isCatched")
+    LiveData<List<Lesson>> findLessonByDate(String date,boolean isCatched);
+
+    //Get all the lesson for current user which isDone = true
+    @Query("SELECT * FROM Lesson WHERE Lesson.student_id LIKE :currentUserID AND Lesson.isDone LIKE :isDone")
+    LiveData<List<Lesson>> findLessonHistoryOfUser(String currentUserID,boolean isDone);
+
+    //Get all the lesson for current user which isDone = true
+    @Query("SELECT * FROM Lesson WHERE Lesson.student_id LIKE :currentUserID ")
+    LiveData<List<Lesson>> getMyLessons(String currentUserID);
+
+//    //Get all the lesson by date
+//    @Query("SELECT * FROM Lesson WHERE Lesson.schedule_date= :date AND Lesson.isCatch= :isCatched")
+//    LiveData<List<Lesson>> findLessonByDate(String date,boolean isCatched);
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

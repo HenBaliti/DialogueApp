@@ -95,8 +95,7 @@ public class fragment_schedule_student extends Fragment {
         findFreeTeachers_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String dateFilter = "2021/05/03";
-                fragment_schedule_studentDirections.ActionFragmentScheduleStudentToFragmentLessonList action = fragment_schedule_studentDirections.actionFragmentScheduleStudentToFragmentLessonList(dateFilter);
+                fragment_schedule_studentDirections.ActionFragmentScheduleStudentToFragmentLessonList action = fragment_schedule_studentDirections.actionFragmentScheduleStudentToFragmentLessonList(tvDate.getText().toString());
                 Navigation.findNavController(view).navigate(action);
             }
         });

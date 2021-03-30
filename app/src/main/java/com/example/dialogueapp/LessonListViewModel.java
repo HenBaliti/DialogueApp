@@ -17,4 +17,18 @@ public class LessonListViewModel extends ViewModel {
         return stLesson;
     }
 
+    public void setStLessonFilteredDate(String date) {
+        this.stLesson = Model.instance.getLessonsByDate(date);
+    }
+
+    public void setStLessonHistoryForUser(String cureentUserId) {
+        this.stLesson = Model.instance.getLessonsHistoryForUser(cureentUserId);
+    }
+
+    public void setMyLessons(String cureentUserId) {
+        this.stLesson = Model.instance.getMyLessons(cureentUserId);
+    }
+
+
+
 }
