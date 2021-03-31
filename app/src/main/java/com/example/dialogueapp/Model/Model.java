@@ -2,6 +2,7 @@ package com.example.dialogueapp.Model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 
 import androidx.lifecycle.LiveData;
 
@@ -209,6 +210,11 @@ public class Model {
         modelFireBase.GetUserByID(userid,listener);
         return null;
     }
-
+    public interface UploadImageListener {
+        public void onComplete(String url);
+    }
+    public void uploadImage(Bitmap imageBmp, String id, final UploadImageListener listener) {
+        modelFireBase.uploadImage(imageBmp, id, listener);
+    }
 
 }

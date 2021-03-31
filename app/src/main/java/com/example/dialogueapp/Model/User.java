@@ -20,7 +20,7 @@ public class User {
     private String email;
     private String user_type;
     private Long lastUpdated;
-   // private String imageUrl;
+    private String imageUrl;
 
 
     public Map<String,Object> toMap(){
@@ -30,6 +30,7 @@ public class User {
         result.put("full_name",full_name);
         result.put("email",email);
         result.put("user_type",user_type);
+        result.put("imageUrl",imageUrl);
         result.put("lastUpdated", FieldValue.serverTimestamp());
         return result;
 
@@ -41,6 +42,7 @@ public class User {
         full_name = (String)map.get("full_name");
         email = (String)map.get("email");
         user_type = (String)map.get("user_type");
+        imageUrl = (String)map.get("imageUrl");
         Timestamp ts = (Timestamp)map.get("lastUpdated");
         lastUpdated = (Long)ts.getSeconds();
     }
@@ -94,5 +96,13 @@ public class User {
 
     public void setUser_type(String user_type) {
         this.user_type = user_type;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
