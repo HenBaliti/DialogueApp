@@ -118,21 +118,6 @@ public class fragment_register extends Fragment {
                 user.setUser_name(username);
                 user.setUser_type(usertype);
 
-                //Add Image to firebase
-                BitmapDrawable drawable = (BitmapDrawable)avatarImageView.getDrawable();
-                Bitmap bitmap =  drawable.getBitmap();
-                Model.instance.uploadImage(bitmap, user.getUser_id(), new Model.UploadImageListener() {
-                    @Override
-                    public void onComplete(String url) {
-                        if(url==null) {
-
-                        }
-                        else {
-                            user.setImageUrl(url);
-
-                        }
-                    }
-                });
 
                 Model.instance.addUser(user, new Model.AddUserListener() {
                     @Override
@@ -141,7 +126,7 @@ public class fragment_register extends Fragment {
                     }
                 });
 
-                //When The user clicked the login and the pass and wmail was correct
+                //When The user clicked the login and the pass and email was correct
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                             @Override
@@ -160,6 +145,22 @@ public class fragment_register extends Fragment {
                                 }
                             }
                         });
+
+                //Add Image to firebase
+                BitmapDrawable drawable = (BitmapDrawable)avatarImageView.getDrawable();
+                Bitmap bitmap =  drawable.getBitmap();
+                Model.instance.uploadImage(bitmap, user.getUser_id(), new Model.UploadImageListener() {
+                    @Override
+                    public void onComplete(String url) {
+                        if(url==null) {
+
+                        }
+                        else {
+                            user.setImageUrl(url);
+
+                        }
+                    }
+                });
 
             }
         });
