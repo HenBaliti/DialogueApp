@@ -118,7 +118,7 @@ public class fragment_my_lessons_student extends Fragment {
     }
 
     class MyViewHolderMyLessons extends RecyclerView.ViewHolder{
-        TextView txtLessonId;
+
         TextView txtLessonTitle;
         TextView txtLessonDate;
         TextView txtLessonTime;
@@ -130,7 +130,7 @@ public class fragment_my_lessons_student extends Fragment {
 
         public MyViewHolderMyLessons(@NonNull View itemView) {
             super(itemView);
-            txtLessonId = itemView.findViewById(R.id.txt_lesson_row_id);
+
             txtLessonTitle = itemView.findViewById(R.id.txt_lesson_row_title);
             txtLessonDate = itemView.findViewById(R.id.txt_lesson_row_date);
             txtLessonTime = itemView.findViewById(R.id.txt_lesson_row_time);
@@ -148,7 +148,7 @@ public class fragment_my_lessons_student extends Fragment {
         }
 
         public void bindData(Lesson lesson, int position) {
-            txtLessonId.setText(""+lesson.getLesson_id());
+
             txtLessonTitle.setText(lesson.getLesson_title());
             txtLessonDate.setText(""+lesson.getSchedule_date());
             txtLessonTime.setText(""+lesson.getLesson_time());

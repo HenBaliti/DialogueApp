@@ -18,8 +18,8 @@
         android:title="History" />
 
     <item
-        android:id="@+id/fragment_progress"
-        android:icon="@drawable/ic_progress"
-        android:title="Progress" />
+        android:id="@+id/fragment_profile"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="Profile" />
 
 </menu>
