@@ -20,7 +20,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class fragment_login extends Fragment {
+public class LoginActivity extends Fragment {
     private FirebaseAuth mAuth;
 
     @Override

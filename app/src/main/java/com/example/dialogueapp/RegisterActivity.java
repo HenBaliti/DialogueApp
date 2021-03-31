@@ -1,17 +1,24 @@
 package com.example.dialogueapp;
 
+import android.app.DownloadManager;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,10 +30,13 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class fragment_register extends Fragment {
+import static android.app.Activity.RESULT_OK;
+
+public class RegisterActivity extends Fragment {
     private FirebaseAuth mAuth;
     String usertype;
-    static int id=0;
+    static int id = 0;
+    ImageView avatarImageView;
     @Override
     public void onStart() {
         super.onStart();
@@ -39,6 +49,7 @@ public class fragment_register extends Fragment {
         //Authentication
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+
     }
 
     @Override
@@ -54,7 +65,11 @@ public class fragment_register extends Fragment {
         Button signStudent = view.findViewById(R.id.btn_registerstudent);
         Button signTeacher = view.findViewById(R.id.btn_registerteacher);
         TextView signIn = view.findViewById(R.id.text_signin);
-
+        avatarImageView = view.findViewById(R.id.avatar_image);
+        ImageButton editImage = view.findViewById(R.id.edit_avatarimage);
+        signStudent.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+        signTeacher.setBackgroundColor(getResources().getColor(R.color.colorWhite));
+        usertype = "Student";
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,14 +77,19 @@ public class fragment_register extends Fragment {
 
             }
         });
-
+        editImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditImage();
+            }
+        });
         signStudent.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 signStudent.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                 signTeacher.setBackgroundColor(getResources().getColor(R.color.colorWhite));
-                usertype="Student";
+                usertype = "Student";
             }
         });
         signTeacher.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +98,7 @@ public class fragment_register extends Fragment {
             public void onClick(View v) {
                 signStudent.setBackgroundColor(getResources().getColor(R.color.colorWhite));
                 signTeacher.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-                usertype="Teacher";
+                usertype = "Teacher";
             }
         });
         confirmBtn.setOnClickListener(new View.OnClickListener() {
@@ -95,6 +115,26 @@ public class fragment_register extends Fragment {
                 user.setFull_name(fullname);
                 user.setUser_name(username);
                 user.setUser_type(usertype);
+
+                //Add Image to firebase
+                BitmapDrawable drawable = (BitmapDrawable)avatarImageView.getDrawable();
+                Bitmap bitmap =  drawable.getBitmap();
+                Model.instance.uploadImage(bitmap, user.getUser_id(), new Model.UploadImageListener() {
+                    @Override
+                    public void onComplete(String url) {
+                        if(url==null) {
+
+                        }
+                        else {
+                            user.setImageUrl(url);
+
+                        }
+                    }
+                });
+
+
+
+
                 Model.instance.addUser(user, new Model.AddUserListener() {
                     @Override
                     public void onComplete() {
@@ -125,5 +165,24 @@ public class fragment_register extends Fragment {
             }
         });
         return view;
+    }
+
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+
+    private void EditImage() {
+        Intent takePictureIntent = new Intent(
+                MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE &&
+                resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            avatarImageView.setImageBitmap(imageBitmap);
+        }
     }
 }

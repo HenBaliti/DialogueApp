@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
@@ -22,15 +21,14 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.dialogueapp.Model.Lesson;
+import com.example.dialogueapp.Model.LessonListViewModel;
 import com.example.dialogueapp.Model.Model;
-import com.example.dialogueapp.Model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Calendar;
-import java.util.List;
 
-public class fragment_set_lesson_teacher extends Fragment {
+public class TeacherAddLessonFragment extends Fragment {
     Button createLesson_btn;
     LessonListViewModel viewModelList;
     TextView txt_Title;

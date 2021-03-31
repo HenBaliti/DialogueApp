@@ -6,7 +6,7 @@
     app:startDestination="@id/fragment_home">
     <fragment
         android:id="@+id/fragment_home"
-        android:name="com.example.dialogueapp.fragment_home"
+        android:name="com.example.dialogueapp.HomeActivity"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -25,7 +25,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragment_login"
-        android:name="com.example.dialogueapp.fragment_login"
+        android:name="com.example.dialogueapp.LoginActivity"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -37,7 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragment_schedule_student"
-        android:name="com.example.dialogueapp.fragment_schedule_student"
+        android:name="com.example.dialogueapp.StudentScheduleFragment"
         android:label="Schedule_student"
         tools:layout="@layout/fragment_schedule_student" >
         <action
@@ -52,7 +52,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragment_summary"
-        android:name="com.example.dialogueapp.fragment_summary"
+        android:name="com.example.dialogueapp.SummaryFragment"
         android:label="fragment_summary"
         tools:layout="@layout/fragment_summary" >
         <action
@@ -64,7 +64,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragment_history"
-        android:name="com.example.dialogueapp.fragment_history"
+        android:name="com.example.dialogueapp.HistoryLessonsFragment"
         android:label="fragment_history"
         tools:layout="@layout/fragment_history" >
         <action
@@ -76,7 +76,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragment_progress"
-        android:name="com.example.dialogueapp.fragment_progress"
+        android:name="com.example.dialogueapp.ProgressFragment"
         android:label="fragment_progress"
         tools:layout="@layout/fragment_progress" >
         <action
@@ -88,7 +88,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragment_register"
-        android:name="com.example.dialogueapp.fragment_register"
+        android:name="com.example.dialogueapp.RegisterActivity"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" >
         <action
@@ -100,7 +100,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragment_LessonList"
-        android:name="com.example.dialogueapp.fragment_LessonList"
+        android:name="com.example.dialogueapp.LessonListFragment"
         android:label="fragment__lesson_list"
         tools:layout="@layout/fragment__lesson_list" >
         <action
@@ -115,7 +115,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragment_set_lesson_teacher"
-        android:name="com.example.dialogueapp.fragment_set_lesson_teacher"
+        android:name="com.example.dialogueapp.TeacherAddLessonFragment"
         android:label="fragment_set_lesson_teacher"
         tools:layout="@layout/fragment_set_lesson_teacher" >
         <action
@@ -124,6 +124,6 @@
     </fragment>
     <fragment
         android:id="@+id/fragment_SearchUsers2"
-        android:name="com.example.dialogueapp.fragment_SearchUsers"
+        android:name="com.example.dialogueapp.UserListFragment"
         android:label="fragment_SearchUsers" />
 </navigation>

@@ -2,8 +2,11 @@ package com.example.dialogueapp.Model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 
 import androidx.lifecycle.LiveData;
+
+import com.google.firebase.firestore.util.Listener;
 
 import java.util.List;
 
@@ -205,6 +208,11 @@ public class Model {
         modelFireBase.GetUserByID(userid,listener);
         return null;
     }
-
+    public interface UploadImageListener {
+        public void onComplete(String url);
+    }
+    public void uploadImage(Bitmap imageBmp, int id, final UploadImageListener listener) {
+        modelFireBase.uploadImage(imageBmp, id, listener);
+    }
 
 }

@@ -22,7 +22,7 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.Calendar;
 
 
-public class fragment_schedule_student extends Fragment {
+public class StudentScheduleFragment extends Fragment {
 //    private FirebaseAuth mAuth;
 
     TextView tvDate;
@@ -96,7 +96,7 @@ public class fragment_schedule_student extends Fragment {
             @Override
             public void onClick(View v) {
                 String dateFilter = "2021/05/03";
-                fragment_schedule_studentDirections.ActionFragmentScheduleStudentToFragmentLessonList action = fragment_schedule_studentDirections.actionFragmentScheduleStudentToFragmentLessonList(dateFilter);
+                StudentScheduleFragmentDirections.ActionFragmentScheduleStudentToFragmentLessonList action = StudentScheduleFragmentDirections.actionFragmentScheduleStudentToFragmentLessonList(dateFilter);
                 Navigation.findNavController(view).navigate(action);
             }
         });

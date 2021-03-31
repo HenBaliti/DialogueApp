@@ -1,4 +1,4 @@
-package com.example.dialogueapp;
+package com.example.dialogueapp.Model;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

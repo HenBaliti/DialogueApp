@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
-public class TeacherListViewModel extends ViewModel {
+public class UserListViewModel extends ViewModel {
     private LiveData<List<User>> listTeachers = Model.instance.getAllUsers();
 
     public LiveData<List<User>> getListTeachers() {

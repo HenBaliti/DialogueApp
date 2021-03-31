@@ -1,6 +1,5 @@
 package com.example.dialogueapp;
 
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,43 +9,35 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.dialogueapp.Model.Lesson;
-import com.example.dialogueapp.Model.Model;
-import com.example.dialogueapp.Model.User;
+import com.example.dialogueapp.Model.LessonListViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
-public class fragment_LessonList extends Fragment {
-//    private FirebaseAuth mAuth;
-    FirebaseUser user;
-    ProgressBar pb;
-    MyAdapter adapter;
-    SwipeRefreshLayout sref;
+public class HistoryLessonsFragment extends Fragment {
+
+    private FirebaseAuth mAuth;
     RecyclerView list;
     LessonListViewModel viewModelList;
+    MyAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment__lesson_list, container, false);
-
+        View view = inflater.inflate(R.layout.fragment_history, container, false);
         //--ViewModel--
         viewModelList = new ViewModelProvider(this).get(LessonListViewModel.class);
         viewModelList.getStLesson().observe(getViewLifecycleOwner(), new Observer<List<Lesson>>() {
@@ -55,7 +46,8 @@ public class fragment_LessonList extends Fragment {
                 adapter.notifyDataSetChanged();
             }
         });
-        list = view.findViewById(R.id.recycler_list_lesson);
+
+        list = view.findViewById(R.id.recycler_history);
         list.hasFixedSize();
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -73,14 +65,11 @@ public class fragment_LessonList extends Fragment {
         });
 
 
-        String datePassed = fragment_LessonListArgs.fromBundle(getArguments()).getDateFilter();
-        Log.d("TAG",datePassed);
-
         ////////////////////////////////
         ////////////User Auth///////////
         ////////////////////////////////
-        ImageButton logOutBtn = view.findViewById(R.id.btn_logout_lesson_list);
-        user = FirebaseAuth.getInstance().getCurrentUser();
+        ImageButton logOutBtn = view.findViewById(R.id.btn_logout_history);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user != null) {
             // User is signed in
             logOutBtn.setVisibility(view.VISIBLE);
@@ -90,7 +79,7 @@ public class fragment_LessonList extends Fragment {
                 @Override
                 public void onClick(View v) {
                     LogOutFunction();
-                    Navigation.findNavController(view).navigate(R.id.action_fragment_LessonList_to_fragment_home);
+                    Navigation.findNavController(view).navigate(R.id.action_fragment_history_to_fragment_home);
                 }
 
                 private void LogOutFunction() {
@@ -101,33 +90,11 @@ public class fragment_LessonList extends Fragment {
             // No user is signed in
             logOutBtn.setVisibility(view.GONE);
         }
-//
 
-
-        //--LIST--
-
-        pb = view.findViewById(R.id.progressBar_lesson_list);
-        pb.setVisibility(View.INVISIBLE);
-        sref = view.findViewById(R.id.lessonList_swipe);
-
-        sref.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                sref.setRefreshing(true);
-                reloadData();
-            }
-        });
-
-
-        adapter = new MyAdapter();
-        list.setAdapter(adapter);
-
-
-
-        reloadData();
 
         return view;
     }
+
 
 
     //////////////////////////////////////
@@ -154,7 +121,7 @@ public class fragment_LessonList extends Fragment {
             txtLessonDate = itemView.findViewById(R.id.txt_lesson_row_date);
             txtLessonTime = itemView.findViewById(R.id.txt_lesson_row_time);
             txtLessonLengthTime = itemView.findViewById(R.id.txt_lesson_row_length_time);
-            txtImageTeacherName = itemView.findViewById(R.id.txt_lesson_row_image_title);
+
             //Todo -> Need to put the imageUrl of the teacher on the list_history
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -163,59 +130,6 @@ public class fragment_LessonList extends Fragment {
                     listener.onItemClick(position);
                 }
             });
-
-            Lesson lesson = viewModelList.getStLesson().getValue().get(position);
-
-            Model.instance.GetUserByID(lesson.getTeacher_id(), new Model.GetUserByIDListener() {
-                @Override
-                public void onComplete(User teacherData) {
-                    txtLessonId.setText(""+lesson.getLesson_id());
-                    txtLessonTitle.setText(lesson.getLesson_title());
-                    txtLessonDate.setText(""+lesson.getSchedule_date());
-                    txtLessonTime.setText(""+lesson.getLesson_time());
-                    txtLessonLengthTime.setText(""+lesson.getNumOfMinutesPerLesson());
-                    txtImageTeacherName.setText(teacherData.getFirst_name()+" "+teacherData.getLast_name());
-                }
-            });
-
-            ImageButton btn_order_Now = itemView.findViewById(R.id.btn_order_now);
-
-            btn_order_Now.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //UPDATE -> ROOM AND FIREBASE
-
-                    //Get the user(Student) id
-                    Model.instance.getStudentByEmail(user.getEmail(), new Model.GetUserByEmailListener() {
-                        @Override
-                        public void onComplete(int userId) {
-                            Log.d("User ID IS: ",""+userId);
-
-                            //Get the Lesson on click Id + set the student id for the lesson
-                            lesson.setStudent_id(userId);
-                            lesson.setCatch(true);
-
-                            Model.instance.addLesson(lesson, new Model.AddLessonListener() {
-                                @Override
-                                public void onComplete() {
-//                                    Toast.makeText(getActivity(), "Update Lesson Succeeded",
-//                                            Toast.LENGTH_SHORT).show();
-                                    Toast.makeText(getActivity(), "You Have Set A Lesson to the "+lesson.getSchedule_date()+"\n"+"Time: "+lesson.getLesson_time()+" Successfully.",
-                                            Toast.LENGTH_SHORT).show();
-
-                                    Model.instance.refreshAllLessons(null);
-                                }
-                            });
-
-                        }
-                    });
-
-
-
-                }
-            });
-
-
         }
 
         public void bindData(Lesson lesson, int position) {
@@ -242,7 +156,7 @@ public class fragment_LessonList extends Fragment {
         @NonNull
         @Override
         public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = getLayoutInflater().inflate(R.layout.lesson_list_row,parent,false);
+            View view = getLayoutInflater().inflate(R.layout.history_student_list_row,parent,false);
             MyViewHolder holder = new MyViewHolder(view);
             holder.listener = listener;
             return holder;
@@ -261,41 +175,4 @@ public class fragment_LessonList extends Fragment {
             return viewModelList.getStLesson().getValue().size();
         }
     }
-
-
-
-
-    static int id = 0;
-    private void addNewLesson() {
-        int id = viewModelList.getStLesson().getValue().size();
-        Lesson lesson = new Lesson();
-        lesson.setLesson_id(id);
-        lesson.setLesson_title("LESSON "+id);
-        pb.setVisibility(View.VISIBLE);
-        Model.instance.addLesson(lesson, new Model.AddLessonListener() {
-            @Override
-            public void onComplete() {
-                reloadData();
-            }
-        });
-        id++;
-    }
-
-
-
-    //Add New Lesson -> Student
-
-    void reloadData(){
-        pb.setVisibility(View.VISIBLE);
-
-        Model.instance.refreshAllLessons(new Model.GetAllLessonsListener() {
-            @Override
-            public void onComplete(List<Lesson> data) {
-                pb.setVisibility(View.INVISIBLE);
-
-                sref.setRefreshing(false);
-            }
-        });
-    }
-
 }

@@ -15,18 +15,17 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.dialogueapp.Model.Lesson;
 import com.example.dialogueapp.Model.Model;
-import com.example.dialogueapp.Model.TeacherListViewModel;
+import com.example.dialogueapp.Model.UserListViewModel;
 import com.example.dialogueapp.Model.User;
 
 import java.util.List;
 
-public class fragment_SearchUsers extends Fragment {
-    TeacherListViewModel viewModelList;
+public class UserListFragment extends Fragment {
+    UserListViewModel viewModelList;
     Button btn_add;
     ProgressBar pb;
-    fragment_SearchUsers.MyAdapter adapter;
+    UserListFragment.MyAdapter adapter;
     SwipeRefreshLayout sref;
 
 
@@ -37,7 +36,7 @@ public class fragment_SearchUsers extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_search_users, container, false);
 
-        viewModelList = new ViewModelProvider(this).get(TeacherListViewModel.class);
+        viewModelList = new ViewModelProvider(this).get(UserListViewModel.class);
 
         ListView list = view.findViewById(R.id.teacher_list);
         pb = view.findViewById(R.id.progressBar_teacher_list);
