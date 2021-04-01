@@ -1,6 +1,5 @@
-package com.example.dialogueapp;
+package com.example.dialogueapp.FragmentsStudent;
 
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,21 +15,23 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.dialogueapp.Model.LessonListViewModel;
 import com.example.dialogueapp.Model.Lesson;
 import com.example.dialogueapp.Model.Model;
 import com.example.dialogueapp.Model.User;
+import com.example.dialogueapp.R;
+import com.example.dialogueapp.FragmentsStudent.fragment_LessonListArgs;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
+
+import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
 
 public class fragment_LessonList extends Fragment {
 //    private FirebaseAuth mAuth;
@@ -148,7 +149,7 @@ public class fragment_LessonList extends Fragment {
         TextView txtLessonTime;
         TextView txtLessonLengthTime;
         TextView txtImageTeacherName;
-        ImageButton btn_order_Now;
+        CircularProgressButton btn_order_Now;
         public OnItemClickListener listener;
         int position;
 

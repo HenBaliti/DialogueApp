@@ -1,4 +1,4 @@
-package com.example.dialogueapp;
+package com.example.dialogueapp.FragmentsTeacher;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -6,9 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,14 +19,15 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.dialogueapp.DatePickerFragment;
+import com.example.dialogueapp.Model.LessonListViewModel;
 import com.example.dialogueapp.Model.Lesson;
 import com.example.dialogueapp.Model.Model;
-import com.example.dialogueapp.Model.User;
+import com.example.dialogueapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Calendar;
-import java.util.List;
 import java.util.UUID;
 
 public class fragment_set_lesson_teacher extends Fragment {
@@ -70,7 +69,7 @@ public class fragment_set_lesson_teacher extends Fragment {
                 @Override
                 public void onClick(View v) {
                     LogOutFunction();
-                    Navigation.findNavController(view).navigate(R.id.action_fragment_set_lesson_teacher_to_fragment_home);
+//                    Navigation.findNavController(view).navigate(R.id.action_fragment_set_lesson_teacher_to_fragment_home);
                 }
 
                 private void LogOutFunction() {
@@ -96,7 +95,7 @@ public class fragment_set_lesson_teacher extends Fragment {
             @Override
             public void onClick(View v) { //FF747277
                 numOfMinutes = 15;
-                btn_15.setBackgroundColor(Color.parseColor("#5434DF"));
+                btn_15.setBackgroundColor(Color.parseColor("#11CFC5"));
                 btn_30.setBackgroundColor(Color.parseColor("#FF747277"));
                 btn_45.setBackgroundColor(Color.parseColor("#FF747277"));
 //                btn_45.setTextColor(Color.WHITE);
@@ -108,7 +107,7 @@ public class fragment_set_lesson_teacher extends Fragment {
             public void onClick(View v) { //FF747277
                 numOfMinutes = 30;
                 btn_15.setBackgroundColor(Color.parseColor("#FF747277"));
-                btn_30.setBackgroundColor(Color.parseColor("#5434DF"));
+                btn_30.setBackgroundColor(Color.parseColor("#11CFC5"));
                 btn_45.setBackgroundColor(Color.parseColor("#FF747277"));
 //                btn_45.setTextColor(Color.WHITE);
             }
@@ -120,7 +119,7 @@ public class fragment_set_lesson_teacher extends Fragment {
                 numOfMinutes = 45;
                 btn_15.setBackgroundColor(Color.parseColor("#FF747277"));
                 btn_30.setBackgroundColor(Color.parseColor("#FF747277"));
-                btn_45.setBackgroundColor(Color.parseColor("#5434DF"));
+                btn_45.setBackgroundColor(Color.parseColor("#11CFC5"));
 //                btn_45.setTextColor(Color.WHITE);
             }
         });

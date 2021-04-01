@@ -4,20 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FragmentsStudent.fragment_history">
+    tools:context=".FragmentsTeacher.fragment_history_teacher">
+
+
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_history"
+        android:id="@+id/recycler_history_teacher"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="70dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_title_history" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_title_history_teacher" />
 
     <ImageButton
-        android:id="@+id/btn_logout_history"
+        android:id="@+id/btn_logout_history_teacher"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_baseline_logout_24"
@@ -26,7 +28,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/txt_title_history"
+        android:id="@+id/txt_title_history_teacher"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"

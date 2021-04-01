@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.dialogueapp.Model.Model;
+import com.example.dialogueapp.Model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -55,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
                                 Log.d("TAG", "signInWithEmail:success");
 
                              //   Navigation.findNavController(view).navigate(R.id.action_fragment_login_to_fragment_home);
-                                loginIntent();
+                                loginIntent(email);
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w("TAG", "signInWithEmail:failure", task.getException());
@@ -84,10 +86,21 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void loginIntent(){
+    private void loginIntent(String email){
 
-        Intent intent = new Intent(mActivity, MainActivity.class);
-        startActivityForResult(intent, CODE);
+        Model.instance.GetUserObjByID(email, new Model.GetUserObjByEmailListener() {
+            @Override
+            public void onComplete(User user) {
+                if(user.getUser_type().equals("Student")){
+                    Intent intent = new Intent(mActivity, MainActivity.class);
+                    startActivityForResult(intent, CODE);
+                }
+                else{
+                    Intent intent = new Intent(mActivity, MainActivityTeacher.class);
+                    startActivityForResult(intent, CODE);
+                }
+            }
+        });
 
     }
 

@@ -6,41 +6,20 @@
     app:startDestination="@id/fragment_home">
     <fragment
         android:id="@+id/fragment_home"
-        android:name="com.example.dialogueapp.fragment_home"
+        android:name="com.example.dialogueapp.FragmentsStudent.fragment_home"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_fragment_home_to_fragment_login"
-            app:destination="@id/fragment_login" />
-        <action
             android:id="@+id/action_fragment_home_self"
             app:destination="@id/fragment_home" />
-        <action
-            android:id="@+id/action_fragment_home_to_fragment_register"
-            app:destination="@id/fragment_register" />
-        <action
-            android:id="@+id/action_fragment_home_to_fragment_set_lesson_teacher"
-            app:destination="@id/fragment_set_lesson_teacher" />
         <action
             android:id="@+id/action_fragment_home_to_fragment_my_lessons_student"
             app:destination="@id/fragment_my_lessons_student" />
 
     </fragment>
     <fragment
-        android:id="@+id/fragment_login"
-        android:name="com.example.dialogueapp.fragment_login"
-        android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
-        <action
-            android:id="@+id/action_fragment_login_to_fragment_home"
-            app:destination="@id/fragment_home" />
-        <argument
-            android:name="LoginError"
-            app:argType="string" />
-    </fragment>
-    <fragment
         android:id="@+id/fragment_schedule_student"
-        android:name="com.example.dialogueapp.fragment_schedule_student"
+        android:name="com.example.dialogueapp.FragmentsStudent.fragment_schedule_student"
         android:label="Schedule_student"
         tools:layout="@layout/fragment_schedule_student" >
         <action
@@ -49,73 +28,31 @@
         <action
             android:id="@+id/action_fragment_schedule_student_to_fragment_home"
             app:destination="@id/fragment_home" />
-        <action
-            android:id="@+id/action_fragment_schedule_student_to_fragment_login"
-            app:destination="@id/fragment_login" />
-    </fragment>
-    <fragment
-        android:id="@+id/fragment_summary"
-        android:name="com.example.dialogueapp.fragment_summary"
-        android:label="fragment_summary"
-        tools:layout="@layout/fragment_summary" >
-        <action
-            android:id="@+id/action_fragment_summary_to_fragment_home"
-            app:destination="@id/fragment_home" />
-        <action
-            android:id="@+id/action_fragment_summary_to_fragment_login"
-            app:destination="@id/fragment_login" />
     </fragment>
     <fragment
         android:id="@+id/fragment_history"
-        android:name="com.example.dialogueapp.fragment_history"
+        android:name="com.example.dialogueapp.FragmentsStudent.fragment_history"
         android:label="fragment_history"
         tools:layout="@layout/fragment_history" >
         <action
             android:id="@+id/action_fragment_history_to_fragment_home"
             app:destination="@id/fragment_home" />
-        <action
-            android:id="@+id/action_fragment_history_to_fragment_login"
-            app:destination="@id/fragment_login" />
-    </fragment>
-    <fragment
-        android:id="@+id/fragment_register"
-        android:name="com.example.dialogueapp.fragment_register"
-        android:label="fragment_register"
-        tools:layout="@layout/fragment_register" >
-        <action
-            android:id="@+id/action_fragment_register_to_fragment_home"
-            app:destination="@id/fragment_home" />
-        <action
-            android:id="@+id/action_fragment_register_to_fragment_login"
-            app:destination="@id/fragment_login" />
     </fragment>
     <fragment
         android:id="@+id/fragment_LessonList"
-        android:name="com.example.dialogueapp.fragment_LessonList"
+        android:name="com.example.dialogueapp.FragmentsStudent.fragment_LessonList"
         android:label="fragment__lesson_list"
         tools:layout="@layout/fragment__lesson_list" >
         <action
             android:id="@+id/action_fragment_LessonList_to_fragment_home"
             app:destination="@id/fragment_home" />
-        <action
-            android:id="@+id/action_fragment_LessonList_to_fragment_login"
-            app:destination="@id/fragment_login" />
         <argument
             android:name="dateFilter"
             app:argType="string" />
     </fragment>
     <fragment
-        android:id="@+id/fragment_set_lesson_teacher"
-        android:name="com.example.dialogueapp.fragment_set_lesson_teacher"
-        android:label="fragment_set_lesson_teacher"
-        tools:layout="@layout/fragment_set_lesson_teacher" >
-        <action
-            android:id="@+id/action_fragment_set_lesson_teacher_to_fragment_home"
-            app:destination="@id/fragment_home" />
-    </fragment>
-    <fragment
         android:id="@+id/fragment_my_lessons_student"
-        android:name="com.example.dialogueapp.fragment_my_lessons_student"
+        android:name="com.example.dialogueapp.FragmentsStudent.fragment_my_lessons_student"
         android:label="fragment_my_lessons_student"
         tools:layout="@layout/fragment_my_lessons_student" >
         <action
@@ -124,12 +61,9 @@
     </fragment>
     <fragment
         android:id="@+id/fragment_profile"
-        android:name="com.example.dialogueapp.fragment_profile"
+        android:name="com.example.dialogueapp.FragmentsStudent.fragment_profile"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
-        <action
-            android:id="@+id/action_fragment_profile_to_fragment_login"
-            app:destination="@id/fragment_login" />
         <action
             android:id="@+id/action_fragment_profile_to_fragment_home"
             app:destination="@id/fragment_home" />

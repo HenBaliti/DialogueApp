@@ -1,4 +1,4 @@
-package com.example.dialogueapp;
+package com.example.dialogueapp.FragmentsStudent;
 
 import android.os.Bundle;
 
@@ -15,18 +15,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.dialogueapp.Model.LessonListViewModel;
 import com.example.dialogueapp.Model.Lesson;
 import com.example.dialogueapp.Model.Model;
+import com.example.dialogueapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
+
+import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
 
 public class fragment_my_lessons_student extends Fragment {
 
@@ -124,7 +126,7 @@ public class fragment_my_lessons_student extends Fragment {
         TextView txtLessonTime;
         TextView txtLessonLengthTime;
         TextView txtImageTeacherName;
-        Button isDone;
+        CircularProgressButton isDone;
         public fragment_history.OnItemClickListener listener;
         int position;
 

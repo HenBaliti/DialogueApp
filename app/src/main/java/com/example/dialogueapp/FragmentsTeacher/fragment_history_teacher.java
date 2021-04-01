@@ -1,4 +1,4 @@
-package com.example.dialogueapp;
+package com.example.dialogueapp.FragmentsTeacher;
 
 import android.os.Bundle;
 
@@ -15,17 +15,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.dialogueapp.FragmentsStudent.fragment_history;
 import com.example.dialogueapp.Model.Lesson;
+import com.example.dialogueapp.Model.LessonListViewModel;
 import com.example.dialogueapp.Model.Model;
+import com.example.dialogueapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
-public class fragment_history extends Fragment {
+
+public class fragment_history_teacher extends Fragment {
 
     private FirebaseAuth mAuth;
     RecyclerView list;
@@ -36,10 +39,11 @@ public class fragment_history extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_history, container, false);
+        View view = inflater.inflate(R.layout.fragment_history_teacher, container, false);
 
 
-        list = view.findViewById(R.id.recycler_history);
+
+        list = view.findViewById(R.id.recycler_history_teacher);
         list.hasFixedSize();
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -60,7 +64,7 @@ public class fragment_history extends Fragment {
         ////////////////////////////////
         ////////////User Auth///////////
         ////////////////////////////////
-        ImageButton logOutBtn = view.findViewById(R.id.btn_logout_history);
+        ImageButton logOutBtn = view.findViewById(R.id.btn_logout_history_teacher);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user != null) {
             // User is signed in
@@ -71,7 +75,7 @@ public class fragment_history extends Fragment {
                 @Override
                 public void onClick(View v) {
                     LogOutFunction();
-                    Navigation.findNavController(view).navigate(R.id.action_fragment_history_to_fragment_home);
+//                    Navigation.findNavController(view).navigate(R.id.action_fragment_history_to_fragment_home);
                 }
 
                 private void LogOutFunction() {
@@ -88,16 +92,18 @@ public class fragment_history extends Fragment {
         //--ViewModel--
         viewModelList = new ViewModelProvider(this).get(LessonListViewModel.class);
         Model.instance.getStudentByEmail(user.getEmail(), new Model.GetUserByEmailListener() {
+            @Override
+            public void onComplete(String id) {
+                Log.d("CheckLess2",""+id);
+                viewModelList.setStLessonHistoryOfTeacher(id);
+                viewModelList.getStLesson().observe(getViewLifecycleOwner(), new Observer<List<Lesson>>() {
                     @Override
-                    public void onComplete(String id) {
-                        viewModelList.setStLessonHistoryForUser(id);
-                        viewModelList.getStLesson().observe(getViewLifecycleOwner(), new Observer<List<Lesson>>() {
-                            @Override
-                            public void onChanged(List<Lesson> lessons) {
-                                adapter.notifyDataSetChanged();
-                            }
-                        });
+                    public void onChanged(List<Lesson> lessons) {
+                        Log.d("CheckLess",lessons.size()+"");
+                        adapter.notifyDataSetChanged();
                     }
+                });
+            }
         });
 
 
@@ -113,7 +119,7 @@ public class fragment_history extends Fragment {
         void onItemClick(int position);
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder{
+    class MyViewHolderHistoryTeacher extends RecyclerView.ViewHolder{
 
         TextView txtLessonTitle;
         TextView txtLessonDate;
@@ -123,7 +129,7 @@ public class fragment_history extends Fragment {
         public OnItemClickListener listener;
         int position;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public MyViewHolderHistoryTeacher(@NonNull View itemView) {
             super(itemView);
 
             txtLessonTitle = itemView.findViewById(R.id.txt_lesson_row_title);
@@ -153,7 +159,7 @@ public class fragment_history extends Fragment {
     //////////////////////////////////////
     ///////////// Adapter ////////////////
     //////////////////////////////////////
-    class MyAdapter extends RecyclerView.Adapter<MyViewHolder>{
+    class MyAdapter extends RecyclerView.Adapter<MyViewHolderHistoryTeacher>{
         private OnItemClickListener listener;
 
         void setOnClickListener(OnItemClickListener listener){
@@ -162,15 +168,15 @@ public class fragment_history extends Fragment {
 
         @NonNull
         @Override
-        public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        public MyViewHolderHistoryTeacher onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = getLayoutInflater().inflate(R.layout.history_student_list_row,parent,false);
-            MyViewHolder holder = new MyViewHolder(view);
+            MyViewHolderHistoryTeacher holder = new MyViewHolderHistoryTeacher(view);
             holder.listener = listener;
             return holder;
         }
 
         @Override
-        public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull MyViewHolderHistoryTeacher holder, int position) {
 //            Lesson lesson = viewModelList.getStLesson().getValue().get(position);
 //            holder.bindData(lesson,position);
             Lesson lesson = viewModelList.getStLesson().getValue().get(position);

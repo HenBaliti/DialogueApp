@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_teacher"
+    app:startDestination="@id/fragment_home_teacher">
+
+    <fragment
+        android:id="@+id/fragment_home_teacher"
+        android:name="com.example.dialogueapp.FragmentsTeacher.fragment_home_teacher"
+        android:label="fragment_home_teacher"
+        tools:layout="@layout/fragment_home_teacher" />
+    <fragment
+        android:id="@+id/fragment_set_lesson_teacher"
+        android:name="com.example.dialogueapp.FragmentsTeacher.fragment_set_lesson_teacher"
+        android:label="fragment_set_lesson_teacher"
+        tools:layout="@layout/fragment_set_lesson_teacher" />
+    <fragment
+        android:id="@+id/fragment_history_teacher"
+        android:name="com.example.dialogueapp.FragmentsTeacher.fragment_history_teacher"
+        android:label="fragment_history_teacher"
+        tools:layout="@layout/fragment_history_teacher" />
+    <fragment
+        android:id="@+id/fragment_profile_teacher"
+        android:name="com.example.dialogueapp.FragmentsTeacher.fragment_profile_teacher"
+        android:label="fragment_profile_teacher"
+        tools:layout="@layout/fragment_profile_teacher" />
+</navigation>

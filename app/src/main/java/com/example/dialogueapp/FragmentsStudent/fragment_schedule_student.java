@@ -1,4 +1,4 @@
-package com.example.dialogueapp;
+package com.example.dialogueapp.FragmentsStudent;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -16,6 +16,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.example.dialogueapp.DatePickerFragment;
+import com.example.dialogueapp.R;
+import com.example.dialogueapp.FragmentsStudent.fragment_schedule_studentDirections;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 

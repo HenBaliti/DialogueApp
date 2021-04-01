@@ -134,14 +134,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/image_teacher_row_lesson" />
 
-    <Button
+
+    <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
         android:id="@+id/btn_isDone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/loginButton"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="38dp"
-        android:text="Finish Lesson"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_lesson_row_image_title" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_lesson_row_image_title"
+        android:layout_width="120dp"
+        android:layout_height="35dp"
+        android:text="Finish Lesson"
+        app:initialCornerAngle="27dp"
+        app:spinning_bar_color="#FFF"
+        app:spinning_bar_padding="6dp"
+        app:spinning_bar_width="4dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

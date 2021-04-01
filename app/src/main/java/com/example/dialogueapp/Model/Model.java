@@ -38,6 +38,10 @@ public class Model {
         return modelSql.getLessonsHistoryForUser(curentUserId);
     }
 
+    public LiveData<List<Lesson>> findLessonHistoryOfTeacher(String curentUserId){
+        return modelSql.findLessonHistoryOfTeacher(curentUserId);
+    }
+
     public LiveData<List<Lesson>> getMyLessons(String curentUserId){
         return modelSql.getMyLessons(curentUserId);
     }
@@ -200,6 +204,14 @@ public class Model {
         return null;
     }
 
+    /////Getting the user by email
+    public interface GetUserObjByEmailListener{
+        void onComplete(User user);
+    }
+    public User GetUserObjByID(String email, final GetUserObjByEmailListener listener) {
+        modelFireBase.GetUserObjByEmail(email,listener);
+        return null;
+    }
 
 
     /////Getting the user by id

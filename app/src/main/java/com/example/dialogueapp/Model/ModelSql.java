@@ -55,6 +55,10 @@ public LiveData<List<User>> getAllUsers() { return AppLocalDb.db.userDao().getAl
         return AppLocalDb.db.lessonDao().findLessonHistoryOfUser(cureentUserId,true);
     }
 
+    public LiveData<List<Lesson>> findLessonHistoryOfTeacher(String cureentUserId){
+        return AppLocalDb.db.lessonDao().findLessonHistoryOfTeacher(cureentUserId,true);
+    }
+
     public LiveData<List<Lesson>> getMyLessons(String cureentUserId){
         return AppLocalDb.db.lessonDao().getMyLessons(cureentUserId);
     }

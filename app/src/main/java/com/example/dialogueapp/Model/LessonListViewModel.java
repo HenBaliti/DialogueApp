@@ -1,4 +1,4 @@
-package com.example.dialogueapp;
+package com.example.dialogueapp.Model;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -21,12 +21,16 @@ public class LessonListViewModel extends ViewModel {
         this.stLesson = Model.instance.getLessonsByDate(date);
     }
 
-    public void setStLessonHistoryForUser(String cureentUserId) {
-        this.stLesson = Model.instance.getLessonsHistoryForUser(cureentUserId);
+    public void setStLessonHistoryForUser(String currentUserId) {
+        this.stLesson = Model.instance.getLessonsHistoryForUser(currentUserId);
     }
 
-    public void setMyLessons(String cureentUserId) {
-        this.stLesson = Model.instance.getMyLessons(cureentUserId);
+    public void setStLessonHistoryOfTeacher(String currentUserId) {
+        this.stLesson = Model.instance.findLessonHistoryOfTeacher(currentUserId);
+    }
+
+    public void setMyLessons(String currentUserId) {
+        this.stLesson = Model.instance.getMyLessons(currentUserId);
     }
 
 

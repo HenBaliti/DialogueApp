@@ -249,4 +249,24 @@ public class ModelFireBase {
             }
         });
     }
+
+    public void GetUserObjByEmail(String email, Model.GetUserObjByEmailListener listener) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("User").whereEqualTo("email",email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                User userObjByemail = null;
+                if(task.isSuccessful()) {
+                    DocumentSnapshot doc = task.getResult().getDocuments().get(0);
+                    if (doc != null) {
+                        userObjByemail = new User();
+                        userObjByemail.fromMap(doc.getData());
+//                        userById = task.getResult().toObject(User.class);
+//                        Log.d("MSG",task.getResult().toString());
+                    }
+                    listener.onComplete(userObjByemail);
+                }
+            }
+        });
+    }
 }
