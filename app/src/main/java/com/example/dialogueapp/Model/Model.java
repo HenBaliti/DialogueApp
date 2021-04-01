@@ -46,6 +46,9 @@ public class Model {
         return modelSql.getMyLessons(curentUserId);
     }
 
+    public LiveData<List<Lesson>> getMyLessonsTeacher(String curentUserId){
+        return modelSql.getMyLessonsTeacher(curentUserId);
+    }
 
 
 

@@ -29,6 +29,10 @@ public class LessonListViewModel extends ViewModel {
         this.stLesson = Model.instance.findLessonHistoryOfTeacher(currentUserId);
     }
 
+    public void setMyLessonsTeacher(String currentUserId) {
+        this.stLesson = Model.instance.getMyLessonsTeacher(currentUserId);
+    }
+
     public void setMyLessons(String currentUserId) {
         this.stLesson = Model.instance.getMyLessons(currentUserId);
     }

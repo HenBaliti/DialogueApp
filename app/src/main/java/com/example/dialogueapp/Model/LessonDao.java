@@ -32,6 +32,10 @@ public interface LessonDao {
     @Query("SELECT * FROM Lesson WHERE Lesson.student_id LIKE :currentUserID ")
     LiveData<List<Lesson>> getMyLessons(String currentUserID);
 
+    //Get all the lesson for current Teacher which isDone = true
+    @Query("SELECT * FROM Lesson WHERE Lesson.teacher_id LIKE :currentUserID ")
+    LiveData<List<Lesson>> getMyLessonsTeacher(String currentUserID);
+
 //    //Get all the lesson by date
 //    @Query("SELECT * FROM Lesson WHERE Lesson.schedule_date= :date AND Lesson.isCatch= :isCatched")
 //    LiveData<List<Lesson>> findLessonByDate(String date,boolean isCatched);

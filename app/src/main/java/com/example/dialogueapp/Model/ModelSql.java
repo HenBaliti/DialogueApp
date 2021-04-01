@@ -63,6 +63,10 @@ public LiveData<List<User>> getAllUsers() { return AppLocalDb.db.userDao().getAl
         return AppLocalDb.db.lessonDao().getMyLessons(cureentUserId);
     }
 
+    public LiveData<List<Lesson>> getMyLessonsTeacher(String cureentUserId){
+        return AppLocalDb.db.lessonDao().getMyLessonsTeacher(cureentUserId);
+    }
+
     public interface AddLessonListener{
         void onComplete();
     }

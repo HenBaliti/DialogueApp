@@ -168,6 +168,12 @@ public class activity_register extends AppCompatActivity {
         }
     }
 
+    public void onLoginClick(View View){
+        startActivity(new Intent(this,LoginActivity.class));
+        overridePendingTransition(R.anim.slide_in_left, 0);
+
+    }
+
 
 
     private void EditImage() {

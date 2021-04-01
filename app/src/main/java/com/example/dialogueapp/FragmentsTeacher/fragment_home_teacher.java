@@ -3,7 +3,9 @@ package com.example.dialogueapp.FragmentsTeacher;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,8 @@ import com.example.dialogueapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
+
 public class fragment_home_teacher extends Fragment {
 
     @Override
@@ -24,6 +28,14 @@ public class fragment_home_teacher extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_home_teacher, container, false);
 
+        CircularProgressButton UpComingLessons = view.findViewById(R.id.lastLessonsTeacher);
+
+        UpComingLessons.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(view).navigate(R.id.action_fragment_home_teacher_to_fragment_my_lessons_teacher);
+            }
+        });
 
         ImageButton logOutBtn = view.findViewById(R.id.btn_logout_home_teacher);
         TextView txt_user_firstName = view.findViewById(R.id.txt_user_firstName_home_teacher);

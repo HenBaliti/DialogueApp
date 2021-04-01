@@ -9,7 +9,11 @@
         android:id="@+id/fragment_home_teacher"
         android:name="com.example.dialogueapp.FragmentsTeacher.fragment_home_teacher"
         android:label="fragment_home_teacher"
-        tools:layout="@layout/fragment_home_teacher" />
+        tools:layout="@layout/fragment_home_teacher" >
+        <action
+            android:id="@+id/action_fragment_home_teacher_to_fragment_my_lessons_teacher"
+            app:destination="@id/fragment_my_lessons_teacher" />
+    </fragment>
     <fragment
         android:id="@+id/fragment_set_lesson_teacher"
         android:name="com.example.dialogueapp.FragmentsTeacher.fragment_set_lesson_teacher"
@@ -25,4 +29,9 @@
         android:name="com.example.dialogueapp.FragmentsTeacher.fragment_profile_teacher"
         android:label="fragment_profile_teacher"
         tools:layout="@layout/fragment_profile_teacher" />
+    <fragment
+        android:id="@+id/fragment_my_lessons_teacher"
+        android:name="com.example.dialogueapp.FragmentsTeacher.fragment_my_lessons_teacher"
+        android:label="fragment_my_lessons_teacher"
+        tools:layout="@layout/fragment_my_lessons_teacher" />
 </navigation>
