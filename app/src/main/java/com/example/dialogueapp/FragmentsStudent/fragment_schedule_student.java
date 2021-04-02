@@ -56,7 +56,7 @@ public class fragment_schedule_student extends Fragment {
                 @Override
                 public void onClick(View v) {
                     LogOutFunction();
-                    Navigation.findNavController(view).navigate(R.id.action_fragment_schedule_student_to_fragment_home);
+                    getActivity().finish();
                 }
 
                 private void LogOutFunction() {

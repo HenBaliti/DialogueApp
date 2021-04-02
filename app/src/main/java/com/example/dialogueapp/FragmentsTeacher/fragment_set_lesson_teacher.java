@@ -69,7 +69,7 @@ public class fragment_set_lesson_teacher extends Fragment {
                 @Override
                 public void onClick(View v) {
                     LogOutFunction();
-//                    Navigation.findNavController(view).navigate(R.id.action_fragment_set_lesson_teacher_to_fragment_home);
+                    getActivity().finish();
                 }
 
                 private void LogOutFunction() {

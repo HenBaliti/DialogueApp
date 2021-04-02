@@ -54,7 +54,7 @@ public class fragment_home extends Fragment {
                 @Override
                 public void onClick(View v) {
                     LogOutFunction();
-                    getActivity().getSupportFragmentManager().popBackStack();//Need to backstack the stack of activities !
+                    getActivity().finish();//Need to backstack the stack of activities !
                 }
 
                 private void LogOutFunction() {

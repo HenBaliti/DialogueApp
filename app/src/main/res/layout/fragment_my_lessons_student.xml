@@ -7,17 +7,35 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 tools:context=".FragmentsStudent.fragment_my_lessons_student">
 
-<!-- TODO: Update blank fragment layout -->
+    <ImageView
+        android:id="@+id/back_image_lists_students"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:cropToPadding="true"
+        android:src="@drawable/dialogue_backgroundpng"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-<androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/recycler_my_lessons_student"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginTop="70dp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.497"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/txt_title_my_lessons_student" />
+    <TextView
+        android:id="@+id/title_my_lessons_students"
+        style="@style/viewParent.headerText"
+        android:layout_marginStart="8dp"
+        android:text="My Lessons"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/back_image_lists_students" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_my_lessons_student"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_my_lessons_students" />
 
 <ImageButton
     android:id="@+id/btn_logout_my_lessons_student"
@@ -26,17 +44,6 @@ tools:context=".FragmentsStudent.fragment_my_lessons_student">
     android:src="@drawable/ic_baseline_logout_24"
     android:visibility="invisible"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
-
-<TextView
-    android:id="@+id/txt_title_my_lessons_student"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="16dp"
-    android:text="My Lessons"
-    android:textSize="30sp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

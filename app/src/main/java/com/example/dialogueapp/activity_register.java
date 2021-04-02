@@ -82,13 +82,30 @@ public class activity_register extends AppCompatActivity {
             String email = EmailET.getText().toString();
             String password = PasswordET.getText().toString();
 
-
-            Model.instance.addUser(user, new Model.AddUserListener() {
+            //Add Image to firebase
+            BitmapDrawable drawable = (BitmapDrawable)profileImage.getDrawable();
+            Bitmap bitmap =  drawable.getBitmap();
+            Model.instance.uploadImage(bitmap, user.getUser_id(), new Model.UploadImageListener() {
                 @Override
-                public void onComplete() {
-                    Log.d("TAG", "createUserFirebase:success");
+                public void onComplete(String url) {
+                    if(url==null) {
+
+                    }
+                    else {
+                        user.setImageUrl(url);
+
+                        Model.instance.addUser(user, new Model.AddUserListener() {
+                            @Override
+                            public void onComplete() {
+                                Log.d("TAG", "createUserFirebase:success");
+                            }
+                        });
+
+                    }
                 }
             });
+
+
 
             //When The user clicked the login and the pass and email was correct
             mAuth.createUserWithEmailAndPassword(email, password)
@@ -116,21 +133,6 @@ public class activity_register extends AppCompatActivity {
                         }
                     });
 
-            //Add Image to firebase
-            BitmapDrawable drawable = (BitmapDrawable)profileImage.getDrawable();
-            Bitmap bitmap =  drawable.getBitmap();
-            Model.instance.uploadImage(bitmap, user.getUser_id(), new Model.UploadImageListener() {
-                @Override
-                public void onComplete(String url) {
-                    if(url==null) {
-
-                    }
-                    else {
-                        user.setImageUrl(url);
-
-                    }
-                }
-            });
         });
 
 

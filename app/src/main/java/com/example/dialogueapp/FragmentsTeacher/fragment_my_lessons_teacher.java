@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,11 +14,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.dialogueapp.FragmentsStudent.fragment_history;
-import com.example.dialogueapp.FragmentsStudent.fragment_my_lessons_student;
 import com.example.dialogueapp.Model.Lesson;
 import com.example.dialogueapp.Model.LessonListViewModel;
 import com.example.dialogueapp.Model.Model;
@@ -82,7 +80,7 @@ public class fragment_my_lessons_teacher extends Fragment {
                 @Override
                 public void onClick(View v) {
                     LogOutFunction();
-//                    Navigation.findNavController(view).navigate(R.id.action_fragment_my_lessons_student_to_fragment_home);
+                    getActivity().finish();
                 }
 
                 private void LogOutFunction() {
@@ -132,6 +130,7 @@ public class fragment_my_lessons_teacher extends Fragment {
         TextView txtLessonLengthTime;
         TextView txtImageTeacherName;
         CircularProgressButton isDone;
+        ImageView img_done;
         public OnItemClickListener listener;
         int position;
 
@@ -142,7 +141,8 @@ public class fragment_my_lessons_teacher extends Fragment {
             txtLessonDate = itemView.findViewById(R.id.txt_lesson_row_date);
             txtLessonTime = itemView.findViewById(R.id.txt_lesson_row_time);
             txtLessonLengthTime = itemView.findViewById(R.id.txt_lesson_row_length_time);
-            isDone = itemView.findViewById(R.id.btn_isDone);
+            isDone = itemView.findViewById(R.id.btn_order_now);
+            img_done = itemView.findViewById(R.id.imageViewDone);
             //Todo -> Need to put the imageUrl of the teacher on the list_history
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -161,10 +161,12 @@ public class fragment_my_lessons_teacher extends Fragment {
             txtLessonTime.setText(""+lesson.getLesson_time());
             txtLessonLengthTime.setText(""+lesson.getNumOfMinutesPerLesson());
             if(lesson.getIsDone()){
-                isDone.setVisibility(View.INVISIBLE);
+                isDone.setVisibility(View.GONE);
+                img_done.setVisibility(View.VISIBLE);
                 Log.d("isDone??",lesson.getIsDone()+"");
             }else{
                 isDone.setVisibility(View.VISIBLE);
+                img_done.setVisibility(View.GONE);
                 Log.d("isDone??",lesson.getIsDone()+"");
 
             }
@@ -204,7 +206,7 @@ public class fragment_my_lessons_teacher extends Fragment {
         @NonNull
         @Override
         public MyViewHolderMyLessons onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = getLayoutInflater().inflate(R.layout.my_lessons_student_list_row,parent,false);
+            View view = getLayoutInflater().inflate(R.layout.lst_item_my_lessons_teacher,parent,false);
             MyViewHolderMyLessons holder = new MyViewHolderMyLessons(view);
             holder.listener = listener;
             return holder;

@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +33,7 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.List;
 
 import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class fragment_LessonList extends Fragment {
 //    private FirebaseAuth mAuth;
@@ -95,7 +97,7 @@ public class fragment_LessonList extends Fragment {
                 @Override
                 public void onClick(View v) {
                     LogOutFunction();
-                    Navigation.findNavController(view).navigate(R.id.action_fragment_LessonList_to_fragment_home);
+                    getActivity().finish();
                 }
 
                 private void LogOutFunction() {
@@ -148,8 +150,8 @@ public class fragment_LessonList extends Fragment {
         TextView txtLessonDate;
         TextView txtLessonTime;
         TextView txtLessonLengthTime;
-        TextView txtImageTeacherName;
         CircularProgressButton btn_order_Now;
+        CircleImageView imageTeacher;
         public OnItemClickListener listener;
         int position;
 
@@ -160,8 +162,8 @@ public class fragment_LessonList extends Fragment {
             txtLessonDate = itemView.findViewById(R.id.txt_lesson_row_date);
             txtLessonTime = itemView.findViewById(R.id.txt_lesson_row_time);
             txtLessonLengthTime = itemView.findViewById(R.id.txt_lesson_row_length_time);
-            txtImageTeacherName = itemView.findViewById(R.id.txt_lesson_row_image_title);
             btn_order_Now = itemView.findViewById(R.id.btn_order_now);
+            imageTeacher = itemView.findViewById(R.id.image_teacher_row_lesson);
             //Todo -> Need to put the imageUrl of the teacher on the list_history
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -186,7 +188,15 @@ public class fragment_LessonList extends Fragment {
                     txtLessonDate.setText(""+lesson.getSchedule_date());
                     txtLessonTime.setText(""+lesson.getLesson_time());
                     txtLessonLengthTime.setText(""+lesson.getNumOfMinutesPerLesson());
-                    txtImageTeacherName.setText(teacherData.getFull_name());
+
+
+                    Model.instance.GetUserObjByID(user.getEmail(), new Model.GetUserObjByEmailListener() {
+                        @Override
+                        public void onComplete(User user) {
+//
+//                            imageTeacher.setImageURI();
+                        }
+                    });
 
 
                     btn_order_Now.setOnClickListener(new View.OnClickListener() {
@@ -244,7 +254,7 @@ public class fragment_LessonList extends Fragment {
         @NonNull
         @Override
         public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = getLayoutInflater().inflate(R.layout.lesson_list_row,parent,false);
+            View view = getLayoutInflater().inflate(R.layout.lst_item_find_free_lessons,parent,false);
             MyViewHolder holder = new MyViewHolder(view);
             holder.listener = listener;
             return holder;

@@ -14,8 +14,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -77,7 +77,7 @@ public class fragment_my_lessons_student extends Fragment {
                 @Override
                 public void onClick(View v) {
                     LogOutFunction();
-                    Navigation.findNavController(view).navigate(R.id.action_fragment_my_lessons_student_to_fragment_home);
+                    getActivity().finish();
                 }
 
                 private void LogOutFunction() {
@@ -127,6 +127,7 @@ public class fragment_my_lessons_student extends Fragment {
         TextView txtLessonLengthTime;
         TextView txtImageTeacherName;
         CircularProgressButton isDone;
+        ImageView img_done;
         public fragment_history.OnItemClickListener listener;
         int position;
 
@@ -137,7 +138,8 @@ public class fragment_my_lessons_student extends Fragment {
             txtLessonDate = itemView.findViewById(R.id.txt_lesson_row_date);
             txtLessonTime = itemView.findViewById(R.id.txt_lesson_row_time);
             txtLessonLengthTime = itemView.findViewById(R.id.txt_lesson_row_length_time);
-            isDone = itemView.findViewById(R.id.btn_isDone);
+            isDone = itemView.findViewById(R.id.btn_order_now);
+            img_done = itemView.findViewById(R.id.imageViewDone);
             //Todo -> Need to put the imageUrl of the teacher on the list_history
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -156,10 +158,12 @@ public class fragment_my_lessons_student extends Fragment {
             txtLessonTime.setText(""+lesson.getLesson_time());
             txtLessonLengthTime.setText(""+lesson.getNumOfMinutesPerLesson());
             if(lesson.getIsDone()){
-                isDone.setVisibility(View.INVISIBLE);
+                isDone.setVisibility(View.GONE);
+                img_done.setVisibility(View.VISIBLE);
                 Log.d("isDone??",lesson.getIsDone()+"");
             }else{
                 isDone.setVisibility(View.VISIBLE);
+                img_done.setVisibility(View.GONE);
                 Log.d("isDone??",lesson.getIsDone()+"");
 
             }
@@ -198,7 +202,7 @@ public class fragment_my_lessons_student extends Fragment {
         @NonNull
         @Override
         public MyViewHolderMyLessons onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = getLayoutInflater().inflate(R.layout.my_lessons_student_list_row,parent,false);
+            View view = getLayoutInflater().inflate(R.layout.lst_item_my_lessons_student,parent,false);
             MyViewHolderMyLessons holder = new MyViewHolderMyLessons(view);
             holder.listener = listener;
             return holder;

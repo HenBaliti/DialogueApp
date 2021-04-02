@@ -75,7 +75,7 @@ public class fragment_history_teacher extends Fragment {
                 @Override
                 public void onClick(View v) {
                     LogOutFunction();
-//                    Navigation.findNavController(view).navigate(R.id.action_fragment_history_to_fragment_home);
+                    getActivity().finish();
                 }
 
                 private void LogOutFunction() {
@@ -169,7 +169,7 @@ public class fragment_history_teacher extends Fragment {
         @NonNull
         @Override
         public MyViewHolderHistoryTeacher onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = getLayoutInflater().inflate(R.layout.history_student_list_row,parent,false);
+            View view = getLayoutInflater().inflate(R.layout.lst_item_history,parent,false);
             MyViewHolderHistoryTeacher holder = new MyViewHolderHistoryTeacher(view);
             holder.listener = listener;
             return holder;

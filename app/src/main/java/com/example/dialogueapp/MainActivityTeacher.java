@@ -38,7 +38,7 @@ public class MainActivityTeacher extends AppCompatActivity {
             mAuth = FirebaseAuth.getInstance();
             user = mAuth.getCurrentUser();
         }
-        Toast.makeText(this, user.getEmail() + " work", Toast.LENGTH_LONG ).show();
+        Toast.makeText(this, "Connected as "+user.getEmail()+" Successfully.", Toast.LENGTH_SHORT ).show();
 
         navController = Navigation.findNavController(this, R.id.nav_host_fragment_teacher);
 

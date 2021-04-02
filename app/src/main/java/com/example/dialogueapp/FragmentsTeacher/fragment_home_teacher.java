@@ -59,7 +59,7 @@ public class fragment_home_teacher extends Fragment {
                 @Override
                 public void onClick(View v) {
                     LogOutFunction();
-                    getActivity().getSupportFragmentManager().popBackStack();//Need to backstack the stack of activities !
+                    getActivity().finish();
                 }
 
                 private void LogOutFunction() {
