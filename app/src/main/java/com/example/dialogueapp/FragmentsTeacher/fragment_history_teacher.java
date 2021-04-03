@@ -21,11 +21,15 @@ import com.example.dialogueapp.FragmentsStudent.fragment_history;
 import com.example.dialogueapp.Model.Lesson;
 import com.example.dialogueapp.Model.LessonListViewModel;
 import com.example.dialogueapp.Model.Model;
+import com.example.dialogueapp.Model.User;
 import com.example.dialogueapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class fragment_history_teacher extends Fragment {
@@ -125,7 +129,7 @@ public class fragment_history_teacher extends Fragment {
         TextView txtLessonDate;
         TextView txtLessonTime;
         TextView txtLessonLengthTime;
-        TextView txtImageTeacherName;
+        CircleImageView imageStudent;
         public OnItemClickListener listener;
         int position;
 
@@ -136,6 +140,7 @@ public class fragment_history_teacher extends Fragment {
             txtLessonDate = itemView.findViewById(R.id.txt_lesson_row_date);
             txtLessonTime = itemView.findViewById(R.id.txt_lesson_row_time);
             txtLessonLengthTime = itemView.findViewById(R.id.txt_lesson_row_length_time);
+            imageStudent = itemView.findViewById(R.id.image_teacher_row_lesson);
             //Todo -> Need to put the imageUrl of the teacher on the list_history
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -151,6 +156,14 @@ public class fragment_history_teacher extends Fragment {
             txtLessonDate.setText(""+lesson.getSchedule_date());
             txtLessonTime.setText(""+lesson.getLesson_time());
             txtLessonLengthTime.setText(""+lesson.getNumOfMinutesPerLesson());
+            Model.instance.GetUserByID(lesson.getTeacher_id(), new Model.GetUserByIDListener() {
+                @Override
+                public void onComplete(User user) {
+                    if(user.getImageUrl()!=null){
+                        Picasso.get().load(user.getImageUrl()).into(imageStudent);
+                    }
+                }
+            });
             this.position = position;
         }
     }

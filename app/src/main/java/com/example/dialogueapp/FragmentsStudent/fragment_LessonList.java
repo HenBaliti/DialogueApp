@@ -29,6 +29,7 @@ import com.example.dialogueapp.R;
 import com.example.dialogueapp.FragmentsStudent.fragment_LessonListArgs;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -190,11 +191,12 @@ public class fragment_LessonList extends Fragment {
                     txtLessonLengthTime.setText(""+lesson.getNumOfMinutesPerLesson());
 
 
-                    Model.instance.GetUserObjByID(user.getEmail(), new Model.GetUserObjByEmailListener() {
+                    Model.instance.GetUserByID(lesson.getTeacher_id(), new Model.GetUserByIDListener() {
                         @Override
                         public void onComplete(User user) {
-//
-//                            imageTeacher.setImageURI();
+                            if(user.getImageUrl()!=null){
+                                Picasso.get().load(user.getImageUrl()).into(imageTeacher);
+                            }
                         }
                     });
 

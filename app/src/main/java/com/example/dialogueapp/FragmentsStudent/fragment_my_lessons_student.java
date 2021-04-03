@@ -22,13 +22,16 @@ import android.widget.Toast;
 import com.example.dialogueapp.Model.LessonListViewModel;
 import com.example.dialogueapp.Model.Lesson;
 import com.example.dialogueapp.Model.Model;
+import com.example.dialogueapp.Model.User;
 import com.example.dialogueapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class fragment_my_lessons_student extends Fragment {
 
@@ -128,6 +131,7 @@ public class fragment_my_lessons_student extends Fragment {
         TextView txtImageTeacherName;
         CircularProgressButton isDone;
         ImageView img_done;
+        CircleImageView imageTeacher;
         public fragment_history.OnItemClickListener listener;
         int position;
 
@@ -140,6 +144,7 @@ public class fragment_my_lessons_student extends Fragment {
             txtLessonLengthTime = itemView.findViewById(R.id.txt_lesson_row_length_time);
             isDone = itemView.findViewById(R.id.btn_order_now);
             img_done = itemView.findViewById(R.id.imageViewDone);
+            imageTeacher = itemView.findViewById(R.id.image_teacher_row_lesson);
             //Todo -> Need to put the imageUrl of the teacher on the list_history
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -182,6 +187,14 @@ public class fragment_my_lessons_student extends Fragment {
                             Model.instance.refreshAllLessons(null);
                         }
                     });
+                }
+            });
+            Model.instance.GetUserByID(lesson.getTeacher_id(), new Model.GetUserByIDListener() {
+                @Override
+                public void onComplete(User user) {
+                    if(user.getImageUrl()!=null){
+                        Picasso.get().load(user.getImageUrl()).into(imageTeacher);
+                    }
                 }
             });
             this.position = position;
