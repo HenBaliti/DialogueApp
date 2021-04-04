@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DialogueApp">
         <activity android:name=".MainActivityTeacher"></activity>
-        <activity android:name=".activity_register" />
+        <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -2,7 +2,6 @@ package com.example.dialogueapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.Navigation;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -18,7 +17,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
 
@@ -105,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onLoginClick(View View){
-        startActivity(new Intent(this,activity_register.class));
+        startActivity(new Intent(this, RegisterActivity.class));
         overridePendingTransition(R.anim.slide_in_right,0);
 
     }

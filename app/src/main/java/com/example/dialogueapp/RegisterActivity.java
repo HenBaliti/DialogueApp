@@ -1,14 +1,17 @@
 package com.example.dialogueapp;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.Navigation;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -34,7 +37,7 @@ import java.util.UUID;
 import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class activity_register extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private String usertype;
@@ -81,14 +84,27 @@ public class activity_register extends AppCompatActivity {
             user.setUser_type(usertype);
             String email = EmailET.getText().toString();
             String password = PasswordET.getText().toString();
-
-
-            Model.instance.addUser(user, new Model.AddUserListener() {
+            BitmapDrawable drawable = (BitmapDrawable)profileImage.getDrawable();
+            Bitmap bitmap =  drawable.getBitmap();
+            Model.instance.uploadImage(bitmap, user.getUser_id(), new Model.UploadImageListener() {
                 @Override
-                public void onComplete() {
-                    Log.d("TAG", "createUserFirebase:success");
+                public void onComplete(String url) {
+                    if(url==null) {
+                        displayFailedErrors();
+                    }
+                    else {
+                        user.setImageUrl(url);
+                        Model.instance.addUser(user, new Model.AddUserListener() {
+                            @Override
+                            public void onComplete() {
+                                Log.d("TAG", "createUserFirebase:success");
+                            }
+                        });
+                    }
                 }
             });
+
+
 
             //When The user clicked the login and the pass and email was correct
             mAuth.createUserWithEmailAndPassword(email, password)
@@ -117,25 +133,25 @@ public class activity_register extends AppCompatActivity {
                     });
 
             //Add Image to firebase
-            BitmapDrawable drawable = (BitmapDrawable)profileImage.getDrawable();
-            Bitmap bitmap =  drawable.getBitmap();
-            Model.instance.uploadImage(bitmap, user.getUser_id(), new Model.UploadImageListener() {
-                @Override
-                public void onComplete(String url) {
-                    if(url==null) {
 
-                    }
-                    else {
-                        user.setImageUrl(url);
-
-                    }
-                }
-            });
         });
 
 
 
 
+    }
+
+    private void displayFailedErrors() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+        builder.setTitle("Operation Failed");
+        builder.setTitle("Saving Image failed, please try again later...");
+        builder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.show();
     }
 
     private void init() {
@@ -177,22 +193,65 @@ public class activity_register extends AppCompatActivity {
 
 
     private void EditImage() {
-        Intent takePictureIntent = new Intent(
-                MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(this.getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        }
+        final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+        builder.setTitle("Choose your profile picture");
+
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+
+                if (options[item].equals("Take Photo")) {
+                    Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(takePicture, 0);
+
+                } else if (options[item].equals("Choose from Gallery")) {
+                    Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(pickPhoto , 1);
+
+                } else if (options[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
     }
 
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_IMAGE_CAPTURE &&
-                resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            profileImage.setImageBitmap(imageBitmap);
+        if (resultCode != RESULT_CANCELED) {
+            switch (requestCode) {
+                case 0:
+                    if (resultCode == RESULT_OK && data != null) {
+                        Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
+                        profileImage.setImageBitmap(selectedImage);
+                    }
+
+                    break;
+                case 1:
+                    if (resultCode == RESULT_OK && data != null) {
+                        Uri selectedImage = data.getData();
+                        String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                        if (selectedImage != null) {
+                            Cursor cursor = getContentResolver().query(selectedImage,
+                                    filePathColumn, null, null, null);
+                            if (cursor != null) {
+                                cursor.moveToFirst();
+
+                                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                                String picturePath = cursor.getString(columnIndex);
+                                profileImage.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+                                cursor.close();
+                            }
+                        }
+
+                    }
+                    break;
+            }
         }
     }
 }
