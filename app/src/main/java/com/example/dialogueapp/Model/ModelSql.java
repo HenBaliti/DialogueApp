@@ -11,34 +11,6 @@ import java.util.List;
 public class ModelSql {
 
 
-    ///// --- Async GetAll Lessons Function Room ---
-
-//    public interface GetAllLessonsListener{
-//        void onComplete(List<Lesson> data);
-//    }
-
-//    public void getAllLessons(GetAllLessonsListener listener){
-//
-//        /////////////////////////////////// ASYNC TASK /////////////////////////////////
-//        class MyAsyncTask extends AsyncTask{
-//            List<Lesson> dataLessons;
-//
-//            @Override
-//            protected Object doInBackground(Object[] objects) {
-//                dataLessons = AppLocalDb.db.lessonDao().getAllLessons();
-//                return null;
-//            }
-//
-//            @Override
-//            protected void onPostExecute(Object o) {
-//                super.onPostExecute(o);
-//                listener.onComplete(dataLessons);
-//            }
-//        }
-//        MyAsyncTask task = new MyAsyncTask();
-//        task.execute();
-//    }
-
     public LiveData<List<Lesson>> getAllLessons(){
         return AppLocalDb.db.lessonDao().getAllLessons();
     }

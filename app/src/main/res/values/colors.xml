@@ -21,4 +21,11 @@
     <!-- Card View Colors -->
     <color name="whiteBodyColor">#FCFCFC</color>
 
+    <!--colors for profile-->
+    <color name="profilePrimaryDark">#11CFC5</color>
+    <color name="profileAccentColor">#F7F7F7</color>
+    <color name="profileBackground">#fff</color>
+    <color name="blackTextColor">#000</color>
+    <color name="profileEditTextColor">#707070</color>
+
 </resources>
