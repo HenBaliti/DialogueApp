@@ -1,10 +1,8 @@
 package com.example.dialogueapp;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.Navigation;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -118,12 +116,12 @@ public class activity_register extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
-                                Log.d("TAG", "createUserWithEmail:success");
-                                FirebaseUser user = mAuth.getCurrentUser();
+                                    // Sign in success, update UI with the signed-in user's information
+                                    Log.d("TAG", "createUserWithEmail:success");
+                                    FirebaseUser user = mAuth.getCurrentUser();
 
-                                Intent returnIntent = new Intent();
-                                setResult(Activity.RESULT_OK,returnIntent);
+                                    Intent returnIntent = new Intent();
+                                    setResult(Activity.RESULT_OK,returnIntent);
                                 finish();
 
 
@@ -152,7 +150,7 @@ public class activity_register extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mActivity = this;
 
-        profileImage = findViewById(R.id.profile_image);
+        profileImage = findViewById(R.id.profile_image_register);
         radioGroup = findViewById(R.id.radioGroup);
         radioGroup.clearCheck();
         NameET = findViewById(R.id.editTextName);
@@ -212,8 +210,8 @@ public class activity_register extends AppCompatActivity {
                     startActivityForResult(takePicture, 0);
 
                 } else if (options[item].equals("Choose from Gallery")) {
-                    Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(pickPhoto , 1);
+                 Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                 startActivityForResult(pickPhoto , 1);
 
                 } else if (options[item].equals("Cancel")) {
                     dialog.dismiss();
@@ -232,7 +230,8 @@ public class activity_register extends AppCompatActivity {
                 case 0:
                     if (resultCode == RESULT_OK && data != null) {
                         Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
-                        profileImage.setImageBitmap(selectedImage);
+                        //profileImage.setImageBitmap(selectedImage);
+                        profileImage.setImageURI(data.getData());
                     }
 
                     break;
@@ -248,7 +247,8 @@ public class activity_register extends AppCompatActivity {
 
                                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                                 String picturePath = cursor.getString(columnIndex);
-                                profileImage.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+                                profileImage.setImageURI(data.getData());
+                                //profileImage.setImageBitmap(BitmapFactory.decodeFile(picturePath));
                                 cursor.close();
                             }
                         }
