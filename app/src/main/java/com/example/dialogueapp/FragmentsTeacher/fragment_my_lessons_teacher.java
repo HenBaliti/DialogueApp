@@ -165,6 +165,7 @@ public class fragment_my_lessons_teacher extends Fragment {
         CircularProgressButton isDone;
         CircleImageView imageStudent;
         ImageView img_done;
+        ImageView img_Catch;
         public OnItemClickListener listener;
         int position;
 
@@ -177,6 +178,7 @@ public class fragment_my_lessons_teacher extends Fragment {
             txtLessonLengthTime = itemView.findViewById(R.id.txt_lesson_row_length_time);
             isDone = itemView.findViewById(R.id.btn_order_now);
             img_done = itemView.findViewById(R.id.imageViewDone);
+            img_Catch = itemView.findViewById(R.id.imageViewCatch);
             imageStudent = itemView.findViewById(R.id.image_teacher_row_lesson);
             //Todo -> Need to put the imageUrl of the teacher on the list_history
 
@@ -198,13 +200,19 @@ public class fragment_my_lessons_teacher extends Fragment {
             if(lesson.getIsDone()){
                 isDone.setVisibility(View.GONE);
                 img_done.setVisibility(View.VISIBLE);
-                Log.d("isDone??",lesson.getIsDone()+"");
+                img_Catch.setVisibility(View.GONE);
+
             }else{
+                if(lesson.getIsCatch()){
+                    img_Catch.setVisibility(View.VISIBLE);
+                }
                 isDone.setVisibility(View.VISIBLE);
                 img_done.setVisibility(View.GONE);
-                Log.d("isDone??",lesson.getIsDone()+"");
 
             }
+
+
+
             isDone.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
