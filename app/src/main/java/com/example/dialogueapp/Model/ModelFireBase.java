@@ -269,4 +269,15 @@ public class ModelFireBase {
             }
         });
     }
+
+    public void DeleteLessonTeacher(Lesson lesson, Model.DeleteLessonListener listener) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Lesson").document(""+lesson.getLesson_id()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                listener.onComplete();
+                Log.d("Delete:","Item Deleted");
+            }
+        });
+    }
 }

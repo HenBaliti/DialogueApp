@@ -130,6 +130,7 @@ public class fragment_my_lessons_student extends Fragment {
         TextView txtLessonLengthTime;
         TextView txtImageTeacherName;
         CircularProgressButton isDone;
+        CircularProgressButton cancelLesson;
         ImageView img_done;
         CircleImageView imageTeacher;
         public fragment_history.OnItemClickListener listener;
@@ -143,6 +144,7 @@ public class fragment_my_lessons_student extends Fragment {
             txtLessonTime = itemView.findViewById(R.id.txt_lesson_row_time);
             txtLessonLengthTime = itemView.findViewById(R.id.txt_lesson_row_length_time);
             isDone = itemView.findViewById(R.id.btn_order_now);
+            cancelLesson = itemView.findViewById(R.id.btn_cancel);
             img_done = itemView.findViewById(R.id.imageViewDone);
             imageTeacher = itemView.findViewById(R.id.image_teacher_row_lesson);
             //Todo -> Need to put the imageUrl of the teacher on the list_history
@@ -164,10 +166,12 @@ public class fragment_my_lessons_student extends Fragment {
             txtLessonLengthTime.setText(""+lesson.getNumOfMinutesPerLesson());
             if(lesson.getIsDone()){
                 isDone.setVisibility(View.GONE);
+                cancelLesson.setVisibility(View.GONE);
                 img_done.setVisibility(View.VISIBLE);
                 Log.d("isDone??",lesson.getIsDone()+"");
             }else{
                 isDone.setVisibility(View.VISIBLE);
+                cancelLesson.setVisibility(View.VISIBLE);
                 img_done.setVisibility(View.GONE);
                 Log.d("isDone??",lesson.getIsDone()+"");
 
@@ -184,6 +188,24 @@ public class fragment_my_lessons_student extends Fragment {
                                     Toast.LENGTH_SHORT).show();
 
                             isDone.setEnabled(true);
+                            Model.instance.refreshAllLessons(null);
+                        }
+                    });
+                }
+            });
+            cancelLesson.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    lesson.setStudent_id(null);
+                    lesson.setCatch(false);
+                    Model.instance.addLesson(lesson, new Model.AddLessonListener() {
+                        @Override
+                        public void onComplete() {
+
+                            Toast.makeText(getActivity(), "You Have Canceled the lesson Successfully.",
+                                    Toast.LENGTH_SHORT).show();
+
+                            cancelLesson.setEnabled(true);
                             Model.instance.refreshAllLessons(null);
                         }
                     });

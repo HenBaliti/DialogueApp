@@ -39,6 +39,7 @@ public LiveData<List<User>> getAllUsers() { return AppLocalDb.db.userDao().getAl
         return AppLocalDb.db.lessonDao().getMyLessonsTeacher(cureentUserId);
     }
 
+
     public interface AddLessonListener{
         void onComplete();
     }
@@ -78,6 +79,23 @@ public LiveData<List<User>> getAllUsers() { return AppLocalDb.db.userDao().getAl
                 if(listener !=null){
                     listener.onComplete();
                 }
+            }
+        };
+        MyAsyncTask task = new MyAsyncTask();
+        task.execute();
+    }
+
+    public void deleteLesson(Lesson lesson){
+        class MyAsyncTask extends AsyncTask {
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                AppLocalDb.db.lessonDao().delete(lesson);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Object o) {
+                super.onPostExecute(o);
             }
         };
         MyAsyncTask task = new MyAsyncTask();
