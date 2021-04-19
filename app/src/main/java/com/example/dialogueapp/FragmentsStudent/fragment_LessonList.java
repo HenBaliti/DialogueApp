@@ -75,12 +75,6 @@ public class fragment_LessonList extends Fragment {
         adapter = new MyAdapter();
         list.setAdapter(adapter);
 
-        adapter.setOnClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                Log.d("TAG","row was clicked " + position);
-            }
-        });
 
 
 

@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -61,12 +62,41 @@ public class fragment_my_lessons_teacher extends Fragment {
         adapter = new MyAdapterMyLessons();
         list.setAdapter(adapter);
 
-        adapter.setOnClickListener(new OnItemClickListener() {
+
+
+
+        // Swip To Delete
+        //////
+
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+
             @Override
-            public void onItemClick(int position) {
-                Log.d("TAG","row was clicked " + position);
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                Toast.makeText(getActivity(), "on Move", Toast.LENGTH_SHORT).show();
+                return false;
             }
-        });
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                Toast.makeText(getActivity(), "on Swiped ", Toast.LENGTH_SHORT).show();
+                //Remove swiped item from list and notify the RecyclerView
+                int position = viewHolder.getAdapterPosition();
+                Lesson lesson = viewModelList.getStLesson().getValue().get(position);
+                Model.instance.DeleteLessonTeacher(lesson, new Model.DeleteLessonListener() {
+                    @Override
+                    public void onComplete() {
+                        Log.d("Check",lesson.getLesson_title()+" was deleted");
+                    }
+                });
+                adapter.notifyDataSetChanged();
+
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(list);
+
+        //////
 
 
         ////////////////////////////////
