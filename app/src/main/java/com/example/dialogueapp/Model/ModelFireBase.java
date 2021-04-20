@@ -114,7 +114,8 @@ public class ModelFireBase {
                 if(task.isSuccessful()){
                     DocumentSnapshot doc = task.getResult();
                     if(doc!=null){
-                        lesson = task.getResult().toObject(Lesson.class);
+                        lesson = new Lesson();
+                        lesson.fromMap(doc.getData());
                     }
                 listener.onComplete(lesson);
                 }
@@ -266,6 +267,17 @@ public class ModelFireBase {
                     }
                     listener.onComplete(userObjByemail);
                 }
+            }
+        });
+    }
+
+    public void DeleteLessonTeacher(Lesson lesson, Model.DeleteLessonListener listener) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Lesson").document(""+lesson.getLesson_id()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                listener.onComplete();
+                Log.d("Delete:","Item Deleted");
             }
         });
     }

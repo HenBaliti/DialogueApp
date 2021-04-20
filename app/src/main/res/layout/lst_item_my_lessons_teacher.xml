@@ -51,6 +51,16 @@
                     android:layout_height="wrap_content"
                     android:text="Lorem Ipsum"
                     android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/imageViewCatch"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center|center_horizontal"
+                    android:layout_marginLeft="100dp"
+                    android:src="@drawable/padlock"
+                    android:visibility="gone" />
+
             </LinearLayout>
 
 

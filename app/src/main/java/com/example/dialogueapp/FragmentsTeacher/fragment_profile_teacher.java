@@ -47,6 +47,7 @@ public class fragment_profile_teacher extends Fragment {
         txtEmail = view.findViewById(R.id.email_student);
         txtUserType = view.findViewById(R.id.text_usertype);
         imageProfile = view.findViewById(R.id.image_profile_student);
+
         txtTopUserName = view.findViewById(R.id.id_usernametop);
         txtTopEmail = view.findViewById(R.id.id_useremail);
         ImageButton btnEdit = view.findViewById(R.id.edit_profile_student);

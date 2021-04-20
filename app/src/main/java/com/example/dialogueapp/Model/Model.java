@@ -248,4 +248,12 @@ public class Model {
         modelFireBase.uploadImage(imageBmp, id, listener);
     }
 
+    public interface DeleteLessonListener {
+        void onComplete();
+    }
+    public void DeleteLessonTeacher(Lesson lesson, final DeleteLessonListener listener) {
+        modelSql.deleteLesson(lesson);
+        modelFireBase.DeleteLessonTeacher(lesson,listener);
+    }
+
 }

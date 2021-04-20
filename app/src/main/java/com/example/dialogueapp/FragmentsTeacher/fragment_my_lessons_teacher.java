@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.dialogueapp.FragmentsStudent.fragment_my_lessons_student;
+import com.example.dialogueapp.FragmentsStudent.fragment_my_lessons_studentDirections;
 import com.example.dialogueapp.Model.Lesson;
 import com.example.dialogueapp.Model.LessonListViewModel;
 import com.example.dialogueapp.Model.Model;
@@ -64,9 +68,47 @@ public class fragment_my_lessons_teacher extends Fragment {
         adapter.setOnClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Log.d("TAG","row was clicked " + position);
+                Lesson Thislesson = viewModelList.getStLesson().getValue().get(position);
+                fragment_my_lessons_teacherDirections.ActionFragmentMyLessonsTeacherToFragmentLessonDetailsTeacher action = fragment_my_lessons_teacherDirections.actionFragmentMyLessonsTeacherToFragmentLessonDetailsTeacher(Thislesson.getLesson_id());
+                Navigation.findNavController(view).navigate(action);
             }
         });
+
+
+
+
+        // Swip To Delete
+        //////
+
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                Toast.makeText(getActivity(), "on Move", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                Toast.makeText(getActivity(), "on Swiped ", Toast.LENGTH_SHORT).show();
+                //Remove swiped item from list and notify the RecyclerView
+                int position = viewHolder.getAdapterPosition();
+                Lesson lesson = viewModelList.getStLesson().getValue().get(position);
+                Model.instance.DeleteLessonTeacher(lesson, new Model.DeleteLessonListener() {
+                    @Override
+                    public void onComplete() {
+                        Log.d("Check",lesson.getLesson_title()+" was deleted");
+                    }
+                });
+                adapter.notifyDataSetChanged();
+
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(list);
+
+        //////
 
 
         ////////////////////////////////
@@ -135,6 +177,7 @@ public class fragment_my_lessons_teacher extends Fragment {
         CircularProgressButton isDone;
         CircleImageView imageStudent;
         ImageView img_done;
+        ImageView img_Catch;
         public OnItemClickListener listener;
         int position;
 
@@ -147,6 +190,7 @@ public class fragment_my_lessons_teacher extends Fragment {
             txtLessonLengthTime = itemView.findViewById(R.id.txt_lesson_row_length_time);
             isDone = itemView.findViewById(R.id.btn_order_now);
             img_done = itemView.findViewById(R.id.imageViewDone);
+            img_Catch = itemView.findViewById(R.id.imageViewCatch);
             imageStudent = itemView.findViewById(R.id.image_teacher_row_lesson);
             //Todo -> Need to put the imageUrl of the teacher on the list_history
 
@@ -168,13 +212,19 @@ public class fragment_my_lessons_teacher extends Fragment {
             if(lesson.getIsDone()){
                 isDone.setVisibility(View.GONE);
                 img_done.setVisibility(View.VISIBLE);
-                Log.d("isDone??",lesson.getIsDone()+"");
+                img_Catch.setVisibility(View.GONE);
+
             }else{
+                if(lesson.getIsCatch()){
+                    img_Catch.setVisibility(View.VISIBLE);
+                }
                 isDone.setVisibility(View.VISIBLE);
                 img_done.setVisibility(View.GONE);
-                Log.d("isDone??",lesson.getIsDone()+"");
 
             }
+
+
+
             isDone.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
