@@ -67,7 +67,7 @@ public class fragment_edit_profile_teacher extends Fragment {
         moveToProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(view).navigate(R.id.action_fragment_edit_profile_to_fragment_profile);
+                Navigation.findNavController(view).navigate(R.id.action_fragment_edit_profile_teacher_to_fragment_profile_teacher);
             }
         });
 
