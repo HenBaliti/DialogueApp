@@ -73,15 +73,20 @@ public class fragment_lesson_details_teacher extends Fragment {
                     }
                 });
 
-                Model.instance.GetUserByID(lesson.getStudent_id(), new Model.GetUserByIDListener() {
-                    @Override
-                    public void onComplete(User user) {
-                        studentName.setText(user.getFull_name());
-                        if(user.getImageUrl()!=null){
-                            Picasso.get().load(user.getImageUrl()).into(imageStudent);
+                if(lesson.getStudent_id()!=null){
+                    Model.instance.GetUserByID(lesson.getStudent_id(), new Model.GetUserByIDListener() {
+                        @Override
+                        public void onComplete(User user) {
+                            studentName.setText(user.getFull_name());
+                            if(user.getImageUrl()!=null){
+                                Picasso.get().load(user.getImageUrl()).into(imageStudent);
+                            }
                         }
-                    }
-                });
+                    });
+                }
+                else{
+                    studentName.setText("Still Not Occupied");
+                }
 
             }
         });
