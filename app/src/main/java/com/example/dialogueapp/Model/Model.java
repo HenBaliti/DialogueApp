@@ -198,6 +198,22 @@ public class Model {
         modelFireBase.addUser(user,listener);
     }
 
+    //Update user => Profile Fragment
+    public interface UpdateUser extends AddUserListener{
+    }
+    public void UpdateU(User user,AddUserListener listener){
+        modelFireBase.addUser(user, new UpdateUser() {
+            @Override
+            public void onComplete() {
+                refreshAllUsers(new GetAllUsersListener() {
+                    @Override
+                    public void onComplete(List<User> data) {
+                        listener.onComplete();
+                    }
+                });
+            }
+        });
+    }
 
     public interface GetUserByEmailListener{
         void onComplete(String id);

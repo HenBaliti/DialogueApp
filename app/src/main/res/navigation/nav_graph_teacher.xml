@@ -28,11 +28,33 @@
         android:id="@+id/fragment_profile_teacher"
         android:name="com.example.dialogueapp.FragmentsTeacher.fragment_profile_teacher"
         android:label="fragment_profile_teacher"
-        tools:layout="@layout/fragment_profile_teacher" />
+        tools:layout="@layout/fragment_profile_teacher" >
+        <action
+            android:id="@+id/action_fragment_profile_teacher_to_fragment_edit_profile_teacher"
+            app:destination="@id/fragment_edit_profile_teacher" />
+    </fragment>
     <fragment
         android:id="@+id/fragment_my_lessons_teacher"
         android:name="com.example.dialogueapp.FragmentsTeacher.fragment_my_lessons_teacher"
         android:label="fragment_my_lessons_teacher"
+        tools:layout="@layout/fragment_my_lessons_teacher" />
+    <fragment
+        android:id="@+id/fragment_edit_profile_teacher"
+        android:name="com.example.dialogueapp.FragmentsTeacher.fragment_edit_profile_teacher"
+        android:label="fragment_edit_profile_teacher"
+        tools:layout="@layout/fragment_edit_profile_teacher" >
+        <action
+            android:id="@+id/action_fragment_edit_profile_teacher_to_fragment_profile_teacher"
+            app:destination="@id/fragment_profile_teacher" />
+        <argument
+            android:name="username"
+            app:argType="string" />
+        <argument
+            android:name="fullname"
+            app:argType="string" />
+        <argument
+            android:name="imageUrl"
+            app:argType="string" />
         tools:layout="@layout/fragment_my_lessons_teacher" >
         <action
             android:id="@+id/action_fragment_my_lessons_teacher_to_fragment_lesson_details_teacher"
