@@ -67,5 +67,21 @@
         <action
             android:id="@+id/action_fragment_profile_to_fragment_home"
             app:destination="@id/fragment_home" />
+        <action
+            android:id="@+id/action_fragment_profile_to_fragment_edit_profile"
+            app:destination="@id/fragment_edit_profile" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_edit_profile"
+        android:name="com.example.dialogueapp.FragmentsStudent.fragment_edit_profile"
+        android:label="fragment_edit_profile" >
+        <action
+            android:id="@+id/action_fragment_edit_profile_to_fragment_profile"
+            app:destination="@id/fragment_profile" />
+        <argument
+            android:name="username"
+            app:argType="string" />
+        <argument android:name="fullname" />
+        <argument android:name="imageprofile" />
     </fragment>
 </navigation>

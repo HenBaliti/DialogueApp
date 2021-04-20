@@ -2,7 +2,6 @@ package com.example.dialogueapp.FragmentsStudent;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -11,8 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.dialogueapp.Model.Model;
 import com.example.dialogueapp.Model.User;
@@ -28,7 +27,8 @@ public class fragment_profile extends Fragment {
     private TextView txtUserName, txtFullName, txtEmail, txtUserType, txtTopUserName, txtTopEmail;
     private CircleImageView imageProfile;
     private String UserID;
-
+    private ImageView editProfile;
+   private String imageUrl;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -41,13 +41,23 @@ public class fragment_profile extends Fragment {
                 Navigation.findNavController(view).navigate(R.id.action_fragment_profile_to_fragment_home);
             }
         });
-        txtUserName = view.findViewById(R.id.textUserName);
-        txtFullName = view.findViewById(R.id.textFullName);
-        txtEmail = view.findViewById(R.id.textEmail);
-        txtUserType = view.findViewById(R.id.textUserType);
-        imageProfile = view.findViewById(R.id.image_profile);
+
+        txtUserName = view.findViewById(R.id.text_username);
+        txtFullName = view.findViewById(R.id.fullname_student);
+        txtEmail = view.findViewById(R.id.email_student);
+        txtUserType = view.findViewById(R.id.text_usertype);
+        imageProfile = view.findViewById(R.id.image_profile_student);
         txtTopUserName = view.findViewById(R.id.id_usernametop);
         txtTopEmail = view.findViewById(R.id.id_useremail);
+        editProfile = view.findViewById(R.id.edit_profile_student);
+        editProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragment_profileDirections.ActionFragmentProfileToFragmentEditProfile action = fragment_profileDirections.actionFragmentProfileToFragmentEditProfile(txtUserName.getText().toString(), txtFullName.getText().toString(), imageUrl);
+                Navigation.findNavController(view).navigate(action);
+            }
+        });
+
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         ImageButton logOutBtn = view.findViewById(R.id.btn_logout_profile);
@@ -84,6 +94,7 @@ public class fragment_profile extends Fragment {
                 txtUserType.setText(currentUser.getUser_type());
                 txtTopUserName.setText(currentUser.getUser_name());
                 txtTopEmail.setText(currentUser.getEmail());
+                imageUrl = currentUser.getImageUrl();
                 if (currentUser.getImageUrl() != null) {
                     Log.d("check",currentUser.getImageUrl());
                     Picasso.get().load(currentUser.getImageUrl()).into(imageProfile);
