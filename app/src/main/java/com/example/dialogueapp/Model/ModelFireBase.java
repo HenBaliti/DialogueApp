@@ -114,7 +114,8 @@ public class ModelFireBase {
                 if(task.isSuccessful()){
                     DocumentSnapshot doc = task.getResult();
                     if(doc!=null){
-                        lesson = task.getResult().toObject(Lesson.class);
+                        lesson = new Lesson();
+                        lesson.fromMap(doc.getData());
                     }
                 listener.onComplete(lesson);
                 }

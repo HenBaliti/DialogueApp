@@ -41,7 +41,7 @@ public class fragment_profile_teacher extends Fragment {
                 Navigation.findNavController(view).navigate(R.id.action_fragment_profile_to_fragment_home);
             }
         });
-        txtUserName = view.findViewById(R.id.textUserName);
+        txtUserName = view.findViewById(R.id.txt_isDone_Details);
         txtFullName = view.findViewById(R.id.textFullName);
         txtEmail = view.findViewById(R.id.textEmail);
         txtUserType = view.findViewById(R.id.textUserType);

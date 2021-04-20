@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.dialogueapp.FragmentsStudent.fragment_my_lessons_student;
+import com.example.dialogueapp.FragmentsStudent.fragment_my_lessons_studentDirections;
 import com.example.dialogueapp.Model.Lesson;
 import com.example.dialogueapp.Model.LessonListViewModel;
 import com.example.dialogueapp.Model.Model;
@@ -61,6 +64,15 @@ public class fragment_my_lessons_teacher extends Fragment {
 
         adapter = new MyAdapterMyLessons();
         list.setAdapter(adapter);
+
+        adapter.setOnClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Lesson Thislesson = viewModelList.getStLesson().getValue().get(position);
+                fragment_my_lessons_teacherDirections.ActionFragmentMyLessonsTeacherToFragmentLessonDetailsTeacher action = fragment_my_lessons_teacherDirections.actionFragmentMyLessonsTeacherToFragmentLessonDetailsTeacher(Thislesson.getLesson_id());
+                Navigation.findNavController(view).navigate(action);
+            }
+        });
 
 
 

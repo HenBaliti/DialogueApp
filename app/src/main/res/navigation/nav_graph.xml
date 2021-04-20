@@ -58,6 +58,9 @@
         <action
             android:id="@+id/action_fragment_my_lessons_student_to_fragment_home"
             app:destination="@id/fragment_home" />
+        <action
+            android:id="@+id/action_fragment_my_lessons_student_to_fragment_lesson_details_student"
+            app:destination="@id/fragment_lesson_details_student" />
     </fragment>
     <fragment
         android:id="@+id/fragment_profile"
@@ -67,5 +70,13 @@
         <action
             android:id="@+id/action_fragment_profile_to_fragment_home"
             app:destination="@id/fragment_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_lesson_details_student"
+        android:name="com.example.dialogueapp.FragmentsStudent.fragment_lesson_details_student"
+        android:label="fragment_lesson_details_student" >
+        <argument
+            android:name="lesson_id"
+            app:argType="string" />
     </fragment>
 </navigation>

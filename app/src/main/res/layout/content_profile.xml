@@ -26,13 +26,13 @@
                 style="@style/profileDetailsImage" />
 
             <TextView
-                android:id="@+id/usernameTextView"
+                android:id="@+id/isDone_txt"
                 style="@style/profileDetailsTextMain"
                 android:layout_toRightOf="@id/nameImageView"
                 android:text="Username" />
 
             <TextView
-                android:id="@+id/textUserName"
+                android:id="@+id/txt_isDone_Details"
                 style="@style/profileDetailsMiniText"
                 android:layout_toRightOf="@id/nameImageView"
                 android:text="developer" />

@@ -2,7 +2,6 @@ package com.example.dialogueapp.FragmentsStudent;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -12,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.dialogueapp.Model.Model;
 import com.example.dialogueapp.Model.User;
@@ -41,7 +39,7 @@ public class fragment_profile extends Fragment {
                 Navigation.findNavController(view).navigate(R.id.action_fragment_profile_to_fragment_home);
             }
         });
-        txtUserName = view.findViewById(R.id.textUserName);
+        txtUserName = view.findViewById(R.id.txt_isDone_Details);
         txtFullName = view.findViewById(R.id.textFullName);
         txtEmail = view.findViewById(R.id.textEmail);
         txtUserType = view.findViewById(R.id.textUserType);

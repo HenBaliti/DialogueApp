@@ -59,6 +59,8 @@ public class fragment_history extends Fragment {
             public void onItemClick(int position) {
                 Log.d("TAG","row was clicked " + position);
             }
+
+
         });
 
 

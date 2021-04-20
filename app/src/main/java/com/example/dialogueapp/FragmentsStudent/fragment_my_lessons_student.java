@@ -58,10 +58,12 @@ public class fragment_my_lessons_student extends Fragment {
         adapter = new MyAdapterMyLessons();
         list.setAdapter(adapter);
 
-        adapter.setOnClickListener(new fragment_history.OnItemClickListener() {
+        adapter.setOnClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Log.d("TAG","row was clicked " + position);
+                Lesson Thislesson = viewModelList.getStLesson().getValue().get(position);
+                fragment_my_lessons_studentDirections.ActionFragmentMyLessonsStudentToFragmentLessonDetailsStudent action = fragment_my_lessons_studentDirections.actionFragmentMyLessonsStudentToFragmentLessonDetailsStudent(Thislesson.getLesson_id());
+                Navigation.findNavController(view).navigate(action);
             }
         });
 
@@ -118,9 +120,11 @@ public class fragment_my_lessons_student extends Fragment {
     //////////////////////////////////////
     ///////////// ViewHolder ////////////////
     //////////////////////////////////////
+
     interface OnItemClickListener{
         void onItemClick(int position);
     }
+
 
     class MyViewHolderMyLessons extends RecyclerView.ViewHolder{
 
@@ -133,7 +137,7 @@ public class fragment_my_lessons_student extends Fragment {
         CircularProgressButton cancelLesson;
         ImageView img_done;
         CircleImageView imageTeacher;
-        public fragment_history.OnItemClickListener listener;
+        public OnItemClickListener listener;
         int position;
 
         public MyViewHolderMyLessons(@NonNull View itemView) {
@@ -155,7 +159,8 @@ public class fragment_my_lessons_student extends Fragment {
                     listener.onItemClick(position);
                 }
             });
-            Lesson lesson = viewModelList.getStLesson().getValue().get(position);
+
+
         }
 
         public void bindData(Lesson lesson, int position) {
@@ -228,9 +233,9 @@ public class fragment_my_lessons_student extends Fragment {
     ///////////// Adapter ////////////////
     //////////////////////////////////////
     class MyAdapterMyLessons extends RecyclerView.Adapter<MyViewHolderMyLessons>{
-        private fragment_history.OnItemClickListener listener;
+        private OnItemClickListener listener;
 
-        void setOnClickListener(fragment_history.OnItemClickListener listener){
+        void setOnClickListener(OnItemClickListener listener){
             this.listener = listener;
         }
 
