@@ -1,6 +1,7 @@
 package com.example.dialogueapp.FragmentsTeacher;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -192,6 +193,8 @@ public class fragment_set_lesson_teacher extends Fragment {
         createLesson_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 if(isValidate){
                     Log.d("TAG",timePickerValueTextView.getText().toString());
                     if(timePickerValueTextView.getText().toString().length()>=3){
@@ -231,6 +234,10 @@ public class fragment_set_lesson_teacher extends Fragment {
 
     private void addNewLessonTeacher() {
 //        String teacherId = user.getUid();
+
+        ProgressDialog progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Creating New Lesson...");
+        progressDialog.show();
         createLesson_btn.setEnabled((false));
 //        id = viewModelList.getStLesson().getValue().size();
         lesson = new Lesson();
@@ -251,6 +258,7 @@ public class fragment_set_lesson_teacher extends Fragment {
                 Model.instance.addLesson(lesson, new Model.AddLessonListener() {
                     @Override
                     public void onComplete() {
+                        progressDialog.dismiss();
                         Toast.makeText(getActivity(), "Added a new Lesson Succeeded",
                                 Toast.LENGTH_SHORT).show();
                         createLesson_btn.setEnabled((true));

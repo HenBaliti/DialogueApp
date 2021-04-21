@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -50,6 +51,7 @@ public class activity_register extends AppCompatActivity {
     private TextView PasswordET;
     private Activity mActivity;
     private Uri imageurl;
+    private boolean isImageOk = false;
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
 
@@ -111,12 +113,15 @@ public class activity_register extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "You need to chose user type",
                         Toast.LENGTH_SHORT).show();
             }
-            if(imageurl==null) {
+            if(isImageOk==false) {
                 validate = true;
                 Toast.makeText(getApplicationContext(), "You need to add image",
                         Toast.LENGTH_SHORT).show();
             }
             if(validate==false) {
+                ProgressDialog progressDialog = new ProgressDialog(this);
+                progressDialog.setMessage("Creating New User...");
+                progressDialog.show();
                 User user = new User();
                 user.setUser_id(String.valueOf(UUID.randomUUID()));
                 user.setEmail(EmailET.getText().toString());
@@ -272,9 +277,10 @@ public class activity_register extends AppCompatActivity {
             switch (requestCode) {
                 case 0:
                     if (resultCode == RESULT_OK && data != null) {
+                        isImageOk = true;
                         Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
-                        //profileImage.setImageBitmap(selectedImage);
-                        profileImage.setImageURI(data.getData());
+                        profileImage.setImageBitmap(selectedImage);
+//                        profileImage.setImageURI(data.getData());
                     }
 
                     break;
@@ -287,7 +293,7 @@ public class activity_register extends AppCompatActivity {
                                     filePathColumn, null, null, null);
                             if (cursor != null) {
                                 cursor.moveToFirst();
-
+                                isImageOk = true;
                                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                                 String picturePath = cursor.getString(columnIndex);
                                 profileImage.setImageURI(data.getData());
