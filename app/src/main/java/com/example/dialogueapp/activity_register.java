@@ -49,6 +49,7 @@ public class activity_register extends AppCompatActivity {
     private TextView EmailET;
     private TextView PasswordET;
     private Activity mActivity;
+    private Uri imageurl;
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
 
@@ -71,71 +72,112 @@ public class activity_register extends AppCompatActivity {
                 RadioButton rb = group.findViewById(checkedId);
                 if (null != rb) {
                     usertype = rb.getText().toString().toLowerCase().intern().equals("student") ? "Student" : "Teacher";
+                    Log.d(usertype, "usertype");
                 }
             }
         });
 
         registerBtn.setOnClickListener(v -> {
-            User user = new User();
-            user.setUser_id(String.valueOf(UUID.randomUUID()));
-            user.setEmail(EmailET.getText().toString());
-            user.setFull_name(NameET.getText().toString());
-            user.setUser_name(UserNameET.getText().toString());
-            user.setUser_type(usertype);
-            String email = EmailET.getText().toString();
-            String password = PasswordET.getText().toString();
+            String namef = NameET.getText().toString();
+            String nameu = UserNameET.getText().toString();
+            String emailu = EmailET.getText().toString();
+            String pass = PasswordET.getText().toString();
+            //String imageu = profileImage.toString();
+            boolean validate = false;
+            if (namef.isEmpty()) {
+                validate = true;
+                Toast.makeText(getApplicationContext(), "Enter your fullname",
+                        Toast.LENGTH_SHORT).show();
+            }
+            if (nameu.isEmpty()) {
+                validate = true;
+                Toast.makeText(getApplicationContext(), "Enter your username",
+                        Toast.LENGTH_SHORT).show();
+            }
+            if (emailu.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(emailu).matches()) {
+                Toast.makeText(getApplicationContext(), "unvalid email",
+                        Toast.LENGTH_SHORT).show();
+                validate = true;
+            }
 
-            //Add Image to firebase
-            BitmapDrawable drawable = (BitmapDrawable)profileImage.getDrawable();
-            Bitmap bitmap =  drawable.getBitmap();
-            Model.instance.uploadImage(bitmap, user.getUser_id(), new Model.UploadImageListener() {
-                @Override
-                public void onComplete(String url) {
-                    if(url==null) {
-                        displayFailedErrors();
+            if (pass.isEmpty() || pass.length() < 6 || pass.length() > 12) {
+                validate = true;
+                Toast.makeText(getApplicationContext(), "Password should be 6-12 digits",
+                        Toast.LENGTH_SHORT).show();
+
+            }
+            if(usertype ==null) {
+                validate = true;
+                Toast.makeText(getApplicationContext(), "You need to chose user type",
+                        Toast.LENGTH_SHORT).show();
+            }
+            if(imageurl==null) {
+                validate = true;
+                Toast.makeText(getApplicationContext(), "You need to add image",
+                        Toast.LENGTH_SHORT).show();
+            }
+            if(validate==false) {
+                User user = new User();
+                user.setUser_id(String.valueOf(UUID.randomUUID()));
+                user.setEmail(EmailET.getText().toString());
+                user.setFull_name(NameET.getText().toString());
+                user.setUser_name(UserNameET.getText().toString());
+                user.setUser_type(usertype);
+                String email = EmailET.getText().toString();
+                String password = PasswordET.getText().toString();
+
+                //Add Image to firebase
+
+                BitmapDrawable drawable = (BitmapDrawable) profileImage.getDrawable();
+                Bitmap bitmap = drawable.getBitmap();
+                Model.instance.uploadImage(bitmap, user.getUser_id(), new Model.UploadImageListener() {
+                    @Override
+                    public void onComplete(String url) {
+                        if (url == null) {
+                            displayFailedErrors();
+                        } else {
+                            user.setImageUrl(url);
+
+                            Model.instance.addUser(user, new Model.AddUserListener() {
+                                @Override
+                                public void onComplete() {
+                                    Log.d("TAG", "createUserFirebase:success");
+                                    Toast.makeText(activity_register.this,"Registerd Successfully", Toast.LENGTH_SHORT ).show();
+
+                                }
+                            });
+
+                        }
                     }
-                    else {
-                        user.setImageUrl(url);
+                });
 
-                        Model.instance.addUser(user, new Model.AddUserListener() {
+
+                //When The user clicked the login and the pass and email was correct
+                mAuth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                             @Override
-                            public void onComplete() {
-                                Log.d("TAG", "createUserFirebase:success");
-                            }
-                        });
-
-                    }
-                }
-            });
-
-
-
-            //When The user clicked the login and the pass and email was correct
-            mAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
                                     // Sign in success, update UI with the signed-in user's information
                                     Log.d("TAG", "createUserWithEmail:success");
                                     FirebaseUser user = mAuth.getCurrentUser();
 
                                     Intent returnIntent = new Intent();
-                                    setResult(Activity.RESULT_OK,returnIntent);
-                                finish();
+                                    setResult(Activity.RESULT_OK, returnIntent);
+                                    finish();
 
 
 //                                Navigation.findNavController(view).navigate(R.id.action_fragment_register_to_fragment_home); //need to send the user through the navigation
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                Log.d("TAG", "createUserWithEmail:failure", task.getException());
-                                Toast.makeText(mActivity, "Authentication failed.",
-                                        Toast.LENGTH_SHORT).show();
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                    Log.d("TAG", "createUserWithEmail:failure", task.getException());
+                                    Toast.makeText(mActivity, "Authentication failed.",
+                                            Toast.LENGTH_SHORT).show();
 
+                                }
                             }
-                        }
-                    });
-
+                        });
+            }
         });
 
 
@@ -224,6 +266,7 @@ public class activity_register extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        imageurl = data.getData();
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != RESULT_CANCELED) {
             switch (requestCode) {
