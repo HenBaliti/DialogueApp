@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,7 +32,7 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class fragment_history extends Fragment {
-
+    SwipeRefreshLayout sref;
     private FirebaseAuth mAuth;
     RecyclerView list;
     LessonListViewModel viewModelList;
@@ -107,6 +108,17 @@ public class fragment_history extends Fragment {
                     }
         });
 
+
+
+        sref = view.findViewById(R.id.srf_history);
+
+        sref.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                sref.setRefreshing(true);
+                reloadData();
+            }
+        });
 
         return view;
     }
@@ -202,5 +214,18 @@ public class fragment_history extends Fragment {
                 return 0;
             return viewModelList.getStLesson().getValue().size();
         }
+    }
+
+
+    void reloadData(){
+
+
+        Model.instance.refreshAllLessons(new Model.GetAllLessonsListener() {
+            @Override
+            public void onComplete(List<Lesson> data) {
+
+                sref.setRefreshing(false);
+            }
+        });
     }
 }

@@ -39,7 +39,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class fragment_LessonList extends Fragment {
 //    private FirebaseAuth mAuth;
     FirebaseUser user;
-    ProgressBar pb;
     MyAdapter adapter;
     SwipeRefreshLayout sref;
     RecyclerView list;
@@ -108,8 +107,7 @@ public class fragment_LessonList extends Fragment {
 
         //--LIST--
 
-        pb = view.findViewById(R.id.progressBar_lesson_list);
-        pb.setVisibility(View.INVISIBLE);
+
         sref = view.findViewById(R.id.lessonList_swipe);
 
         sref.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -275,12 +273,11 @@ public class fragment_LessonList extends Fragment {
     //Add New Lesson -> Student
 
     void reloadData(){
-        pb.setVisibility(View.VISIBLE);
+
 
         Model.instance.refreshAllLessons(new Model.GetAllLessonsListener() {
             @Override
             public void onComplete(List<Lesson> data) {
-                pb.setVisibility(View.INVISIBLE);
 
                 sref.setRefreshing(false);
             }

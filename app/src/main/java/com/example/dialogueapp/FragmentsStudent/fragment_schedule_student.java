@@ -45,7 +45,7 @@ public class fragment_schedule_student extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_schedule_student, container, false);
 
 
-
+        tvDate = view.findViewById(R.id.txt_picked_date);
         ImageButton logOutBtn = view.findViewById(R.id.btn_logout_schedule);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user != null) {
@@ -99,7 +99,7 @@ public class fragment_schedule_student extends Fragment {
         findFreeTeachers_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(tvDate.getText().toString()!=""){
+                if(tvDate.getText().toString().length()>=3){
                     fragment_schedule_studentDirections.ActionFragmentScheduleStudentToFragmentLessonList action = fragment_schedule_studentDirections.actionFragmentScheduleStudentToFragmentLessonList(tvDate.getText().toString());
                     Navigation.findNavController(view).navigate(action);
                 }
@@ -117,7 +117,6 @@ public class fragment_schedule_student extends Fragment {
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
 
-            tvDate = (TextView) getActivity().findViewById(R.id.txt_picked_date);
             tvDate.setText(String.valueOf(year) + "-" + String.valueOf(monthOfYear+1)
                     + "-" + String.valueOf(dayOfMonth));
         }
