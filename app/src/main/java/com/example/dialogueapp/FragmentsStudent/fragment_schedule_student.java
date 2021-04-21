@@ -15,6 +15,7 @@ import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.example.dialogueapp.DatePickerFragment;
 import com.example.dialogueapp.R;
@@ -98,8 +99,13 @@ public class fragment_schedule_student extends Fragment {
         findFreeTeachers_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragment_schedule_studentDirections.ActionFragmentScheduleStudentToFragmentLessonList action = fragment_schedule_studentDirections.actionFragmentScheduleStudentToFragmentLessonList(tvDate.getText().toString());
-                Navigation.findNavController(view).navigate(action);
+                if(tvDate.getText().toString()!=""){
+                    fragment_schedule_studentDirections.ActionFragmentScheduleStudentToFragmentLessonList action = fragment_schedule_studentDirections.actionFragmentScheduleStudentToFragmentLessonList(tvDate.getText().toString());
+                    Navigation.findNavController(view).navigate(action);
+                }
+                else{
+                    Toast.makeText(getActivity(), "You Must Choose Valid Date..", Toast.LENGTH_LONG ).show();
+                }
             }
         });
 

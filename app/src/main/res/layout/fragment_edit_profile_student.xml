@@ -26,6 +26,8 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginLeft="350px"
+                app:civ_border_color="@color/primaryTextColor"
+                app:civ_border_width="2dp"
                 android:src="@drawable/ic_baseline_person_24" />
 
         </RelativeLayout>
@@ -81,24 +83,33 @@
         <RelativeLayout style="@style/profileDetailsLayout">
 
 
-            <Button
+            <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+                style="@style/loginButton"
                 android:id="@+id/save_changes_student"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="300px"
+                android:layout_marginLeft="270px"
                 android:layout_marginTop="150px"
-                android:text="Save Changes" />
+                android:text="Save Changes"
+                app:spinning_bar_color="#FFF"
+                app:spinning_bar_padding="6dp"
+                app:spinning_bar_width="4dp" />
+
+
         </RelativeLayout>
         <RelativeLayout style="@style/profileDetailsLayout">
 
-
-            <Button
+            <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+                style="@style/loginButton"
                 android:id="@+id/back_profile_student"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="220px"
+                android:layout_marginLeft="270px"
                 android:text="Back to Profile page"
-                app:backgroundTint="#03A9F4" />
+                app:spinning_bar_color="#FFF"
+                app:spinning_bar_padding="6dp"
+                app:spinning_bar_width="4dp" />
+
         </RelativeLayout>
 
         <View style="@style/proifleDetailsView" />

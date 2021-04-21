@@ -41,6 +41,7 @@ public class fragment_set_lesson_teacher extends Fragment {
     Button btn_30;
     Button btn_45;
     Lesson lesson;
+    boolean isValidate = false;
     int numOfMinutes;
 
 
@@ -57,6 +58,13 @@ public class fragment_set_lesson_teacher extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_set_lesson_teacher, container, false);
 
         viewModelList = new ViewModelProvider(this).get(LessonListViewModel.class);
+
+        txt_Title = view.findViewById(R.id.txt_picked_title_teacher);
+        timePickerValueTextView = view.findViewById(R.id.txt_picked_time_teacher);
+        tvDate = view.findViewById(R.id.txt_picked_date_teacher);
+        txt_Title.setText("");
+        tvDate.setText("");
+        timePickerValueTextView.setText("");
 
         ImageButton logOutBtn = view.findViewById(R.id.btn_logout_schedule_teacher);
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -80,10 +88,6 @@ public class fragment_set_lesson_teacher extends Fragment {
             // No user is signed in
             logOutBtn.setVisibility(view.GONE);
 
-            String errorMsg = "You are not Login yet.";
-//            fragment_schedule_studentDirections.ActionFragmentScheduleStudentToFragmentLogin action = fragment_schedule_studentDirections.actionFragmentScheduleStudentToFragmentLogin(errorMsg);
-//            Navigation.findNavController(view).navigate(action);
-
         }
 
 
@@ -94,6 +98,7 @@ public class fragment_set_lesson_teacher extends Fragment {
         btn_15.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { //FF747277
+                isValidate = true;
                 numOfMinutes = 15;
                 btn_15.setBackgroundColor(Color.parseColor("#11CFC5"));
                 btn_30.setBackgroundColor(Color.parseColor("#FF747277"));
@@ -105,6 +110,7 @@ public class fragment_set_lesson_teacher extends Fragment {
         btn_30.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { //FF747277
+                isValidate = true;
                 numOfMinutes = 30;
                 btn_15.setBackgroundColor(Color.parseColor("#FF747277"));
                 btn_30.setBackgroundColor(Color.parseColor("#11CFC5"));
@@ -116,6 +122,7 @@ public class fragment_set_lesson_teacher extends Fragment {
         btn_45.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { //FF747277
+                isValidate = true;
                 numOfMinutes = 45;
                 btn_15.setBackgroundColor(Color.parseColor("#FF747277"));
                 btn_30.setBackgroundColor(Color.parseColor("#FF747277"));
@@ -185,7 +192,33 @@ public class fragment_set_lesson_teacher extends Fragment {
         createLesson_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addNewLessonTeacher();
+                if(isValidate){
+                    Log.d("TAG",timePickerValueTextView.getText().toString());
+                    if(timePickerValueTextView.getText().toString().length()>=3){
+                        if(tvDate.getText().toString().length()>=4){
+                            if(txt_Title.getText().toString().length()>0){
+                                addNewLessonTeacher();
+                            }
+                            else{
+                                Toast.makeText(getActivity(), "You Need To Choose A Lesson Title.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+
+                        }else{
+                            Toast.makeText(getActivity(), "You Need To Choose A Lesson Schedule Date.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    else{
+                        Toast.makeText(getActivity(), "You Need To Choose A Lesson Schedule Time.",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else{
+                    Toast.makeText(getActivity(), "You Need To Choose A Lesson Length Time.",
+                            Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -198,7 +231,6 @@ public class fragment_set_lesson_teacher extends Fragment {
 
     private void addNewLessonTeacher() {
 //        String teacherId = user.getUid();
-        txt_Title = (TextView) getActivity().findViewById(R.id.txt_picked_title_teacher);
         createLesson_btn.setEnabled((false));
 //        id = viewModelList.getStLesson().getValue().size();
         lesson = new Lesson();
@@ -250,7 +282,6 @@ public class fragment_set_lesson_teacher extends Fragment {
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
 
-            tvDate = (TextView) getActivity().findViewById(R.id.txt_picked_date_teacher);
             tvDate.setText(String.valueOf(year) + "-" + String.valueOf(monthOfYear+1)
                     + "-" + String.valueOf(dayOfMonth));
         }

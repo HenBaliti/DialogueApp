@@ -32,6 +32,9 @@
         <action
             android:id="@+id/action_fragment_profile_teacher_to_fragment_edit_profile_teacher"
             app:destination="@id/fragment_edit_profile_teacher" />
+        <action
+            android:id="@+id/action_fragment_profile_teacher_to_fragment_home_teacher"
+            app:destination="@id/fragment_home_teacher" />
     </fragment>
     <fragment
         android:id="@+id/fragment_my_lessons_teacher"

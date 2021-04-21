@@ -39,7 +39,7 @@ public class fragment_profile_teacher extends Fragment {
         moveHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(view).navigate(R.id.action_fragment_profile_to_fragment_home);
+                Navigation.findNavController(view).navigate(R.id.action_fragment_profile_teacher_to_fragment_home_teacher);
             }
         });
         txtUserName = view.findViewById(R.id.text_username);
