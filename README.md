@@ -11,7 +11,7 @@ The Dialogue app was made to help connect between student and private teachers a
 
 ## Create Lesson
 
-In this page you create a lesson in a date your avilable and another user can catch it and you will get a zoom generator url.
+In this page you create a lesson in a date you are avilable and another user can catch it and you will get a zoom generator url.
 
 ![Choose date](https://github.com/HenBaliti/DialogueApp/blob/master/app/src/main/res/read/date.jpeg)
 ![Lesson Details](https://github.com/HenBaliti/DialogueApp/blob/master/app/src/main/res/read/createlesson.jpeg)
